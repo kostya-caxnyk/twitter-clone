@@ -4,7 +4,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import { useStylesSignIn } from '../../pages/SignIn';
+import { useStylesSignIn } from '../pages/SignIn';
 
 interface DialogBoxProps {
   children: React.ReactNode;

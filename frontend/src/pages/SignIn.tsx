@@ -7,7 +7,7 @@ import PeopleOutlineIcon from '@material-ui/icons/PeopleOutline';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 
 import TextField from '@material-ui/core/TextField';
-import DialogBox from '../components/DialogBox/DialogBox';
+import DialogBox from '../components/ModalBlock';
 
 export const useStylesSignIn = makeStyles((theme) => ({
   wrapper: {
