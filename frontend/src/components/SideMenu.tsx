@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-import { IconButton } from '@material-ui/core';
-import { useHomeStyles } from '../pages/Home';
+import { Hidden, IconButton } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import HomeIcon from '@material-ui/icons/HomeOutlined';
 import SearchIcon from '@material-ui/icons/Search';
@@ -13,12 +12,15 @@ import ListIcon from '@material-ui/icons/ListAltOutlined';
 import PermIdentityIcon from '@material-ui/icons/PermIdentityOutlined';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
+import CreateIcon from '@material-ui/icons/Create';
 
-interface SideMenuProps {
-  classes: ReturnType<typeof useHomeStyles>;
-}
+import useHomeStyles from '../pages/Home/useHomeStyles';
 
-const SideMenu: React.FC<SideMenuProps> = ({ classes: s }) => {
+interface SideMenuProps {}
+
+const SideMenu: React.FC<SideMenuProps> = () => {
+  const s = useHomeStyles();
+
   return (
     <nav className={s.navSideBar}>
       <IconButton aria-label="delete" className={s.logoBtn}>
@@ -30,62 +32,79 @@ const SideMenu: React.FC<SideMenuProps> = ({ classes: s }) => {
         <li className={s.navListItem}>
           <NavLink to="/" className={s.navLink} activeClassName={s.activeLink} exact>
             <HomeIcon className={s.navIcon} />
-            <Typography variant="h6" component="span" className={s.navListLabel}>
-              Главная
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="h6" component="span" className={s.navListLabel}>
+                Главная
+              </Typography>
+            </Hidden>
           </NavLink>
         </li>
         <li className={s.navListItem}>
           <NavLink to="/explore" className={s.navLink} activeClassName={s.activeLink} exact>
             <SearchIcon className={s.navIcon} />
-            <Typography variant="h6" component="span" className={s.navListLabel}>
-              Поиск
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="h6" component="span" className={s.navListLabel}>
+                Поиск
+              </Typography>
+            </Hidden>
           </NavLink>
         </li>
         <li className={s.navListItem}>
           <NavLink to="/notifications" className={s.navLink} activeClassName={s.activeLink} exact>
             <NotificationsNoneIcon className={s.navIcon} />
-            <Typography variant="h6" component="span" className={s.navListLabel}>
-              Уведомления
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="h6" component="span" className={s.navListLabel}>
+                Уведомления
+              </Typography>
+            </Hidden>
           </NavLink>
         </li>
         <li className={s.navListItem}>
           <NavLink to="/messages" className={s.navLink} activeClassName={s.activeLink}>
             <EmailIcon className={s.navIcon} />
-            <Typography variant="h6" component="span" className={s.navListLabel}>
-              Сообщения
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="h6" component="span" className={s.navListLabel}>
+                Сообщения
+              </Typography>
+            </Hidden>
           </NavLink>
         </li>
         <li className={s.navListItem}>
           <NavLink to="/bookmarks" className={s.navLink} activeClassName={s.activeLink}>
             <BookmarkBorderIcon className={s.navIcon} />
-            <Typography variant="h6" component="span" className={s.navListLabel}>
-              Закладки
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="h6" component="span" className={s.navListLabel}>
+                Закладки
+              </Typography>
+            </Hidden>
           </NavLink>
         </li>
         <li className={s.navListItem}>
           <NavLink to="/lists" className={s.navLink} activeClassName={s.activeLink}>
             <ListIcon className={s.navIcon} />
-            <Typography variant="h6" component="span" className={s.navListLabel}>
-              Списки
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="h6" component="span" className={s.navListLabel}>
+                Списки
+              </Typography>
+            </Hidden>
           </NavLink>
         </li>
         <li className={s.navListItem}>
           <NavLink to="/profile" className={s.navLink} activeClassName={s.activeLink}>
             <PermIdentityIcon className={s.navIcon} />
-            <Typography variant="h6" component="span" className={s.navListLabel}>
-              Профиль
-            </Typography>
+            <Hidden smDown>
+              <Typography variant="h6" component="span" className={s.navListLabel}>
+                Профиль
+              </Typography>
+            </Hidden>
           </NavLink>
         </li>
         <li>
           <Button className={s.navTweetButton} variant="contained" color="primary" fullWidth>
-            Твитнуть
+            <Hidden smDown>Твитнуть</Hidden>
+            <Hidden mdUp>
+              <CreateIcon />
+            </Hidden>
           </Button>
         </li>
       </ul>

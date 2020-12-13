@@ -83,7 +83,7 @@ export const useStylesSignIn = makeStyles((theme) => ({
     position: 'relative',
   },
   headerTwitterIcon: {
-    fontSize: 30,
+    fontSize: 50,
     paddingTop: 15,
     color: theme.palette.primary.main,
   },
