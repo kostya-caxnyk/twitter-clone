@@ -7,13 +7,17 @@ import './index.css';
 import App from './App';
 import { ThemeProvider, CssBaseline } from '@material-ui/core';
 import theme from './theme';
+import { Provider } from 'react-redux';
+import { store } from './store/store';
 
 ReactDOM.render(
   <React.StrictMode>
     <Router>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <App />
+        <Provider store={store}>
+          <CssBaseline />
+          <App />
+        </Provider>
       </ThemeProvider>
     </Router>
   </React.StrictMode>,

@@ -12,7 +12,11 @@ import useHomeStyles from '../pages/Home/useHomeStyles';
 
 const MAX_INPUT_LENGTH = 280;
 
-const AddTweetForm = (): React.ReactElement => {
+interface AddTweetFormProps {
+  rowsMin?: number;
+}
+
+const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.ReactElement => {
   const s = useHomeStyles();
 
   const [textValue, setTextValue] = React.useState('');
@@ -42,6 +46,7 @@ const AddTweetForm = (): React.ReactElement => {
           className={s.formAddTweetTextArea}
           onChange={handleTextAreaChange}
           value={textValue}
+          rowsMin={rowsMin}
         />
         <div className={s.formAddTweetButtons}>
           <div className={s.formAddTweetButtonsGroup}>

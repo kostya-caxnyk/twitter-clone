@@ -4,30 +4,60 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import { useStylesSignIn } from '../pages/SignIn';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  dialogBoxHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    position: 'relative',
+    height: 50,
+  },
+  headerTwitterIcon: {
+    fontSize: 30,
+    color: theme.palette.primary.main,
+  },
+  dialogBoxCloseBtn: {
+    padding: 8,
+    color: theme.palette.primary.main,
+    position: 'absolute',
+    top: 7,
+    left: 10,
+  },
+  dialogContent: {
+    padding: 0,
+    paddingTop: 15,
+    borderTop: '1px solid rgb(204, 214, 221)',
+  },
+  dialogTitle: {
+    border: 'none',
+    margin: 0,
+  },
+}));
 
 interface DialogBoxProps {
   children: React.ReactNode;
-  title: string;
-  classes: ReturnType<typeof useStylesSignIn>;
+  title?: string;
   visible?: boolean;
   onClose: () => void;
 }
 
-const DialogBox: React.FC<DialogBoxProps> = ({
-  children,
-  title,
-  classes: s,
-  visible = false,
-  onClose,
-}) => {
+const DialogBox: React.FC<DialogBoxProps> = ({ children, title, visible = false, onClose }) => {
+  const s = useStyles();
+
   return (
-    <Dialog open={visible} onClose={onClose} aria-labelledby="form-dialog-title">
+    <Dialog open={visible} onClose={onClose}>
       <div className={s.dialogBoxHeader}>
+        <IconButton className={s.dialogBoxCloseBtn} onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
         <TwitterIcon className={s.headerTwitterIcon} />
       </div>
-      <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-      <DialogContent>{children}</DialogContent>
+      {title && <DialogTitle className={s.dialogTitle}>{title}</DialogTitle>}
+      <DialogContent className={s.dialogContent}>{children}</DialogContent>
     </Dialog>
   );
 };

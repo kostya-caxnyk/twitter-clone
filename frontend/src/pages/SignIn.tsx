@@ -77,18 +77,11 @@ export const useStylesSignIn = makeStyles((theme) => ({
     right: '-50vh',
     color: theme.palette.primary.main,
   },
-  dialogBoxHeader: {
-    display: 'flex',
-    justifyContent: 'center',
-    position: 'relative',
-  },
-  headerTwitterIcon: {
-    fontSize: 50,
-    paddingTop: 15,
-    color: theme.palette.primary.main,
-  },
   inputMarginBottom: {
     marginBottom: 20,
+  },
+  formControl: {
+    padding: '5px 24px',
   },
 }));
 
@@ -157,11 +150,10 @@ export const SignIn = () => {
           </Button>
         </div>
         <DialogBox
-          classes={s}
           title="Войти в аккаунт"
           visible={visibleModal === 'signIn'}
           onClose={handleCloseModal}>
-          <FormControl component="fieldset" fullWidth>
+          <FormControl component="fieldset" className={s.formControl} fullWidth>
             <FormGroup aria-label="position" row>
               <TextField
                 autoFocus
@@ -189,11 +181,10 @@ export const SignIn = () => {
           </FormControl>
         </DialogBox>
         <DialogBox
-          classes={s}
           title="Создайте учетную запись"
           visible={visibleModal === 'signUp'}
           onClose={handleCloseModal}>
-          <FormControl component="fieldset" fullWidth>
+          <FormControl component="fieldset" className={s.formControl} fullWidth>
             <FormGroup aria-label="position" row>
               <TextField
                 autoFocus
