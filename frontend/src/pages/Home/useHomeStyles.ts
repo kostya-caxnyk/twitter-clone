@@ -250,4 +250,8 @@ export default makeStyles((theme) => ({
     color: 'red',
     marginRight: 5,
   },
+  loading: {
+    textAlign: 'center',
+    marginTop: 20,
+  },
 }));

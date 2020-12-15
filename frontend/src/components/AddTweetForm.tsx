@@ -61,13 +61,13 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
             <div className={s.formAddTweetProgressBar}>
               {hasReachedLimit && <span className={s.formAddTweetLimit}>{symbolsCount}</span>}
               <CircularProgress
-                variant="static"
+                variant="determinate"
                 value={progressBarPercent > 100 ? 100 : progressBarPercent}
                 size={25}
                 className={classnames({ [s.redColor]: hasReachedLimit })}
               />
               <CircularProgress
-                variant="static"
+                variant="determinate"
                 value={100}
                 size={25}
                 className={s.formAddTweetCircle}

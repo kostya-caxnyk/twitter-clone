@@ -1,5 +1,5 @@
-import React from 'react';
-
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import classnames from 'classnames';
 
 import Grid from '@material-ui/core/Grid';
@@ -14,9 +14,19 @@ import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
 
 import useHomeStyles from './useHomeStyles';
 import AddTweetForm from '../../components/AddTweetForm';
+import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
+import { selectIsTweetsLoading, selectTweetsItems } from '../../store/ducks/tweets/selectors';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const Home = () => {
   const s = useHomeStyles();
+  const dispatch = useDispatch();
+  const tweets = useSelector(selectTweetsItems);
+  const isLoading = useSelector(selectIsTweetsLoading);
+
+  useEffect(() => {
+    dispatch(fetchTweets());
+  }, [dispatch]);
 
   return (
     <Container maxWidth="lg" className={s.wrapper}>
@@ -33,16 +43,12 @@ const Home = () => {
             </Paper>
             <AddTweetForm />
             <Paper square className={s.gap} variant="outlined" />
-            {new Array(20).fill(
-              <Tweet
-                text="Дві українські правозахисниці Тетяна Печончик і Марта Чумало отримали премію «Тюльпан прав людини» за видатні досягнення у боротьбі за права людини МЗС Нідерландів"
-                user={{
-                  username: 'Kostya20335905',
-                  name: 'Kostya',
-                  avatarUrl:
-                    'https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png',
-                }}
-              />,
+            {isLoading ? (
+              <div className={s.loading}>
+                <CircularProgress />
+              </div>
+            ) : (
+              tweets.map((tweet) => <Tweet text={tweet.text} user={tweet.user} key={tweet._id} />)
             )}
           </Paper>
         </Grid>
