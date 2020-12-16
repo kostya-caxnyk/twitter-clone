@@ -48,7 +48,7 @@ const Home = () => {
             {isLoading ? (
               <LoadingCircle />
             ) : (
-              tweets.map((tweet) => <Tweet text={tweet.text} user={tweet.user} key={tweet._id} />)
+              tweets.map((tweet) => <Tweet {...tweet} key={tweet._id} />)
             )}
           </Paper>
         </Grid>
