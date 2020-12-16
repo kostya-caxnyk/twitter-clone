@@ -17,6 +17,8 @@ import AddTweetForm from '../../components/AddTweetForm';
 import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
 import { selectIsTweetsLoading, selectTweetsItems } from '../../store/ducks/tweets/selectors';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Topics from '../../components/Topics';
+import LoadingCircle from '../../components/LoadingCircle';
 
 const Home = () => {
   const s = useHomeStyles();
@@ -44,9 +46,7 @@ const Home = () => {
             <AddTweetForm />
             <Paper square className={s.gap} variant="outlined" />
             {isLoading ? (
-              <div className={s.loading}>
-                <CircularProgress />
-              </div>
+              <LoadingCircle />
             ) : (
               tweets.map((tweet) => <Tweet text={tweet.text} user={tweet.user} key={tweet._id} />)
             )}
@@ -65,30 +65,8 @@ const Home = () => {
             }}
             fullWidth
           />
-          <Paper className={s.recommendations}>
-            <Typography variant="h6" className={s.recommendationsTitle}>
-              Актуальные темы
-            </Typography>
-            <Paper className={s.recomItem} square>
-              <Typography className={s.recomItemTitle}>Украине</Typography>
-              <Typography className={s.recomItemText}>Твитов: 3231</Typography>
-            </Paper>
-            <Paper className={s.recomItem} square>
-              <Typography className={s.recomItemTitle}>Простите</Typography>
-              <Typography className={s.recomItemText}>Твитов: 2645</Typography>
-            </Paper>
-            <Paper className={s.recomItem} square>
-              <Typography className={s.recomItemTitle}>ужас</Typography>
-              <Typography className={s.recomItemText}>Твитов: 1676</Typography>
-            </Paper>
-            <Paper className={s.recomItem} square>
-              <Typography className={s.recomItemTitle}>Наруто</Typography>
-              <Typography className={s.recomItemText}>Твитов: 1234</Typography>
-            </Paper>
-            <Paper className={s.recomLoadMore}>
-              <Typography className={s.recomLoadMoreText}>Показать еще</Typography>
-            </Paper>
-          </Paper>
+
+          <Topics />
 
           <Paper className={s.recommendations}>
             <Typography variant="h6" className={s.recommendationsTitle}>

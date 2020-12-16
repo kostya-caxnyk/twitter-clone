@@ -101,21 +101,23 @@
       "text": "Nulla laboris quis enim Lorem do cillum laborum quis. Occaecat fugiat enim aute non aliqua ut minim aliqua fugiat. Magna Lorem est ut excepteur Lorem magna reprehenderit duis magna id. Aliquip magna est elit cupidatat nisi ex laboris culpa excepteur sint ex est incididunt. Proident ut sunt ea commodo magna.\r\n"
     }
   ],
-  "recomTopics": [
-    { "name": "Christmas", "tweets": 1582 },
-    { "name": "Лукашенко", "tweets": 533 },
-    { "name": "Майдане", "tweets": 123 }
+  "topics": [
+    { "name": "Christmas", "tweets": 1582, "_id": 11 },
+    { "name": "Лукашенко", "tweets": 533, "_id": 13 },
+    { "name": "Майдане", "tweets": 123, "_id": 14 }
   ],
   "recomUsers": [
     {
       "name": "Erika Bowman",
       "username": "gefrymorgan",
-      "avatarUrl": "https://www.computerhope.com/jargon/g/guest-user.jpg"
+      "avatarUrl": "https://www.computerhope.com/jargon/g/guest-user.jpg",
+      "_id": 2313
     },
     {
       "name": "Lowery Small",
       "username": "fffr21313",
-      "avatarUrl": "https://www.computerhope.com/jargon/g/guest-user.jpg"
+      "avatarUrl": "https://www.computerhope.com/jargon/g/guest-user.jpg",
+      "_id": 1231321
     }
   ],
   "user": {
