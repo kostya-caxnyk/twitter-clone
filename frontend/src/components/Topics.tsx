@@ -33,8 +33,8 @@ const Topics: React.FC<ITopicsProps> = () => {
         <>
           <List style={{ padding: 0 }}>
             {topics.map((topic) => (
-              <Link to={`/search?q=${topic.name}`}>
-                <ListItem className={s.recomItem} key={topic._id} button>
+              <Link to={`/home/search?q=${topic.name}`} key={topic._id}>
+                <ListItem className={s.recomItem} button>
                   <ListItemText
                     primary={<Typography className={s.recomItemTitle}>{topic.name}</Typography>}
                     secondary={

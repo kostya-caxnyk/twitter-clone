@@ -35,13 +35,13 @@ const SideMenu: React.FC<SideMenuProps> = () => {
   return (
     <nav className={s.navSideBar}>
       <IconButton aria-label="delete" className={s.logoBtn}>
-        <NavLink to="/">
+        <NavLink to="/home">
           <TwitterIcon color="primary" className={s.logoIcon} />
         </NavLink>
       </IconButton>
       <ul className={s.navList}>
         <li className={s.navListItem}>
-          <NavLink to="/" className={s.navLink} activeClassName={s.activeLink} exact>
+          <NavLink to="/home" className={s.navLink} activeClassName={s.activeLink} exact>
             <HomeIcon className={s.navIcon} />
             <Hidden smDown>
               <Typography variant="h6" component="span" className={s.navListLabel}>

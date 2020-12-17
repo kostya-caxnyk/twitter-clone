@@ -24,7 +24,7 @@ const Tweet: React.FC<TweetProps> = ({ text, user, _id }): React.ReactElement =>
   const s = useHomeStyles();
 
   return (
-    <Link to={`tweet/${_id}`}>
+    <Link to={`/home/tweet/${_id}`}>
       <Paper variant="outlined" className={s.tweet} square>
         <div className={s.tweetAvatarWrapper}>
           <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />

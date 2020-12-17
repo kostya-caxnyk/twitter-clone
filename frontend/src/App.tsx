@@ -6,8 +6,8 @@ import Home from './pages/Home';
 function App() {
   return (
     <Switch>
-      <Route path="/" component={Home} exact />
       <Route path="/auth" component={SignIn} />
+      <Route path="/home" component={Home} />
     </Switch>
   );
 }

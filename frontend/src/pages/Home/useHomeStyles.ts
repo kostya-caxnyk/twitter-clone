@@ -71,6 +71,9 @@ export default makeStyles((theme) => ({
     borderRight: 0,
     borderTop: 0,
     cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
   },
   feedHeaderLabel: {
     padding: 15,
@@ -129,8 +132,8 @@ export default makeStyles((theme) => ({
     backgroundColor: 'rgb(235, 238, 240)',
     padding: '5px 15px',
     borderRadius: 20,
-    marginTop: 8,
-    marginBottom: 15,
+    marginTop: 10,
+    marginBottom: 10,
   },
   recommendations: {
     backgroundColor: 'rgb(247, 249, 250)',
