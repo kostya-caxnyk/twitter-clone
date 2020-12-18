@@ -11,15 +11,13 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Router>
-      <ThemeProvider theme={theme}>
-        <Provider store={store}>
-          <CssBaseline />
-          <App />
-        </Provider>
-      </ThemeProvider>
-    </Router>
-  </React.StrictMode>,
+  <Router>
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <CssBaseline />
+        <App />
+      </Provider>
+    </ThemeProvider>
+  </Router>,
   document.getElementById('root'),
 );

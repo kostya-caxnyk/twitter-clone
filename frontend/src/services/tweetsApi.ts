@@ -10,7 +10,17 @@ export const tweetsApi = {
     const { data } = await axios.get('/tweets?_id=' + id);
     return data;
   },
-  async addTweet(tweet: Tweet): Promise<Tweet> {
+  async addTweet(text: string): Promise<Tweet> {
+    const tweet = {
+      _id: '5fd8a1124a883c58bce81e3512',
+      user: {
+        name: 'Kostya Sakhnyuk',
+        username: 'kostya3228',
+        avatarUrl: 'https://www.computerhope.com/jargon/g/guest-user.jpg',
+      },
+      date: '2014-12-22T12:28:21 -03:00',
+      text,
+    };
     const { data } = await axios.post('/tweets', tweet);
     return data;
   },

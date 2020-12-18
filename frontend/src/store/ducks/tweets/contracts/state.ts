@@ -5,6 +5,11 @@ export enum LoadingState {
   LOADING = 'LOADING',
 }
 
+export enum AddFormState {
+  ERROR = 'ERROR',
+  NEVER = 'NEVER',
+  LOADING = 'LOADING',
+}
 export interface Tweet {
   _id: string;
   text: string;
@@ -19,4 +24,5 @@ export interface Tweet {
 export interface TweetsState {
   items: Tweet[];
   loadingState: LoadingState;
+  addFormState: AddFormState;
 }

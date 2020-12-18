@@ -1,7 +1,6 @@
 // @ts-nocheck
 
 import { createMuiTheme } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
   spacing: 10,
@@ -31,7 +30,7 @@ const theme = createMuiTheme({
       dark: 'rgb(21, 32, 43)',
     },
     error: {
-      main: red.A400,
+      main: 'rgb(255, 210, 218)',
     },
     background: {
       default: '#fff',

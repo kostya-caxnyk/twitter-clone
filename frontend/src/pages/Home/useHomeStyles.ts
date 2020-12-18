@@ -190,10 +190,21 @@ export default makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
+  lowOpacity: {
+    opacity: 0.5,
+  },
   formAddTweet: {
     display: 'flex',
-    minHeight: 110,
     padding: '10px 15px',
+  },
+  formAddTweetErrorWrapper: {
+    padding: '10px 15px',
+  },
+  formAddTweetErrorBlock: {
+    padding: '10px 15px',
+    borderRadius: 12,
+    backgroundColor: theme.palette.error.main,
+    fontSize: 15,
   },
   formAddTweetAvatar: {
     width: 49,

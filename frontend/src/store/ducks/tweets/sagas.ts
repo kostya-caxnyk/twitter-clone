@@ -1,12 +1,8 @@
-import {
-  TweetsActionsType,
-  setTweetsLoadingState,
-  setTweets,
-  IAddTweetAction,
-} from './actionCreators';
+import { setTweetsLoadingState, setTweets, addTweet, setAddFormState } from './actionCreators';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { tweetsApi } from '../../../services/tweetsApi';
-import { LoadingState } from './contracts/state';
+import { LoadingState, AddFormState } from './contracts/state';
+import { IFetchAddTweetAction, TweetsActionsType } from './contracts/actionTypes';
 
 export function* fetchTweetsRequest() {
   try {
@@ -17,16 +13,16 @@ export function* fetchTweetsRequest() {
   }
 }
 
-export function* addTweetRequest({ payload }: IAddTweetAction) {
+export function* addTweetRequest({ payload }: IFetchAddTweetAction) {
   try {
-    const tweets = yield call(tweetsApi.addTweet, payload);
-    yield put(setTweets(tweets));
+    const tweet = yield call(tweetsApi.addTweet, payload);
+    yield put(addTweet(tweet));
   } catch (e) {
-    yield put(setTweetsLoadingState(LoadingState.ERROR));
+    yield put(setAddFormState(AddFormState.ERROR));
   }
 }
 
 export function* tweetsSaga() {
   yield takeEvery(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequest);
-  yield takeEvery(TweetsActionsType.ADD_TWEET, addTweetRequest);
+  yield takeEvery(TweetsActionsType.FETCH_ADD_TWEET, addTweetRequest);
 }
