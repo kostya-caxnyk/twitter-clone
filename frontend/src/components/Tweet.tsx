@@ -29,7 +29,7 @@ const Tweet: React.FC<TweetProps> = ({ text, user, _id }): React.ReactElement =>
         <div className={s.tweetAvatarWrapper}>
           <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />
         </div>
-        <div>
+        <div style={{ width: '100%' }}>
           <div className={s.tweetHeader}>
             <b>{user.name} </b>
             <span className={s.tweetUserName}>@{user.username} </span>

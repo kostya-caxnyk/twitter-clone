@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import BigTweet from '../../components/BigTweet';
 import LoadingCircle from '../../components/LoadingCircle';
-import Tweet from '../../components/Tweet';
 import { fetchTweetData, setTweetData } from '../../store/ducks/tweet/actionCreators';
 import { selectIsTweetDataLoading, selectTweetData } from '../../store/ducks/tweet/selectors';
 
@@ -24,7 +24,7 @@ const TweetPage = (): React.ReactElement | null => {
     return <LoadingCircle />;
   }
 
-  return <Tweet {...tweetData} />;
+  return <BigTweet {...tweetData} />;
 };
 
 export default TweetPage;

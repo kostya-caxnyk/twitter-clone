@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import classnames from 'classnames';
 
-import { Avatar, Button, IconButton, Snackbar } from '@material-ui/core';
+import { Avatar, Button, IconButton } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { TextareaAutosize } from '@material-ui/core';
 import ImageIcon from '@material-ui/icons/ImageOutlined';
@@ -28,17 +28,10 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
   const hasError = useSelector(selectIsAddFormStateError);
   const isLoading = useSelector(selectIsAddFormStateLoading);
   const [textValue, setTextValue] = React.useState('');
-  const [visibleNotification, setVisibleNotification] = React.useState(false);
 
   const progressBarPercent = Math.round(textValue.length / 2.8);
   const hasReachedLimit = textValue.length > MAX_INPUT_LENGTH;
   const symbolsCount = MAX_INPUT_LENGTH - textValue.length;
-
-  useEffect(() => {
-    if (hasError) {
-      setVisibleNotification(true);
-    }
-  }, [hasError]);
 
   const handleTextAreaChange = (e: React.FormEvent<HTMLTextAreaElement>): void => {
     setTextValue(e.currentTarget.value);
@@ -47,10 +40,6 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
   const handleClickAddTweet = (): void => {
     dispatch(fetchAddTweet(textValue));
     setTextValue('');
-  };
-
-  const handleCloseNotification = () => {
-    setVisibleNotification(false);
   };
 
   return (
@@ -114,13 +103,6 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
           )}
         </div>
       </div>
-
-      <Snackbar
-        open={visibleNotification}
-        onClose={handleCloseNotification}
-        autoHideDuration={5000}
-        message="Что-то пошло не так, но не беспокойтесь — давайте попробуем еще раз."
-      />
     </Paper>
   );
 };

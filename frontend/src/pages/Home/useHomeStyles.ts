@@ -268,4 +268,34 @@ export default makeStyles((theme) => ({
     textAlign: 'center',
     marginTop: 20,
   },
+  bigTweet: {
+    minHeight: 88,
+    padding: '10px 15px 2px',
+    borderRight: 0,
+    borderLeft: 0,
+    borderTop: 0,
+  },
+  bigTweetUserInfo: {
+    display: 'flex',
+    marginBottom: 10,
+    fontSize: 15,
+    alignItems: 'center',
+  },
+  bigTweetText: {
+    fontSize: 23,
+    marginTop: 15,
+    paddingBottom: 10,
+    wordBreak: 'break-word',
+  },
+  bigTweetButtons: {
+    maxWidth: '100%',
+    justifyContent: 'space-around',
+    padding: '5px 0',
+  },
+  bigTweetIcon: {
+    padding: 10,
+    '& svg': {
+      fontSize: 25,
+    },
+  },
 }));
