@@ -32,10 +32,12 @@ const UserSchema = new Schema<IUserModel>({
   password: {
     required: true,
     type: String,
+    select: false,
   },
   confirmHash: {
     required: true,
     type: String,
+    select: false,
   },
   confirmed: {
     type: Boolean,
@@ -44,6 +46,14 @@ const UserSchema = new Schema<IUserModel>({
   location: String,
   about: String,
   website: String,
+});
+
+UserSchema.set('toJSON', {
+  transform: function (_: any, obj: any) {
+    delete obj.password;
+    delete obj.confirmHash;
+    return obj;
+  },
 });
 
 export default model<IUserDocumentModel>('User', UserSchema);

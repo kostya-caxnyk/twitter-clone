@@ -13,6 +13,7 @@ app.use(express.json());
 app.get('/users', UserController.getUsers);
 app.post('/users', regValidators, UserController.createUser);
 app.get('/users/verify', UserController.verify);
+app.get('/users/:id', UserController.getUser);
 
 app.listen(PORT, () => {
   console.log('server is running on port ' + PORT);

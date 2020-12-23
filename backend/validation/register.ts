@@ -10,6 +10,7 @@ export default [
 
   body('password', 'Введите пароль')
     .isString()
+    .withMessage('Неверный пароль')
     .isLength({ min: 6, max: 100 })
     .withMessage('Неверный пароль')
     .trim(),
