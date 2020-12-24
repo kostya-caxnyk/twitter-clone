@@ -1,10 +1,13 @@
+import { IUserModel } from './../models/UserModel';
 import { transporter } from './../core/mailer';
 import { generateMD5 } from './../utils/generateHash';
 import express from 'express';
+import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import UserModel from '../models/UserModel';
 import regEmail from '../emails/registration';
 import { isValidObjectId } from 'mongoose';
+import jwt from 'jsonwebtoken';
 
 enum Status {
   SUCCESS = 'sucess',
@@ -42,8 +45,8 @@ class UserController {
         email,
         name,
         username,
-        password: generateMD5(password + process.env.SECRET_KEY),
-        confirmHash: generateMD5(process.env.SECRET_KEY || Math.random().toString()),
+        password: await bcrypt.hash(password, 10),
+        confirmHash: await bcrypt.genSalt(8),
       };
 
       const user = new UserModel(data);
@@ -93,27 +96,57 @@ class UserController {
   }
 
   async getUser(req: express.Request, res: express.Response) {
-    const { id } = req.params;
+    try {
+      const { id } = req.params;
 
-    if (!isValidObjectId(id)) {
-      res.status(400).send();
-      return;
-    }
+      if (!isValidObjectId(id)) {
+        res.status(400).send();
+        return;
+      }
 
-    const user = await UserModel.findById(id).exec();
+      const user = await UserModel.findById(id).exec();
 
-    if (!user) {
-      res.status(404).json({
-        status: Status.ERROR,
-        errors: 'Пользователь не найден',
+      if (!user) {
+        res.status(404).json({
+          status: Status.ERROR,
+          errors: 'Пользователь не найден',
+        });
+        return;
+      }
+
+      res.status(200).json({
+        status: Status.SUCCESS,
+        data: user,
       });
-      return;
+    } catch (error) {
+      res.json({
+        status: Status.ERROR,
+        error,
+      });
     }
+  }
 
-    res.status(200).json({
-      status: Status.SUCCESS,
-      data: user,
-    });
+  async getlogin(req: express.Request, res: express.Response): Promise<void> {
+    try {
+      if (!req.user) {
+        return;
+      }
+
+      res.json({
+        status: Status.SUCCESS,
+        data: {
+          ...req.user,
+          token: jwt.sign({ id: (req.user as IUserModel)._id }, process.env.SECRET_KEY || '123', {
+            expiresIn: '24h',
+          }),
+        },
+      });
+    } catch (error) {
+      res.json({
+        status: Status.ERROR,
+        error,
+      });
+    }
   }
 }
 

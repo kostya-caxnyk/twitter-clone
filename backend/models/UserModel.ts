@@ -1,6 +1,6 @@
 import { Schema, model, Document } from 'mongoose';
 
-interface IUserModel {
+export interface IUserModel {
   email: string;
   username: string;
   name: string;
@@ -10,6 +10,7 @@ interface IUserModel {
   location?: string;
   about?: string;
   website?: string;
+  _id?: string;
 }
 
 type IUserDocumentModel = IUserModel & Document;
