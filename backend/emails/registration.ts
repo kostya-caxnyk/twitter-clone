@@ -6,6 +6,6 @@ export default (email: string, hash: string) => ({
     <h1>Welcome</h1>
     <p>You have successfully made your account with this email - ${email}</p>
     <strong>To confirm your account click on this link</strong>
-    <a href='${process.env.BASE_URL}/users/verify?hash=${hash}'>Reset the password</a>
+    <a href='${process.env.BASE_URL}/auth/verify?hash=${hash}'>Reset the password</a>
   `,
 });

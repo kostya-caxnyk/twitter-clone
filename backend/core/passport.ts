@@ -48,8 +48,7 @@ passport.use(
     },
     async (token: any, done: any) => {
       try {
-        console.log(token);
-        return done(null, token.user);
+        return done(null, token);
       } catch (error) {
         done(error);
       }
