@@ -5,6 +5,7 @@ export interface IUserModel {
   username: string;
   name: string;
   password: string;
+  avatarUrl?: string;
   confirmHash: string;
   confirmed: boolean;
   location?: string;
@@ -34,6 +35,9 @@ const UserSchema = new Schema<IUserModel>({
     required: true,
     type: String,
     select: false,
+  },
+  avatarUrl: {
+    type: String,
   },
   confirmHash: {
     required: true,

@@ -25,10 +25,8 @@ app.get('/tweets/:id', TweetController.getTweet);
 app.get('/tweets', TweetController.getAllTweets);
 app.post(
   '/tweets',
+  passport.authenticate('jwt', { session: false }),
   tweetValidators,
-  passport.authenticate('jwt', {
-    session: false,
-  }),
   TweetController.createTweet,
 );
 app.delete(

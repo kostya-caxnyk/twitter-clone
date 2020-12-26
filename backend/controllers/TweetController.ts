@@ -14,7 +14,7 @@ interface IJwtToken {
 class TweetController {
   async getAllTweets(req: express.Request, res: express.Response) {
     try {
-      const tweets = await TweetModel.find().exec();
+      const tweets = await TweetModel.find({}).populate('user').sort({ createdAt: -1 }).exec();
       successResponse(res, 200, { data: tweets });
     } catch (errors) {
       errorResponse(res, 500, { errors });
@@ -24,7 +24,7 @@ class TweetController {
   async getTweet(req: express.Request, res: express.Response) {
     try {
       const tweetId = req.params.id;
-      const tweet = await TweetModel.findById(tweetId).exec();
+      const tweet = await TweetModel.findById(tweetId).populate('user').exec();
       if (!tweet) {
         res.status(404).send();
         return;
@@ -54,13 +54,13 @@ class TweetController {
       const { text } = req.body;
       const data: ITweetModel = {
         text,
-        owner: user._id,
+        user: user._id,
       };
 
       const tweet = new TweetModel(data);
       await tweet.save();
 
-      successResponse(res, 201, { data: tweet });
+      successResponse(res, 201, { data: await tweet.populate('user').execPopulate() });
     } catch (errors) {
       errorResponse(res, 500, { errors });
     }
@@ -68,26 +68,26 @@ class TweetController {
 
   async deleteTweet(req: express.Request, res: express.Response) {
     const user = req.user;
-    const id = req.params.id;
+    const tweetId = req.params.id;
 
-    if (!user || !isValidObjectId(id)) {
+    if (!user) {
       res.status(401).send();
       return;
     }
 
-    const tweet = await TweetModel.findById(id).exec();
+    const tweet = await TweetModel.findById(tweetId).exec();
     if (!tweet) {
       res.status(404).send();
       return;
     }
 
-    const isOwner = tweet.owner.toString() === user._id;
+    const isOwner = tweet.user.toString() === user._id;
     if (!isOwner) {
-      res.status(403).send('Not an owner to delete this tweet');
+      res.status(403).send('Not an author to delete this tweet');
       return;
     }
 
-    await TweetModel.deleteOne({ _id: id });
+    await tweet.remove();
     successResponse(res, 204);
     try {
     } catch (errors) {

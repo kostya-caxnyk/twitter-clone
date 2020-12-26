@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 
 import IconButton from '@material-ui/core/IconButton';
 import { Avatar, Typography } from '@material-ui/core';
@@ -7,9 +8,9 @@ import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import ReplyIcon from '@material-ui/icons/Reply';
+
 import useHomeStyles from '../pages/Home/useHomeStyles';
-import { Link } from 'react-router-dom';
-import classnames from 'classnames';
+import { formatToFullLabel } from '../utils/formatDate';
 
 interface BigTweetProps {
   user: {
@@ -19,10 +20,10 @@ interface BigTweetProps {
   };
   text: string;
   _id: string;
-  date: string;
+  createdAt: string;
 }
 
-const BigTweet: React.FC<BigTweetProps> = ({ text, user, _id, date }): React.ReactElement => {
+const BigTweet: React.FC<BigTweetProps> = ({ text, user, _id, createdAt }): React.ReactElement => {
   const s = useHomeStyles();
 
   return (
@@ -42,7 +43,7 @@ const BigTweet: React.FC<BigTweetProps> = ({ text, user, _id, date }): React.Rea
       </div>
       <div style={{ width: '100%' }}>
         <Typography className={classnames(s.tweetText, s.bigTweetText)}>{text}</Typography>
-        <Typography className={s.tweetDate}>{date}</Typography>
+        <Typography className={s.tweetDate}>{formatToFullLabel(createdAt)}</Typography>
         <div className={classnames(s.tweetButtons, s.bigTweetButtons)}>
           <div>
             <IconButton className={classnames(s.tweetIcon, s.bigTweetIcon)}>

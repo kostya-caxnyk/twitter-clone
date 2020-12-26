@@ -29,12 +29,13 @@ class UserController {
       }
 
       const { email, password, name, username } = req.body;
-      const data = {
+      const data: IUserModel = {
         email,
         name,
         username,
         password: await bcrypt.hash(password, 10),
         confirmHash: await bcrypt.genSalt(8),
+        confirmed: false,
       };
 
       const user = new UserModel(data);

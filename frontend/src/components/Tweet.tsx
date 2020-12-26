@@ -9,6 +9,7 @@ import RepeatIcon from '@material-ui/icons/Repeat';
 import ReplyIcon from '@material-ui/icons/Reply';
 import useHomeStyles from '../pages/Home/useHomeStyles';
 import { Link } from 'react-router-dom';
+import { formatToShortLabel } from '../utils/formatDate';
 
 interface TweetProps {
   user: {
@@ -18,9 +19,10 @@ interface TweetProps {
   };
   text: string;
   _id: string;
+  createdAt: string;
 }
 
-const Tweet: React.FC<TweetProps> = ({ text, user, _id }): React.ReactElement => {
+const Tweet: React.FC<TweetProps> = ({ text, user, _id, createdAt }): React.ReactElement => {
   const s = useHomeStyles();
 
   return (
@@ -34,7 +36,7 @@ const Tweet: React.FC<TweetProps> = ({ text, user, _id }): React.ReactElement =>
             <b>{user.name} </b>
             <span className={s.tweetUserName}>@{user.username} </span>
             <span style={{ padding: '0 3px' }}>·</span>
-            <span className={s.tweetDate}>11 дек.</span>
+            <span className={s.tweetDate}>{formatToShortLabel(createdAt)}</span>
           </div>
           <Typography className={s.tweetText}>{text}</Typography>
           <div className={s.tweetButtons}>

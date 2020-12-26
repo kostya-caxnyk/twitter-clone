@@ -13,7 +13,7 @@ export interface Tweet {
     username: string;
     avatarUrl: string;
   };
-  date: string;
+  createdAt: string;
 }
 
 export interface TweetState {

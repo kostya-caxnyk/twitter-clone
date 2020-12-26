@@ -1,9 +1,8 @@
 import { model, Schema, Document } from 'mongoose';
 
 export interface ITweetModel {
-  owner: string;
+  user: string;
   text: string;
-  date?: Date;
   // likes: {
   //   count: number;
   //   users: [IUserModel];
@@ -15,20 +14,19 @@ export interface ITweetModel {
 
 export type ITweetDocumentModel = ITweetModel & Document;
 
-const TweetSchema = new Schema<ITweetModel>({
-  text: {
-    required: true,
-    type: String,
+const TweetSchema = new Schema<ITweetModel>(
+  {
+    text: {
+      required: true,
+      type: String,
+    },
+    user: {
+      required: true,
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
-  owner: {
-    required: true,
-    type: Schema.Types.ObjectId,
-    ref: 'User',
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true },
+);
 
 export default model<ITweetDocumentModel>('Tweet', TweetSchema);
