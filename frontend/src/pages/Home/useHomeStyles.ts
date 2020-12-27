@@ -86,21 +86,43 @@ export default makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: 'rgba(0,0,0,0.03)',
     },
-    padding: '10px 15px 2px',
+    padding: '3px 15px 2px',
     borderRight: 0,
     borderLeft: 0,
     display: 'flex',
+  },
+  tweetMenu: {
+    '& ul': {
+      borderRadius: 4,
+      border: '1px solid rgba(101, 119, 134, 0.2)',
+    },
+  },
+  tweetMenuDelete: {
+    color: theme.palette.error.main,
+    '& svg': {
+      color: theme.palette.error.main,
+    },
   },
   tweetAvatarWrapper: {
     width: 49,
     marginRight: 10,
   },
   tweetAvatar: {
+    marginTop: 10,
     height: 49,
     width: 49,
   },
   tweetHeader: {
     fontSize: 15,
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  tweetHeaderMoreIcon: {
+    padding: 5,
+    '&:hover': {
+      color: theme.palette.primary.main,
+    },
   },
   tweetUserName: {
     color: grey[600],

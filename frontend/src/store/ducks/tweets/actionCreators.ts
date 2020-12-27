@@ -1,6 +1,8 @@
 import {
   IAddTweetAction,
+  IDeleteTweetAction,
   IFetchAddTweetAction,
+  IFetchDeleteTweetAction,
   IFetchTweetsAction,
   ISetAddFormStateAction,
   ISetLoadingStateAction,
@@ -36,4 +38,14 @@ export const fetchAddTweet = (payload: string): IFetchAddTweetAction => ({
 export const addTweet = (payload: Tweet): IAddTweetAction => ({
   type: TweetsActionsType.ADD_TWEET,
   payload,
+});
+
+export const fetchDeleteTweet = (id: string): IFetchDeleteTweetAction => ({
+  type: TweetsActionsType.FETCH_DELETE_TWEET,
+  payload: id,
+});
+
+export const deleteTweet = (id: string): IDeleteTweetAction => ({
+  type: TweetsActionsType.DELETE_TWEET,
+  payload: id,
 });

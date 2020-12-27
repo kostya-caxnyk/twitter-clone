@@ -1,8 +1,18 @@
-import { setTweetsLoadingState, setTweets, addTweet, setAddFormState } from './actionCreators';
+import {
+  setTweetsLoadingState,
+  setTweets,
+  addTweet,
+  setAddFormState,
+  deleteTweet,
+} from './actionCreators';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { tweetsApi } from '../../../services/tweetsApi';
 import { LoadingState, AddFormState, Tweet } from './contracts/state';
-import { IFetchAddTweetAction, TweetsActionsType } from './contracts/actionTypes';
+import {
+  IFetchAddTweetAction,
+  TweetsActionsType,
+  IFetchDeleteTweetAction,
+} from './contracts/actionTypes';
 
 export function* fetchTweetsRequest() {
   try {
@@ -22,7 +32,17 @@ export function* addTweetRequest({ payload }: IFetchAddTweetAction) {
   }
 }
 
+export function* deleteTweetRequest({ payload }: IFetchDeleteTweetAction) {
+  try {
+    const id: string = yield call(tweetsApi.deleteTweet, payload);
+    yield put(deleteTweet(id));
+  } catch (error) {
+    yield put(setAddFormState(AddFormState.ERROR));
+  }
+}
+
 export function* tweetsSaga() {
   yield takeEvery(TweetsActionsType.FETCH_TWEETS, fetchTweetsRequest);
   yield takeEvery(TweetsActionsType.FETCH_ADD_TWEET, addTweetRequest);
+  yield takeEvery(TweetsActionsType.FETCH_DELETE_TWEET, deleteTweetRequest);
 }
