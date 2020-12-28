@@ -97,7 +97,7 @@ class UserController {
 
   async login(req: express.Request, res: express.Response): Promise<void> {
     try {
-      const user = req.user as IUserModel | undefined;
+      const user = req.user;
       if (!user) {
         errorResponse(res, 500);
         return;
