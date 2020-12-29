@@ -6,6 +6,7 @@ import { FormControl, FormGroup, TextField, Button } from '@material-ui/core';
 import React from 'react';
 import DialogBox from '../../../components/ModalBlock';
 import useAuthStyles from '../useAuthStyles';
+import Notification from '../../../components/Notification';
 
 interface LoginModalProps {
   open: boolean;
@@ -33,49 +34,52 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   };
   console.log(errors);
   return (
-    <DialogBox title="Войти в аккаунт" visible={open} onClose={onClose}>
-      <form onSubmit={handleSubmit(onSumbit)}>
-        <FormControl component="fieldset" className={s.formControl} fullWidth>
-          <FormGroup row>
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              margin="dense"
-              name="email"
-              id="email"
-              label="Email"
-              type="email"
-              className={s.inputMarginBottom}
-              inputRef={register}
-              helperText={errors.email?.message}
-              autoFocus
-              error={!!errors.email}
-              fullWidth
-            />
-            <TextField
-              InputLabelProps={{ shrink: true }}
-              margin="dense"
-              name="password"
-              id="password"
-              label="Пароль"
-              type="password"
-              className={s.inputMarginBottom}
-              inputRef={register}
-              helperText={errors.password?.message}
-              error={!!errors.password}
-              fullWidth
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              type="submit"
-              className={s.inputMarginBottom}
-              fullWidth>
-              Войти
-            </Button>
-          </FormGroup>
-        </FormControl>
-      </form>
-    </DialogBox>
+    <>
+      <Notification open={true} message="eror" />
+      <DialogBox title="Войти в аккаунт" visible={open} onClose={onClose}>
+        <form onSubmit={handleSubmit(onSumbit)}>
+          <FormControl component="fieldset" className={s.formControl} fullWidth>
+            <FormGroup row>
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                margin="dense"
+                name="email"
+                id="email"
+                label="Email"
+                type="email"
+                className={s.inputMarginBottom}
+                inputRef={register}
+                helperText={errors.email?.message}
+                autoFocus
+                error={!!errors.email}
+                fullWidth
+              />
+              <TextField
+                InputLabelProps={{ shrink: true }}
+                margin="dense"
+                name="password"
+                id="password"
+                label="Пароль"
+                type="password"
+                className={s.inputMarginBottom}
+                inputRef={register}
+                helperText={errors.password?.message}
+                error={!!errors.password}
+                fullWidth
+              />
+              <Button
+                variant="contained"
+                color="primary"
+                type="submit"
+                className={s.inputMarginBottom}
+                fullWidth>
+                Войти
+              </Button>
+            </FormGroup>
+          </FormControl>
+        </form>
+      </DialogBox>
+    </>
   );
 };
 
