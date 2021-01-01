@@ -6,6 +6,7 @@ import { FormControl, FormGroup, TextField, Button } from '@material-ui/core';
 import React from 'react';
 import DialogBox from '../../../components/ModalBlock';
 import useAuthStyles from '../useAuthStyles';
+import { AuthApi } from '../../../services/authApi';
 import Notification from '../../../components/Notification';
 
 interface LoginModalProps {
@@ -28,14 +29,25 @@ const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
   const { register, handleSubmit, errors } = useForm<LoginFormData>({
     resolver: yupResolver(loginFormSchema),
   });
+  const [backendErrors, setBackendErrors] = React.useState<string | null>(null);
 
-  const onSumbit = (data: LoginFormData) => {
-    console.log(data, errors);
+  const onSumbit = async (data: LoginFormData) => {
+    try {
+      const returnData = await AuthApi.signIn(data);
+      console.log(returnData);
+    } catch (error) {
+      console.log(error);
+      setBackendErrors('Неверный пароль или логин');
+    }
   };
-  console.log(errors);
+
+  const handleCloseNotification = React.useCallback((): void => {
+    setBackendErrors(null);
+  }, []);
+
   return (
     <>
-      <Notification open={true} message="eror" />
+      <Notification message={backendErrors} onClose={handleCloseNotification} type="error" />
       <DialogBox title="Войти в аккаунт" visible={open} onClose={onClose}>
         <form onSubmit={handleSubmit(onSumbit)}>
           <FormControl component="fieldset" className={s.formControl} fullWidth>

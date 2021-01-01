@@ -3,27 +3,23 @@ import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import React from 'react';
 
 interface NotificationProps {
-  open: boolean;
-  message: string;
+  message: string | null;
+  onClose: () => void;
+  type: 'error' | 'success' | 'warning';
 }
 
 function Alert(props: AlertProps) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const Notification: React.FC<NotificationProps> = ({ open, message }): React.ReactElement => {
-  const [, setOpen] = React.useState(false);
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-  return (
-    <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-      <Alert onClose={handleClose} severity="error">
-        {message}
-      </Alert>
-    </Snackbar>
-  );
-};
+const Notification: React.FC<NotificationProps> = React.memo(
+  ({ message, onClose, type }): React.ReactElement => {
+    return (
+      <Snackbar open={!!message} autoHideDuration={6000} onClose={onClose}>
+        <Alert severity={type}>{message}</Alert>
+      </Snackbar>
+    );
+  },
+);
 
 export default Notification;

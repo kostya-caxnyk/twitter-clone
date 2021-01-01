@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { IUserModel } from './../../../backend/models/UserModel';
 import { LoginFormData } from './../pages/AuthPage/components/LoginModal';
 
 interface ErrorResponse {
@@ -16,7 +15,10 @@ type Response<T> = ErrorResponse | SuccessResponse<T>;
 
 export const AuthApi = {
   async signIn(loginData: LoginFormData) {
-    const { data } = await axios.post<Response<any>>('/auth/login', loginData);
-    console.log(data);
+    const { data } = await axios.post<Response<any>>('/auth/login', {
+      username: loginData.email,
+      password: loginData.password,
+    });
+    return data;
   },
 };
