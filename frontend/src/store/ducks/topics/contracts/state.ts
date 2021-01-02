@@ -1,9 +1,4 @@
-export enum LoadingState {
-  LOADED = 'LOADED',
-  ERROR = 'ERROR',
-  NEVER = 'NEVER',
-  LOADING = 'LOADING',
-}
+import { LoadingStatus } from '../../../types';
 
 export interface Topic {
   _id: string;
@@ -13,5 +8,5 @@ export interface Topic {
 
 export interface TopicsState {
   items: Topic[];
-  loadingState: LoadingState;
+  LoadingStatus: LoadingStatus;
 }

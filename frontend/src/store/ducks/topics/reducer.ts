@@ -1,26 +1,27 @@
-import { TopicsState, LoadingState } from './contracts/state';
+import { TopicsState } from './contracts/state';
 import produce, { Draft } from 'immer';
 import { TopicsActions, TopicsActionsType } from './actionCreators';
+import { LoadingStatus } from '../../types';
 
 const initialTopicsState: TopicsState = {
   items: [],
-  loadingState: LoadingState.NEVER,
+  LoadingStatus: LoadingStatus.NEVER,
 };
 
 export const topicsReducer = produce((draft: Draft<TopicsState>, action: TopicsActions) => {
   switch (action.type) {
     case TopicsActionsType.SET_TOPICS:
       draft.items = action.payload;
-      draft.loadingState = LoadingState.LOADED;
+      draft.LoadingStatus = LoadingStatus.LOADED;
       break;
 
     case TopicsActionsType.FETCH_TOPICS:
       draft.items = [];
-      draft.loadingState = LoadingState.LOADING;
+      draft.LoadingStatus = LoadingStatus.LOADING;
       break;
 
     case TopicsActionsType.SET_LOADING_STATE:
-      draft.loadingState = action.payload;
+      draft.LoadingStatus = action.payload;
       break;
   }
 }, initialTopicsState);

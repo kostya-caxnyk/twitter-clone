@@ -21,8 +21,11 @@ passport.use(
         if (!isValidPassword) {
           return done(null, false);
         }
-
-        done(null, user);
+        const userWithoutPassword: any = {
+          ...user,
+        };
+        delete userWithoutPassword.password;
+        done(null, userWithoutPassword);
       } catch (error) {
         done(error, false);
       }

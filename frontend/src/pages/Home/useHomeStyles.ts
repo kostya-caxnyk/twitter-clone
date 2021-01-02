@@ -287,8 +287,12 @@ export default makeStyles((theme) => ({
     marginRight: 5,
   },
   loading: {
-    textAlign: 'center',
     marginTop: 20,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   bigTweet: {
     minHeight: 88,

@@ -1,13 +1,20 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
 
 import { FormControl, FormGroup, TextField, Button } from '@material-ui/core';
-import React from 'react';
 import DialogBox from '../../../components/ModalBlock';
 import useAuthStyles from '../useAuthStyles';
-import { AuthApi } from '../../../services/authApi';
 import Notification from '../../../components/Notification';
+import { fetchUserData } from '../../../store/ducks/user/actionCreators';
+import {
+  selectIsUserLoading,
+  selectIsUserLoggedIn,
+  selectUserDataHasError,
+} from '../../../store/ducks/user/selectors';
+import { Redirect } from 'react-router-dom';
 
 interface LoginModalProps {
   open: boolean;
@@ -25,30 +32,38 @@ const loginFormSchema = yup.object().shape({
 });
 
 const LoginModal: React.FC<LoginModalProps> = ({ open, onClose }) => {
-  const s = useAuthStyles();
   const { register, handleSubmit, errors } = useForm<LoginFormData>({
     resolver: yupResolver(loginFormSchema),
   });
+
+  const s = useAuthStyles();
+  const dispatch = useDispatch();
+  const isLoading = useSelector(selectIsUserLoading);
+  const isLoggedIn = useSelector(selectIsUserLoggedIn);
+  const hasError = useSelector(selectUserDataHasError);
   const [backendErrors, setBackendErrors] = React.useState<string | null>(null);
 
-  const onSumbit = async (data: LoginFormData) => {
-    try {
-      const returnData = await AuthApi.signIn(data);
-      console.log(returnData);
-    } catch (error) {
-      console.log(error);
-      setBackendErrors('Неверный пароль или логин');
+  useEffect(() => {
+    if (hasError) {
+      setBackendErrors('Неверный E-mail или пароль');
     }
+  }, [hasError]);
+
+  const onSumbit = async (data: LoginFormData) => {
+    dispatch(fetchUserData(data));
   };
 
   const handleCloseNotification = React.useCallback((): void => {
     setBackendErrors(null);
   }, []);
 
+  if (isLoggedIn) {
+    return <Redirect to="/home" />;
+  }
   return (
     <>
       <Notification message={backendErrors} onClose={handleCloseNotification} type="error" />
-      <DialogBox title="Войти в аккаунт" visible={open} onClose={onClose}>
+      <DialogBox title="Войти в аккаунт" visible={open} onClose={onClose} loading={isLoading}>
         <form onSubmit={handleSubmit(onSumbit)}>
           <FormControl component="fieldset" className={s.formControl} fullWidth>
             <FormGroup row>

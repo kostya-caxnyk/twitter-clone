@@ -1,10 +1,11 @@
+import { LoadingStatus } from '../../types';
 import {
   IFetchTweetDataAction,
-  ISetLoadingStateAction,
+  ISetLoadingStatusAction,
   ISetTweetDataAction,
   TweetDataActionsType,
 } from './contracts/actionTypes';
-import { LoadingState, TweetState } from './contracts/state';
+import { TweetState } from './contracts/state';
 
 export const setTweetData = (payload: TweetState['data']): ISetTweetDataAction => ({
   type: TweetDataActionsType.SET_TWEET_DATA,
@@ -16,7 +17,7 @@ export const fetchTweetData = (id: string): IFetchTweetDataAction => ({
   payload: id,
 });
 
-export const setTweetDataLoadingState = (payload: LoadingState): ISetLoadingStateAction => ({
+export const setTweetDataLoadingStatus = (payload: LoadingStatus): ISetLoadingStatusAction => ({
   type: TweetDataActionsType.SET_LOADING_STATE,
   payload,
 });

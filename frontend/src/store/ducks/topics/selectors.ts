@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../../store';
-import { LoadingState } from './contracts/state';
+import { LoadingStatus } from '../../types';
 
 export const selectTopics = (state: RootState) => state.topics;
 
@@ -8,5 +8,5 @@ export const selectTopicsItems = createSelector(selectTopics, (topics) => topics
 
 export const selectIsTopicsLoading = createSelector(
   selectTopics,
-  (topics): boolean => topics.loadingState === LoadingState.LOADING,
+  (topics): boolean => topics.LoadingStatus === LoadingStatus.LOADING,
 );

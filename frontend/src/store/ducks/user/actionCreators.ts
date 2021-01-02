@@ -1,22 +1,34 @@
+import { LoadingStatus } from '../../types';
 import {
-  IFetchTweetDataAction,
-  ISetLoadingStateAction,
-  ISetTweetDataAction,
-  TweetDataActionsType,
+  IFetchUserDataAction,
+  ILoginFormData,
+  IRegisterFormData,
+  ISetLoadingStatusAction,
+  ISetUserDataAction,
+  UserDataActionsType,
 } from './contracts/actionTypes';
-import { LoadingState, TweetState } from './contracts/state';
+import { User } from './contracts/state';
 
-export const setTweetData = (payload: TweetState['data']): ISetTweetDataAction => ({
-  type: TweetDataActionsType.SET_TWEET_DATA,
+export const setUserData = (payload: User): ISetUserDataAction => ({
+  type: UserDataActionsType.SET_USER_DATA,
   payload,
 });
 
-export const fetchTweetData = (id: string): IFetchTweetDataAction => ({
-  type: TweetDataActionsType.FETCH_TWEET_DATA,
-  payload: id,
+export const fetchUserData = (data: ILoginFormData): IFetchUserDataAction => ({
+  type: UserDataActionsType.FETCH_USER_DATA,
+  payload: data,
 });
 
-export const setTweetDataLoadingState = (payload: LoadingState): ISetLoadingStateAction => ({
-  type: TweetDataActionsType.SET_LOADING_STATE,
+export const setUserLoadingStatus = (payload: LoadingStatus): ISetLoadingStatusAction => ({
+  type: UserDataActionsType.SET_LOADING_STATE,
   payload,
+});
+
+export const registerUser = (data: IRegisterFormData) => ({
+  type: UserDataActionsType.REGISTER_USER,
+  payload: data,
+});
+
+export const checkCurrentUser = () => ({
+  type: UserDataActionsType.CHECK_CURRENT_USER,
 });

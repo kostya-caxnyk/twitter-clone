@@ -103,19 +103,33 @@ class UserController {
         return;
       }
 
-      const { _id, username, name } = user;
-      const jwtData = { _id, username, name };
       successResponse(res, 200, {
         data: {
-          ...req.user,
-          token: jwt.sign(jwtData, process.env.SECRET_KEY as string, {
-            expiresIn: '24h',
+          ...user,
+          token: jwt.sign(user, process.env.SECRET_KEY as string, {
+            expiresIn: '30d',
           }),
         },
       });
     } catch (errors) {
       errorResponse(res, 500, { errors });
     }
+  }
+
+  async getCurrentUser(req: express.Request, res: express.Response) {
+    if (!req.user) {
+      res.status(404);
+      return;
+    }
+
+    const user = await UserModel.findById(req.user._id);
+
+    if (!user) {
+      res.status(404);
+      return;
+    }
+
+    successResponse(res, 200, { data: user });
   }
 }
 

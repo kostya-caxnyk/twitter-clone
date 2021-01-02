@@ -15,6 +15,7 @@ app.use(express.json());
 app.use(passport.initialize());
 
 app.get('/users', UserController.getUsers);
+app.get('/users/me', passport.authenticate('jwt'), UserController.getCurrentUser);
 app.get('/users/:id', UserController.getUser);
 
 app.post('/auth/login', passport.authenticate('local'), UserController.login);

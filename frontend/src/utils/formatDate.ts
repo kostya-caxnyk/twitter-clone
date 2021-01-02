@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow, isThisYear } from 'date-fns';
 import format from 'date-fns/format';
 import ru from 'date-fns/locale/ru';
 import isAfter from 'date-fns/isAfter';
@@ -13,5 +13,9 @@ export const formatToShortLabel = (date: string | Date): string => {
   if (isAfter(date, oneDayBefore)) {
     return formatDistanceToNow(date, { locale: ru });
   }
-  return format(date, 'd MMM', { locale: ru });
+
+  if (isThisYear(date)) {
+    return format(date, 'd MMM', { locale: ru });
+  }
+  return format(date, 'd MMM y г.', { locale: ru });
 };

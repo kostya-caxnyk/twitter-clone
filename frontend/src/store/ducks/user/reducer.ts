@@ -1,26 +1,30 @@
 import produce, { Draft } from 'immer';
-import { TweetDataActions, TweetDataActionsType } from './contracts/actionTypes';
-import { LoadingState, TweetState } from './contracts/state';
+import { LoadingStatus } from '../../types';
+import { UserDataActions, UserDataActionsType } from './contracts/actionTypes';
+import { UserState } from './contracts/state';
 
-const initialTweetDataState: TweetState = {
+const initialUserDataState: UserState = {
   data: null,
-  loadingState: LoadingState.NEVER,
+  LoadingStatus: LoadingStatus.NEVER,
 };
 
-export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetDataActions) => {
+export const userReducer = produce((draft: Draft<UserState>, action: UserDataActions) => {
   switch (action.type) {
-    case TweetDataActionsType.SET_TWEET_DATA:
+    case UserDataActionsType.SET_USER_DATA:
       draft.data = action.payload;
-      draft.loadingState = LoadingState.LOADED;
+      draft.LoadingStatus = LoadingStatus.LOADED;
       break;
 
-    case TweetDataActionsType.FETCH_TWEET_DATA:
-      draft.data = null;
-      draft.loadingState = LoadingState.LOADING;
+    case UserDataActionsType.FETCH_USER_DATA:
+      draft.LoadingStatus = LoadingStatus.LOADING;
       break;
 
-    case TweetDataActionsType.SET_LOADING_STATE:
-      draft.loadingState = action.payload;
+    case UserDataActionsType.SET_LOADING_STATE:
+      draft.LoadingStatus = action.payload;
+      break;
+
+    case UserDataActionsType.CHECK_CURRENT_USER:
+      draft.LoadingStatus = LoadingStatus.LOADING;
       break;
   }
-}, initialTweetDataState);
+}, initialUserDataState);

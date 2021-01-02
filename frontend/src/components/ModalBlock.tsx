@@ -1,4 +1,5 @@
 import React from 'react';
+import classnames from 'classnames';
 
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -36,6 +37,10 @@ const useStyles = makeStyles((theme) => ({
     border: 'none',
     margin: 0,
   },
+  loading: {
+    opacity: 0.7,
+    pointerEvents: 'none',
+  },
 }));
 
 interface DialogBoxProps {
@@ -43,13 +48,20 @@ interface DialogBoxProps {
   title?: string;
   visible?: boolean;
   onClose: () => void;
+  loading?: boolean;
 }
 
-const DialogBox: React.FC<DialogBoxProps> = ({ children, title, visible = false, onClose }) => {
+const DialogBox: React.FC<DialogBoxProps> = ({
+  children,
+  title,
+  visible = false,
+  onClose,
+  loading = false,
+}) => {
   const s = useStyles();
 
   return (
-    <Dialog open={visible} onClose={onClose}>
+    <Dialog open={visible} onClose={onClose} className={classnames({ [s.loading]: loading })}>
       <div className={s.dialogBoxHeader}>
         <IconButton className={s.dialogBoxCloseBtn} onClick={onClose}>
           <CloseIcon />

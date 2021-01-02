@@ -1,14 +1,14 @@
-import { TopicsActionsType, setTopicsLoadingState, setTopics } from './actionCreators';
+import { TopicsActionsType, setTopicsLoadingStatus, setTopics } from './actionCreators';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { topicsApi } from '../../../services/topicsApi';
-import { LoadingState } from './contracts/state';
+import { LoadingStatus } from '../../types';
 
 export function* fetchTopicsRequest() {
   try {
     const topics = yield call(topicsApi.getTopics);
     yield put(setTopics(topics));
   } catch (e) {
-    yield put(setTopicsLoadingState(LoadingState.ERROR));
+    yield put(setTopicsLoadingStatus(LoadingStatus.ERROR));
   }
 }
 

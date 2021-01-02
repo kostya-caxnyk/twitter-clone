@@ -1,19 +1,30 @@
-import { IFetchTweetDataAction, TweetDataActionsType } from './contracts/actionTypes';
-import { Tweet } from './../tweets/contracts/state';
-import { setTweetData, setTweetDataLoadingState } from './actionCreators';
+import { IFetchUserDataAction, UserDataActionsType } from './contracts/actionTypes';
+import { User } from './../user/contracts/state';
+import { setUserData, setUserLoadingStatus } from './actionCreators';
 import { call, put, takeEvery } from 'redux-saga/effects';
-import { tweetsApi } from '../../../services/tweetsApi';
-import { LoadingState } from './contracts/state';
+import { authApi } from '../../../services/authApi';
+import { LoadingStatus } from '../../types';
 
-export function* fetchTweetDataRequest({ payload: tweetId }: IFetchTweetDataAction) {
+export function* fetchUserDataRequest({ payload }: IFetchUserDataAction) {
   try {
-    const data: Tweet = yield call(tweetsApi.getTweetData, tweetId);
-    yield put(setTweetData(data));
+    const data: User = yield call(authApi.signIn, payload);
+    localStorage.setItem('token', data.token);
+    yield put(setUserData(data));
   } catch (e) {
-    yield put(setTweetDataLoadingState(LoadingState.ERROR));
+    yield put(setUserLoadingStatus(LoadingStatus.ERROR));
   }
 }
 
-export function* tweetSaga() {
-  yield takeEvery(TweetDataActionsType.FETCH_TWEET_DATA, fetchTweetDataRequest);
+export function* checkCurrentUser() {
+  try {
+    const user: User = yield call(authApi.checkCurrentUser);
+    yield put(setUserData(user));
+  } catch (error) {
+    yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+  }
+}
+
+export function* userSaga() {
+  yield takeEvery(UserDataActionsType.FETCH_USER_DATA, fetchUserDataRequest);
+  yield takeEvery(UserDataActionsType.CHECK_CURRENT_USER, checkCurrentUser);
 }
