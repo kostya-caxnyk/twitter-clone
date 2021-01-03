@@ -1,5 +1,6 @@
 import { LoadingStatus } from '../../types';
 import {
+  IFetchRegisterUserAction,
   IFetchUserDataAction,
   ILoginFormData,
   IRegisterFormData,
@@ -24,8 +25,8 @@ export const setUserLoadingStatus = (payload: LoadingStatus): ISetLoadingStatusA
   payload,
 });
 
-export const registerUser = (data: IRegisterFormData) => ({
-  type: UserDataActionsType.REGISTER_USER,
+export const fetchRegisterUser = (data: IRegisterFormData): IFetchRegisterUserAction => ({
+  type: UserDataActionsType.FETCH_REGISTER_USER,
   payload: data,
 });
 

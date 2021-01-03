@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Redirect } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import { Button, Typography } from '@material-ui/core';
 import TwitterIcon from '@material-ui/icons/Twitter';
@@ -9,11 +11,22 @@ import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import LoginModal from './components/LoginModal';
 import useAuthStyles from './useAuthStyles';
 import RegisterModal from './components/RegisterModal';
+import { selectIsUserLoggedIn, selectUserDataHasError } from '../../store/ducks/user/selectors';
+import Notification from '../../components/Notification';
 
 export const SignIn = () => {
   const s = useAuthStyles();
+  const isLoggedIn = useSelector(selectIsUserLoggedIn);
+  const hasError = useSelector(selectUserDataHasError);
 
   const [visibleModal, setVisibleModal] = React.useState<'signIn' | 'signUp'>();
+  const [backendErrors, setBackendErrors] = React.useState<string | null>(null);
+
+  useEffect(() => {
+    if (hasError) {
+      setBackendErrors('Произошла ошибка');
+    }
+  }, [hasError]);
 
   const handleClickOpenSignIn = () => {
     setVisibleModal('signIn');
@@ -27,10 +40,17 @@ export const SignIn = () => {
     setVisibleModal(undefined);
   };
 
-  const handleRegistration = () => {};
+  const handleCloseNotification = React.useCallback((): void => {
+    setBackendErrors(null);
+  }, []);
+
+  if (isLoggedIn) {
+    return <Redirect to="/home" />;
+  }
 
   return (
     <main className={s.wrapper}>
+      <Notification message={backendErrors} onClose={handleCloseNotification} type="error" />
       <div className={s.leftSide}>
         <TwitterIcon className={s.bgcTwitterIcon} />
 

@@ -41,7 +41,14 @@ class UserController {
       const user = new UserModel(data);
       await user.save();
 
-      successResponse(res, 201, { data: user });
+      successResponse(res, 201, {
+        data: {
+          ...user,
+          token: jwt.sign(user, process.env.SECRET_KEY as string, {
+            expiresIn: '30d',
+          }),
+        },
+      });
 
       await transporter.sendMail(regEmail(email, data.confirmHash));
     } catch (errors) {

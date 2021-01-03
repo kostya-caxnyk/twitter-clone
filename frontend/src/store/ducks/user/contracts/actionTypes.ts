@@ -6,7 +6,7 @@ export enum UserDataActionsType {
   'SET_USER_DATA' = 'user/SET_USER_DATA',
   'FETCH_USER_DATA' = 'user/FETCH_USER_DATA',
   'SET_LOADING_STATE' = 'user/SET_LOADING_STATE',
-  'REGISTER_USER' = 'user/REGISTER_USER',
+  'FETCH_REGISTER_USER' = 'user/FETCH_REGISTER_USER',
   'CHECK_CURRENT_USER' = 'user/CHECK_CURRENT_USER',
 }
 
@@ -32,8 +32,8 @@ export interface IFetchUserDataAction {
   payload: ILoginFormData;
 }
 
-export interface IRegisterUserAction {
-  type: UserDataActionsType.REGISTER_USER;
+export interface IFetchRegisterUserAction {
+  type: UserDataActionsType.FETCH_REGISTER_USER;
   payload: IRegisterFormData;
 }
 export interface ISetLoadingStatusAction {

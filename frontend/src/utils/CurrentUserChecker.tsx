@@ -20,7 +20,7 @@ const CurrentUserChecker: React.FC<CurrentUserCheckerProps> = ({ children }) => 
 
   useEffect(() => {
     if (!token) {
-      dispatch(setUserLoadingStatus(LoadingStatus.ERROR));
+      //dispatch(setUserLoadingStatus(LoadingStatus.ERROR));
       return;
     }
 

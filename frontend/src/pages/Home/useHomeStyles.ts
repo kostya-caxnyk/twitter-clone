@@ -185,6 +185,9 @@ export default makeStyles((theme) => ({
     color: 'rgb(91, 112, 131)',
     fontSize: 13,
   },
+  recomItemBtn: {
+    color: theme.palette.primary.main,
+  },
   recomLoadMore: {
     backgroundColor: 'rgb(247, 249, 250)',
     cursor: 'pointer',

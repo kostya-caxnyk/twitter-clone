@@ -1,3 +1,4 @@
+import { usersReducer } from './ducks/users/reducer';
 import { combineReducers } from 'redux';
 
 import { tweetReducer } from './ducks/tweet/reducer';
@@ -10,4 +11,5 @@ export const rootReducer = combineReducers({
   topics: topicsReducer,
   tweet: tweetReducer,
   user: userReducer,
+  users: usersReducer,
 });

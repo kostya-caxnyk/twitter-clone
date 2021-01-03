@@ -1,5 +1,5 @@
 import axios from '../utils/axios';
-import { ILoginFormData } from '../store/ducks/user/contracts/actionTypes';
+import { ILoginFormData, IRegisterFormData } from '../store/ducks/user/contracts/actionTypes';
 import { User } from '../store/ducks/user/contracts/state';
 
 interface Response<T> {
@@ -18,6 +18,11 @@ export const authApi = {
 
   async checkCurrentUser() {
     const { data } = await axios.get<Response<User>>('/users/me');
+    return data.data;
+  },
+
+  async signUp(registerData: IRegisterFormData) {
+    const { data } = await axios.post<Response<User>>('/auth/registration', registerData);
     return data.data;
   },
 };
