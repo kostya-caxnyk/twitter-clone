@@ -31,6 +31,7 @@ const theme = createMuiTheme({
     },
     error: {
       main: 'rgb(224, 36, 94)',
+      light: 'rgb(255, 210, 218)',
     },
     background: {
       default: '#fff',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classnames from 'classnames';
 
 import { Avatar, Button, IconButton } from '@material-ui/core';
@@ -14,6 +14,7 @@ import { fetchAddTweet } from '../store/ducks/tweets/actionCreators';
 import {
   selectIsAddFormStateError,
   selectIsAddFormStateLoading,
+  selectIsAddTweetLoaded,
 } from '../store/ducks/tweets/selectors';
 
 const MAX_INPUT_LENGTH = 280;
@@ -27,6 +28,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
   const dispatch = useDispatch();
   const hasError = useSelector(selectIsAddFormStateError);
   const isLoading = useSelector(selectIsAddFormStateLoading);
+  const isLoaded = useSelector(selectIsAddTweetLoaded);
   const [textValue, setTextValue] = React.useState('');
 
   const progressBarPercent = Math.round(textValue.length / 2.8);
@@ -34,13 +36,21 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
   const symbolsCount = MAX_INPUT_LENGTH - textValue.length;
 
   const handleTextAreaChange = (e: React.FormEvent<HTMLTextAreaElement>): void => {
+    if (isLoading) {
+      return;
+    }
     setTextValue(e.currentTarget.value);
   };
 
   const handleClickAddTweet = (): void => {
     dispatch(fetchAddTweet(textValue));
-    setTextValue('');
   };
+
+  useEffect(() => {
+    if (isLoaded) {
+      setTextValue('');
+    }
+  }, [isLoaded]);
 
   return (
     <Paper className={classnames({ [s.lowOpacity]: isLoading })}>

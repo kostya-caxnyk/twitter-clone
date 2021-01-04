@@ -4,12 +4,14 @@ export enum AddFormState {
   ERROR = 'ERROR',
   NEVER = 'NEVER',
   LOADING = 'LOADING',
+  LOADED = 'LOADED',
 }
 
-export enum DeleteState {
+export enum DeleteTweetState {
   ERROR = 'ERROR',
   NEVER = 'NEVER',
   LOADING = 'LOADING',
+  DELETED = 'DELETED',
 }
 
 export interface Tweet {
@@ -27,5 +29,5 @@ export interface TweetsState {
   items: Tweet[];
   LoadingStatus: LoadingStatus;
   addFormState: AddFormState;
-  deleteTweetState: DeleteState;
+  deleteTweetState: DeleteTweetState;
 }

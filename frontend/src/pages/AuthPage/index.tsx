@@ -50,7 +50,7 @@ export const SignIn = () => {
 
   return (
     <main className={s.wrapper}>
-      <Notification message={backendErrors} onClose={handleCloseNotification} type="error" />
+      <Notification open={hasError} message="Произошла ошибка" type="error" />
       <div className={s.leftSide}>
         <TwitterIcon className={s.bgcTwitterIcon} />
 

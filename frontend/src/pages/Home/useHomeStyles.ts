@@ -228,7 +228,7 @@ export default makeStyles((theme) => ({
   formAddTweetErrorBlock: {
     padding: '10px 15px',
     borderRadius: 12,
-    backgroundColor: theme.palette.error.main,
+    backgroundColor: theme.palette.error.light,
     fontSize: 15,
   },
   formAddTweetAvatar: {

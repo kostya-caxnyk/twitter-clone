@@ -5,6 +5,8 @@ export const selectUser = (state: RootState) => state.user;
 
 export const selectUserData = (state: RootState) => selectUser(state).data;
 
+export const selectUserLoadingStatus = (state: RootState) => selectUser(state).LoadingStatus;
+
 export const selectIsUserLoading = (state: RootState) =>
   selectUser(state).LoadingStatus === LoadingStatus.LOADING;
 

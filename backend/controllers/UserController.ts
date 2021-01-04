@@ -41,10 +41,11 @@ class UserController {
       const user = new UserModel(data);
       await user.save();
 
+      //TODO: во фронт идет пароль, конфирмхэш убрать это
       successResponse(res, 201, {
         data: {
-          ...user,
-          token: jwt.sign(user, process.env.SECRET_KEY as string, {
+          ...user.toObject(),
+          token: jwt.sign(user.toObject(), process.env.SECRET_KEY as string, {
             expiresIn: '30d',
           }),
         },

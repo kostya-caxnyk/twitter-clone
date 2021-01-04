@@ -1,10 +1,10 @@
 import { Snackbar } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 interface NotificationProps {
+  open: boolean;
   message: string | null;
-  onClose: () => void;
   type: 'error' | 'success' | 'warning';
 }
 
@@ -13,9 +13,22 @@ function Alert(props: AlertProps) {
 }
 
 const Notification: React.FC<NotificationProps> = React.memo(
-  ({ message, onClose, type }): React.ReactElement => {
+  ({ open, message, type }): React.ReactElement | null => {
+    const [openNotification, setOpenNotification] = React.useState(false);
+
+    useEffect(() => {
+      setOpenNotification(open);
+    }, [open]);
+
+    const onClose = () => {
+      setOpenNotification(false);
+    };
+
+    if (!openNotification) {
+      return null;
+    }
     return (
-      <Snackbar open={!!message} autoHideDuration={6000} onClose={onClose}>
+      <Snackbar open={openNotification} autoHideDuration={5000} onClose={onClose}>
         <Alert severity={type}>{message}</Alert>
       </Snackbar>
     );

@@ -19,3 +19,6 @@ export const selectIsAddFormStateLoading = (state: RootState) =>
 
 export const selectIsAddFormStateError = (state: RootState) =>
   selectTweets(state).addFormState === AddFormState.ERROR;
+
+export const selectIsAddTweetLoaded = (state: RootState) =>
+  selectTweets(state).addFormState === AddFormState.LOADED;

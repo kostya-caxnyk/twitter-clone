@@ -6,11 +6,12 @@ import {
   IFetchDeleteTweetAction,
   IFetchTweetsAction,
   ISetAddFormStateAction,
+  ISetDeleteTweetStateAction,
   ISetLoadingStatusAction,
   ISetTweetsAction,
   TweetsActionsType,
 } from './contracts/actionTypes';
-import { Tweet, AddFormState } from './contracts/state';
+import { Tweet, AddFormState, DeleteTweetState } from './contracts/state';
 
 export const setTweets = (payload: Tweet[]): ISetTweetsAction => ({
   type: TweetsActionsType.SET_TWEETS,
@@ -49,4 +50,9 @@ export const fetchDeleteTweet = (id: string): IFetchDeleteTweetAction => ({
 export const deleteTweet = (id: string): IDeleteTweetAction => ({
   type: TweetsActionsType.DELETE_TWEET,
   payload: id,
+});
+
+export const setDeleteTweetState = (payload: DeleteTweetState): ISetDeleteTweetStateAction => ({
+  type: TweetsActionsType.SET_DELETE_TWEET_STATE,
+  payload,
 });

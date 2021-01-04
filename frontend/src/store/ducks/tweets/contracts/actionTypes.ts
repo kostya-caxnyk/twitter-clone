@@ -1,6 +1,6 @@
 import { Action } from 'redux';
 import { LoadingStatus } from '../../../types';
-import { AddFormState, Tweet } from './state';
+import { AddFormState, DeleteTweetState, Tweet } from './state';
 
 export enum TweetsActionsType {
   'SET_TWEETS' = 'tweets/SET_TWEETS',
@@ -11,6 +11,7 @@ export enum TweetsActionsType {
   'DELETE_TWEET' = 'tweets/DELETE_TWEET',
   'SET_LOADING_STATE' = 'tweets/SET_LOADING_STATE',
   'SET_ADD_FORM_STATE' = 'tweets/SET_ADD_FORM_STATE',
+  'SET_DELETE_TWEET_STATE' = 'tweets/SET_DELETE_TWEET_STATE',
 }
 
 export type TweetsActions =
@@ -21,7 +22,8 @@ export type TweetsActions =
   | IFetchAddTweetAction
   | ISetAddFormStateAction
   | IFetchDeleteTweetAction
-  | IDeleteTweetAction;
+  | IDeleteTweetAction
+  | ISetDeleteTweetStateAction;
 
 export interface ISetTweetsAction extends Action<TweetsActionsType> {
   type: TweetsActionsType.SET_TWEETS;
@@ -60,4 +62,9 @@ export interface IFetchDeleteTweetAction {
 export interface IDeleteTweetAction {
   type: TweetsActionsType.DELETE_TWEET;
   payload: string;
+}
+
+export interface ISetDeleteTweetStateAction {
+  type: TweetsActionsType.SET_DELETE_TWEET_STATE;
+  payload: DeleteTweetState;
 }
