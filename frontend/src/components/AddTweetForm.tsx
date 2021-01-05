@@ -4,7 +4,6 @@ import classnames from 'classnames';
 import { Avatar, Button, IconButton } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import { TextareaAutosize } from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/ImageOutlined';
 import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
@@ -16,6 +15,7 @@ import {
   selectIsAddFormStateLoading,
   selectIsAddTweetLoaded,
 } from '../store/ducks/tweets/selectors';
+import UploadImage from './UploadImage';
 
 const MAX_INPUT_LENGTH = 280;
 
@@ -78,9 +78,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
           {!isLoading && (
             <div className={s.formAddTweetButtons}>
               <div className={s.formAddTweetButtonsGroup}>
-                <IconButton className={s.formAddTweetIcon}>
-                  <ImageIcon />
-                </IconButton>
+                <UploadImage />
                 <IconButton className={s.formAddTweetIcon}>
                   <SentimentSatisfiedIcon />
                 </IconButton>

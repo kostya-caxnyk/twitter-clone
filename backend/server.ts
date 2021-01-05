@@ -1,4 +1,5 @@
 import express from 'express';
+import fs from 'fs';
 require('dotenv').config();
 import './core/db';
 import UserController from './controllers/UserController';
@@ -6,6 +7,8 @@ import regValidators from './validation/register';
 import { passport } from './core/passport';
 import TweetController from './controllers/TweetController';
 import tweetValidators from './validation/createTweet';
+import { upload } from './middlewares/multer';
+import { uploads } from './core/cloudinary';
 
 const app = express();
 
@@ -35,6 +38,21 @@ app.delete(
   passport.authenticate('jwt', { session: false }),
   TweetController.deleteTweet,
 );
+
+app.post('/images', upload.array('image'), async (req: express.Request, res: express.Response) => {
+  const uploader = async (path: string) => await uploads(path, 'Images');
+  const urls = [];
+  const files: any = req.files;
+  for (let file of files) {
+    const { path } = file;
+    const newPath = await uploader(path);
+    urls.push(newPath);
+    fs.unlinkSync(path);
+  }
+  res.status(200).json({
+    data: urls,
+  });
+});
 
 app.listen(PORT, () => {
   console.log('server is running on port ' + PORT);
