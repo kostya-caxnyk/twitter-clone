@@ -6,8 +6,9 @@ import Paper from '@material-ui/core/Paper';
 import { TextareaAutosize } from '@material-ui/core';
 import SentimentSatisfiedIcon from '@material-ui/icons/SentimentSatisfiedOutlined';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import CancelIcon from '@material-ui/icons/Cancel';
 
-import useHomeStyles from '../pages/Home/useHomeStyles';
+import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAddTweet } from '../store/ducks/tweets/actionCreators';
 import {
@@ -23,6 +24,11 @@ interface AddTweetFormProps {
   rowsMin?: number;
 }
 
+export interface FileData {
+  file: File;
+  url: string;
+}
+
 const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.ReactElement => {
   const s = useHomeStyles();
   const dispatch = useDispatch();
@@ -30,6 +36,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
   const isLoading = useSelector(selectIsAddFormStateLoading);
   const isLoaded = useSelector(selectIsAddTweetLoaded);
   const [textValue, setTextValue] = React.useState('');
+  const [imageUrls, setImageUrls] = React.useState<FileData[]>([]);
 
   const progressBarPercent = Math.round(textValue.length / 2.8);
   const hasReachedLimit = textValue.length > MAX_INPUT_LENGTH;
@@ -42,13 +49,23 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
     setTextValue(e.currentTarget.value);
   };
 
-  const handleClickAddTweet = (): void => {
-    dispatch(fetchAddTweet(textValue));
+  const handleClickAddTweet = async () => {
+    const images = imageUrls.map((obj) => obj.file);
+    dispatch(fetchAddTweet(textValue, images));
+  };
+
+  const onSelectFile = React.useCallback((url: string, file: File): void => {
+    setImageUrls((prev) => [...prev, { file, url }]);
+  }, []);
+
+  const removeSelectedFile = (index: number) => {
+    setImageUrls((prev) => prev.filter((_, idx) => idx !== index));
   };
 
   useEffect(() => {
     if (isLoaded) {
       setTextValue('');
+      setImageUrls([]);
     }
   }, [isLoaded]);
 
@@ -78,7 +95,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
           {!isLoading && (
             <div className={s.formAddTweetButtons}>
               <div className={s.formAddTweetButtonsGroup}>
-                <UploadImage />
+                <UploadImage onAddFile={onSelectFile} disabled={imageUrls.length >= 4} />
                 <IconButton className={s.formAddTweetIcon}>
                   <SentimentSatisfiedIcon />
                 </IconButton>
@@ -101,7 +118,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
                 </div>
               )}
               <Button
-                disabled={hasReachedLimit || !textValue}
+                disabled={hasReachedLimit || (!textValue && !imageUrls.length)}
                 variant="contained"
                 color="primary"
                 onClick={handleClickAddTweet}>
@@ -109,8 +126,24 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
               </Button>
             </div>
           )}
+          {!!imageUrls.length && (
+            <div className={s.formAddTweetImages}>
+              {imageUrls.map(({ url }, idx) => (
+                <div className={s.formAddTweetImage} key={url + idx}>
+                  <IconButton
+                    className={s.formAddTweetCancelIcon}
+                    onClick={() => removeSelectedFile(idx)}
+                    disabled={isLoading}>
+                    <CancelIcon />
+                  </IconButton>
+                  <img src={url} alt="wtf" />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
+      <Paper square className={s.gap} variant="outlined" />
     </Paper>
   );
 };

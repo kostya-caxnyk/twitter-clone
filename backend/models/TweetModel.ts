@@ -1,5 +1,12 @@
 import { model, Schema, Document } from 'mongoose';
 
+export interface ImageData {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+}
+
 export interface ITweetModel {
   user: string;
   text: string;
@@ -9,6 +16,7 @@ export interface ITweetModel {
   // };
   // retweets: number;
   // comments: number;
+  images: ImageData[];
   _id?: string;
 }
 
@@ -17,7 +25,6 @@ export type ITweetDocumentModel = ITweetModel & Document;
 const TweetSchema = new Schema<ITweetModel>(
   {
     text: {
-      required: true,
       type: String,
     },
     user: {
@@ -25,6 +32,14 @@ const TweetSchema = new Schema<ITweetModel>(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
+    images: [
+      {
+        id: String,
+        url: String,
+        height: Number,
+        width: Number,
+      },
+    ],
   },
   { timestamps: true },
 );

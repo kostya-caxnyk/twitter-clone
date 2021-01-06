@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 import { RootState } from '../../store';
 import { LoadingStatus } from '../../types';
-import { AddFormState } from './contracts/state';
+import { AddFormState, DeleteTweetState } from './contracts/state';
 
 export const selectTweets = (state: RootState) => state.tweets;
 
@@ -22,3 +22,6 @@ export const selectIsAddFormStateError = (state: RootState) =>
 
 export const selectIsAddTweetLoaded = (state: RootState) =>
   selectTweets(state).addFormState === AddFormState.LOADED;
+
+export const selectHasDeleteTweetError = (state: RootState) =>
+  selectTweets(state).deleteTweetState === DeleteTweetState.ERROR;

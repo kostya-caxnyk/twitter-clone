@@ -1,14 +1,14 @@
 import { Route, Switch } from 'react-router-dom';
-import ProtectedHomeRoute from './components/ProtectedHomeRoute';
+import ProtectedRoute from './components/ProtectedRoute';
 
 import { SignIn } from './pages/AuthPage';
-import Home from './pages/Home';
+import Layout from './pages/Layout';
 
 function App() {
   return (
     <Switch>
-      <ProtectedHomeRoute path="/home" component={Home} />
       <Route path="/auth" component={SignIn} />
+      <ProtectedRoute component={Layout} />
     </Switch>
   );
 }

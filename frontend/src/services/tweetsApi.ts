@@ -1,11 +1,17 @@
 import axios from '../utils/axios';
 import { Tweet } from '../store/ducks/tweets/contracts/state';
+import { ImageData } from '../store/types';
 
 type ResponseStatus = 'success' | 'error';
 
 interface IResponse<T> {
   success: ResponseStatus;
   data: T;
+}
+
+interface CreateTweetData {
+  text: string;
+  images: ImageData[];
 }
 
 export const tweetsApi = {
@@ -19,8 +25,8 @@ export const tweetsApi = {
     return data.data;
   },
 
-  async addTweet(text: string): Promise<Tweet> {
-    const { data } = await axios.post<IResponse<Tweet>>('/tweets', { text });
+  async addTweet(tweetData: CreateTweetData): Promise<Tweet> {
+    const { data } = await axios.post<IResponse<Tweet>>('/tweets', tweetData);
     return data.data;
   },
 

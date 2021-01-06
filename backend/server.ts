@@ -9,6 +9,7 @@ import TweetController from './controllers/TweetController';
 import tweetValidators from './validation/createTweet';
 import { upload } from './middlewares/multer';
 import { uploads } from './core/cloudinary';
+import UploadFilesController from './controllers/UploadFilesController';
 
 const app = express();
 
@@ -39,20 +40,7 @@ app.delete(
   TweetController.deleteTweet,
 );
 
-app.post('/images', upload.array('image'), async (req: express.Request, res: express.Response) => {
-  const uploader = async (path: string) => await uploads(path, 'Images');
-  const urls = [];
-  const files: any = req.files;
-  for (let file of files) {
-    const { path } = file;
-    const newPath = await uploader(path);
-    urls.push(newPath);
-    fs.unlinkSync(path);
-  }
-  res.status(200).json({
-    data: urls,
-  });
-});
+app.post('/images', upload.array('images'), UploadFilesController.uploadImages);
 
 app.listen(PORT, () => {
   console.log('server is running on port ' + PORT);

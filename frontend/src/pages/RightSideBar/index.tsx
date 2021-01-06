@@ -6,11 +6,11 @@ import Users from '../../components/Users';
 
 const RightSideBar = () => {
   return (
-    <>
+    <div style={{ position: 'sticky', top: 0 }}>
       <SearchTextField />
       <Topics />
       <Users />
-    </>
+    </div>
   );
 };
 

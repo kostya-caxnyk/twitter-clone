@@ -4,3 +4,10 @@ export enum LoadingStatus {
   NEVER = 'NEVER',
   LOADING = 'LOADING',
 }
+
+export interface ImageData {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+}

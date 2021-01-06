@@ -67,12 +67,16 @@ export default makeStyles((theme) => ({
     borderBottom: 0,
   },
   feedHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    position: 'sticky',
+    top: 0,
+    zIndex: 1000,
+    backgroundColor: 'white',
     borderLeft: 0,
     borderRight: 0,
     borderTop: 0,
     cursor: 'pointer',
-    display: 'flex',
-    alignItems: 'center',
     padding: '0 8px',
   },
   feedHeaderLabel: {
@@ -149,6 +153,29 @@ export default makeStyles((theme) => ({
     '&:hover': {
       color: theme.palette.primary.main,
     },
+  },
+  tweetImages: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    flexWrap: 'wrap',
+  },
+  tweetImage: {
+    width: '40%',
+    height: 300,
+    backgroundPosition: 'center',
+    backgroundSize: 'cover',
+    backgroundRepeat: 'no-repeat',
+    borderRadius: 20,
+    marginBottom: 10,
+  },
+  tweetOneImage: {
+    width: '95%',
+  },
+  tweetTwoImage: {
+    width: '45%',
+    height: 150,
   },
   searchInput: {
     backgroundColor: 'rgb(235, 238, 240)',
@@ -288,6 +315,35 @@ export default makeStyles((theme) => ({
   formAddTweetLimit: {
     color: 'red',
     marginRight: 5,
+  },
+  formAddTweetImages: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    marginTop: 10,
+    flexWrap: 'wrap',
+  },
+  formAddTweetImage: {
+    width: '40%',
+    height: 'auto',
+    position: 'relative',
+    '& img': {
+      width: '100%',
+      height: 'auto',
+      borderRadius: 10,
+    },
+  },
+  formAddTweetCancelIcon: {
+    position: 'absolute',
+    right: 5,
+    top: 5,
+    color: 'black',
+    padding: 0,
+    backgroundColor: 'white',
+    '&:hover': {
+      backgroundColor: 'white',
+      color: '#404040',
+    },
   },
   loading: {
     marginTop: 20,

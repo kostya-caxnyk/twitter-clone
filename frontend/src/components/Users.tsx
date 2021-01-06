@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import { Paper, Typography, Avatar, IconButton, List, ListItem } from '@material-ui/core';
 import PersonAddIcon from '@material-ui/icons/PersonAddOutlined';
-import useHomeStyles from '../pages/Home/useHomeStyles';
+import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';

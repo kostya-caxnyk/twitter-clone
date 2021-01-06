@@ -9,11 +9,13 @@ import DeleteIcon from '@material-ui/icons/DeleteForeverOutlined';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import ReplyIcon from '@material-ui/icons/Reply';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
-import useHomeStyles from '../pages/Home/useHomeStyles';
+import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import { Link } from 'react-router-dom';
 import { formatToShortLabel } from '../utils/formatDate';
 import { fetchDeleteTweet } from '../store/ducks/tweets/actionCreators';
 import { useDispatch } from 'react-redux';
+import { ImageData } from '../store/types';
+import ImagesList from './ImagesList';
 
 interface TweetProps {
   user: {
@@ -21,12 +23,19 @@ interface TweetProps {
     username: string;
     avatarUrl: string;
   };
+  images: ImageData[];
   text: string;
   _id: string;
   createdAt: string;
 }
 
-const Tweet: React.FC<TweetProps> = ({ text, user, _id, createdAt }): React.ReactElement => {
+const Tweet: React.FC<TweetProps> = ({
+  text,
+  user,
+  _id,
+  createdAt,
+  images,
+}): React.ReactElement => {
   const s = useHomeStyles();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
@@ -50,7 +59,7 @@ const Tweet: React.FC<TweetProps> = ({ text, user, _id, createdAt }): React.Reac
 
   return (
     <>
-      <Link to={`/home/tweet/${_id}`}>
+      <Link to={`/tweet/${_id}`}>
         <Paper variant="outlined" className={s.tweet} square>
           <div className={s.tweetAvatarWrapper}>
             <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />
@@ -68,6 +77,7 @@ const Tweet: React.FC<TweetProps> = ({ text, user, _id, createdAt }): React.Reac
               </IconButton>
             </div>
             <Typography className={s.tweetText}>{text}</Typography>
+            <ImagesList images={images} />
             <div className={s.tweetButtons}>
               <div>
                 <IconButton className={s.tweetIcon}>

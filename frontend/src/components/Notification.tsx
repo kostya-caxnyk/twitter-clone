@@ -1,6 +1,9 @@
+import React, { useEffect } from 'react';
+
 import { Snackbar } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import React, { useEffect } from 'react';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 interface NotificationProps {
   open: boolean;
@@ -29,7 +32,15 @@ const Notification: React.FC<NotificationProps> = React.memo(
     }
     return (
       <Snackbar open={openNotification} autoHideDuration={5000} onClose={onClose}>
-        <Alert severity={type}>{message}</Alert>
+        <Alert
+          severity={type}
+          action={
+            <IconButton color="inherit" style={{ padding: 5 }} onClick={onClose}>
+              <CloseIcon />
+            </IconButton>
+          }>
+          {message}
+        </Alert>
       </Snackbar>
     );
   },

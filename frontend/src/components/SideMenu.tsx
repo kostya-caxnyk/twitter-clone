@@ -14,15 +14,18 @@ import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import CreateIcon from '@material-ui/icons/Create';
 
-import useHomeStyles from '../pages/Home/useHomeStyles';
+import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import ModalBlock from './ModalBlock';
 import AddTweetForm from './AddTweetForm';
+import { useSelector } from 'react-redux';
+import { selectUserData } from '../store/ducks/user/selectors';
 
 interface SideMenuProps {}
 
 const SideMenu: React.FC<SideMenuProps> = () => {
   const s = useHomeStyles();
   const [visibleAddTweet, setVisibleAddTweet] = React.useState(false);
+  const currentUser = useSelector(selectUserData);
 
   const handleClickOpenAddTweet = () => {
     setVisibleAddTweet(true);
@@ -101,7 +104,10 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           </NavLink>
         </li>
         <li className={s.navListItem}>
-          <NavLink to="/profile" className={s.navLink} activeClassName={s.activeLink}>
+          <NavLink
+            to={`/profile/${currentUser?.username}`}
+            className={s.navLink}
+            activeClassName={s.activeLink}>
             <PermIdentityIcon className={s.navIcon} />
             <Hidden smDown>
               <Typography variant="h6" component="span" className={s.navListLabel}>

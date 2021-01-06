@@ -21,6 +21,8 @@ export const uploads = (file: any, folder: string) => {
         resolve({
           id: result.public_id,
           url: result.url,
+          height: result.height,
+          width: result.width,
         });
       },
     );

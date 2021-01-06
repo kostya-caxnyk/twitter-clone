@@ -2,39 +2,53 @@ import React, { useRef } from 'react';
 
 import ImageIcon from '@material-ui/icons/ImageOutlined';
 import { IconButton } from '@material-ui/core';
-import useHomeStyles from '../pages/Home/useHomeStyles';
+import useHomeStyles from '../pages/HomePage/useHomeStyles';
 
-const UploadImage = () => {
-  const s = useHomeStyles();
-  const [imageUrls, setImageUrls] = React.useState<string[]>([]);
-  const inputRef = useRef<HTMLInputElement>(null);
+interface UploadImageProps {
+  onAddFile: (url: string, file: File) => void;
+  disabled: boolean;
+}
 
-  const handleClickUploadFile = (): void => {
-    if (inputRef.current) {
-      inputRef.current.click();
-    }
-  };
+const UploadImage: React.FC<UploadImageProps> = React.memo(
+  ({ onAddFile, disabled }): React.ReactElement => {
+    const s = useHomeStyles();
+    const inputRef = useRef<HTMLInputElement>(null);
 
-  const onSelectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) {
-      return;
-    }
-    const fileUrl = URL.createObjectURL(new Blob([file]));
-    setImageUrls((prev) => [...prev, fileUrl]);
-  };
-  console.log(imageUrls);
-  return (
-    <>
-      <IconButton onClick={handleClickUploadFile} className={s.formAddTweetIcon}>
-        <ImageIcon />
-      </IconButton>
-      <input ref={inputRef} onChange={onSelectFile} type="file" hidden />
-      {imageUrls.map((url, idx) => (
-        <img key={idx} src={url} alt="wtf" />
-      ))}
-    </>
-  );
-};
+    const handleClickUploadFile = (): void => {
+      if (inputRef.current) {
+        inputRef.current.value = '';
+        inputRef.current.click();
+      }
+    };
+
+    const onSelectFile = (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) {
+        return;
+      }
+      const fileUrl = URL.createObjectURL(new Blob([file]));
+      onAddFile(fileUrl, file);
+    };
+
+    return (
+      <>
+        <IconButton
+          onClick={handleClickUploadFile}
+          className={s.formAddTweetIcon}
+          disabled={disabled}>
+          <ImageIcon />
+        </IconButton>
+        <input
+          accept="image/jpeg,image/png,image/webp,image/gif"
+          ref={inputRef}
+          onChange={onSelectFile}
+          type="file"
+          tabIndex={-1}
+          hidden
+        />
+      </>
+    );
+  },
+);
 
 export default UploadImage;

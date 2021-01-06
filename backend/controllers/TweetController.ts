@@ -51,10 +51,11 @@ class TweetController {
         return;
       }
 
-      const { text } = req.body;
+      const { text, images } = req.body;
       const data: ITweetModel = {
         text,
         user: user._id,
+        images: images,
       };
 
       const tweet = new TweetModel(data);

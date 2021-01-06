@@ -1,4 +1,4 @@
-import { LoadingStatus } from '../../../types';
+import { ImageData, LoadingStatus } from '../../../types';
 
 export interface Tweet {
   _id: string;
@@ -9,6 +9,7 @@ export interface Tweet {
     avatarUrl: string;
   };
   createdAt: string;
+  images: ImageData[];
 }
 
 export interface TweetState {

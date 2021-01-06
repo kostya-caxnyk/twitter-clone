@@ -26,8 +26,16 @@ export interface RegisterFormData {
 
 const RegisterFormSchema = yup.object().shape({
   email: yup.string().email('Неверный email').required('Введите email'),
-  name: yup.string().required('Введите имя').min(2, 'Минимальная длина имени 2 символа'),
-  username: yup.string().required('Введите никнейм').min(3, 'Минимальная длина никнейма 3 символа'),
+  name: yup
+    .string()
+    .required('Введите имя')
+    .min(2, 'Минимальная длина имени 2 символа')
+    .max(20, 'Максимальная длина имени 20 символов'),
+  username: yup
+    .string()
+    .required('Введите никнейм')
+    .min(3, 'Минимальная длина никнейма 3 символа')
+    .max(14, 'Максимальная длина ника 14 символов'),
   password: yup.string().required('Введите пароль').min(6, 'Минимальная длина пароля 6 символов'),
   password2: yup
     .string()

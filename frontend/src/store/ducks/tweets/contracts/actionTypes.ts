@@ -1,5 +1,5 @@
 import { Action } from 'redux';
-import { LoadingStatus } from '../../../types';
+import { ImageData, LoadingStatus } from '../../../types';
 import { AddFormState, DeleteTweetState, Tweet } from './state';
 
 export enum TweetsActionsType {
@@ -46,7 +46,10 @@ export interface ISetAddFormStateAction {
 
 export interface IFetchAddTweetAction {
   type: TweetsActionsType.FETCH_ADD_TWEET;
-  payload: string;
+  payload: {
+    text: string;
+    files: File[];
+  };
 }
 
 export interface IAddTweetAction {

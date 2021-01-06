@@ -1,4 +1,4 @@
-import { LoadingStatus } from '../../../types';
+import { ImageData, LoadingStatus } from '../../../types';
 
 export enum AddFormState {
   ERROR = 'ERROR',
@@ -17,6 +17,7 @@ export enum DeleteTweetState {
 export interface Tweet {
   _id: string;
   text: string;
+  images: ImageData[];
   user: {
     name: string;
     username: string;

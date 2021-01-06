@@ -9,8 +9,10 @@ import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import ReplyIcon from '@material-ui/icons/Reply';
 
-import useHomeStyles from '../pages/Home/useHomeStyles';
+import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import { formatToFullLabel } from '../utils/formatDate';
+import { ImageData } from '../store/types';
+import ImagesList from './ImagesList';
 
 interface BigTweetProps {
   user: {
@@ -21,9 +23,16 @@ interface BigTweetProps {
   text: string;
   _id: string;
   createdAt: string;
+  images: ImageData[];
 }
 
-const BigTweet: React.FC<BigTweetProps> = ({ text, user, _id, createdAt }): React.ReactElement => {
+const BigTweet: React.FC<BigTweetProps> = ({
+  text,
+  user,
+  _id,
+  createdAt,
+  images,
+}): React.ReactElement => {
   const s = useHomeStyles();
 
   return (
@@ -43,6 +52,7 @@ const BigTweet: React.FC<BigTweetProps> = ({ text, user, _id, createdAt }): Reac
       </div>
       <div style={{ width: '100%' }}>
         <Typography className={classnames(s.tweetText, s.bigTweetText)}>{text}</Typography>
+        <ImagesList images={images} />
         <Typography className={s.tweetDate}>{formatToFullLabel(createdAt)}</Typography>
         <div className={classnames(s.tweetButtons, s.bigTweetButtons)}>
           <div>

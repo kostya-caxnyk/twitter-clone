@@ -1,4 +1,4 @@
-import { LoadingStatus } from '../../types';
+import { ImageData, LoadingStatus } from '../../types';
 import {
   IAddTweetAction,
   IDeleteTweetAction,
@@ -32,9 +32,12 @@ export const setAddFormState = (payload: AddFormState): ISetAddFormStateAction =
   payload,
 });
 
-export const fetchAddTweet = (payload: string): IFetchAddTweetAction => ({
+export const fetchAddTweet = (text: string, files: File[]): IFetchAddTweetAction => ({
   type: TweetsActionsType.FETCH_ADD_TWEET,
-  payload,
+  payload: {
+    text,
+    files,
+  },
 });
 
 export const addTweet = (payload: Tweet): IAddTweetAction => ({

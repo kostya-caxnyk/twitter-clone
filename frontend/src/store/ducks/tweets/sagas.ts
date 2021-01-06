@@ -4,16 +4,18 @@ import {
   addTweet,
   setAddFormState,
   deleteTweet,
+  setDeleteTweetState,
 } from './actionCreators';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { tweetsApi } from '../../../services/tweetsApi';
-import { AddFormState, Tweet } from './contracts/state';
+import { AddFormState, DeleteTweetState, Tweet } from './contracts/state';
 import {
   IFetchAddTweetAction,
   TweetsActionsType,
   IFetchDeleteTweetAction,
 } from './contracts/actionTypes';
-import { LoadingStatus } from '../../types';
+import { ImageData, LoadingStatus } from '../../types';
+import uploadImages from '../../../utils/uploadImages';
 
 export function* fetchTweetsRequest() {
   try {
@@ -26,7 +28,11 @@ export function* fetchTweetsRequest() {
 
 export function* addTweetRequest({ payload }: IFetchAddTweetAction) {
   try {
-    const tweet: Tweet = yield call(tweetsApi.addTweet, payload);
+    const images: ImageData[] = yield call(uploadImages, payload.files);
+    const tweet: Tweet = yield call(tweetsApi.addTweet, {
+      text: payload.text,
+      images,
+    });
     yield put(addTweet(tweet));
   } catch (e) {
     yield put(setAddFormState(AddFormState.ERROR));
@@ -38,7 +44,7 @@ export function* deleteTweetRequest({ payload }: IFetchDeleteTweetAction) {
     const id: string = yield call(tweetsApi.deleteTweet, payload);
     yield put(deleteTweet(id));
   } catch (error) {
-    yield put(setAddFormState(AddFormState.ERROR));
+    yield put(setDeleteTweetState(DeleteTweetState.ERROR));
   }
 }
 
