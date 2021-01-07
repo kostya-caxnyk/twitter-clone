@@ -41,11 +41,16 @@ class UserController {
       const user = new UserModel(data);
       await user.save();
 
-      //TODO: во фронт идет пароль, конфирмхэш убрать это
+      const userWithoutPass: any = {
+        ...user.toObject(),
+      };
+      delete userWithoutPass.password;
+      delete userWithoutPass.confirmHash;
+
       successResponse(res, 201, {
         data: {
-          ...user.toObject(),
-          token: jwt.sign(user.toObject(), process.env.SECRET_KEY as string, {
+          ...userWithoutPass,
+          token: jwt.sign(userWithoutPass, process.env.SECRET_KEY as string, {
             expiresIn: '30d',
           }),
         },

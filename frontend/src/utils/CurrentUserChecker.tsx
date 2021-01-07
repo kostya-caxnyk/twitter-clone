@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import LoadingCircle from '../components/LoadingCircle';
+import { SignIn } from '../pages/AuthPage';
 import { checkCurrentUser } from '../store/ducks/user/actionCreators';
 import { selectUserLoadingStatus } from '../store/ducks/user/selectors';
 import { LoadingStatus } from '../store/types';
@@ -23,7 +24,7 @@ const CurrentUserChecker: React.FC<CurrentUserCheckerProps> = ({ children }) => 
   }, [token, dispatch]);
 
   if (!token) {
-    return children;
+    return <SignIn />;
   }
 
   if (userLoadingStatus === LoadingStatus.NEVER || userLoadingStatus === LoadingStatus.LOADING) {

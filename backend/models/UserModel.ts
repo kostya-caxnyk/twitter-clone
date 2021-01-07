@@ -16,42 +16,47 @@ export interface IUserModel {
 
 type IUserDocumentModel = IUserModel & Document;
 
-const UserSchema = new Schema<IUserModel>({
-  email: {
-    required: true,
-    unique: true,
-    type: String,
+const UserSchema = new Schema<IUserModel>(
+  {
+    email: {
+      required: true,
+      unique: true,
+      type: String,
+    },
+    username: {
+      required: true,
+      unique: true,
+      type: String,
+    },
+    name: {
+      required: true,
+      type: String,
+    },
+    password: {
+      required: true,
+      type: String,
+      select: false,
+    },
+    avatarUrl: {
+      type: String,
+      default:
+        'https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg',
+    },
+    confirmHash: {
+      required: true,
+      type: String,
+      select: false,
+    },
+    confirmed: {
+      type: Boolean,
+      default: false,
+    },
+    location: String,
+    about: String,
+    website: String,
   },
-  username: {
-    required: true,
-    unique: true,
-    type: String,
-  },
-  name: {
-    required: true,
-    type: String,
-  },
-  password: {
-    required: true,
-    type: String,
-    select: false,
-  },
-  avatarUrl: {
-    type: String,
-  },
-  confirmHash: {
-    required: true,
-    type: String,
-    select: false,
-  },
-  confirmed: {
-    type: Boolean,
-    default: false,
-  },
-  location: String,
-  about: String,
-  website: String,
-});
+  { timestamps: true },
+);
 
 UserSchema.set('toJSON', {
   transform: function (_: any, obj: any) {

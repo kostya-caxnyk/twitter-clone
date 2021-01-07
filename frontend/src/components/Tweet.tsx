@@ -13,16 +13,14 @@ import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import { Link } from 'react-router-dom';
 import { formatToShortLabel } from '../utils/formatDate';
 import { fetchDeleteTweet } from '../store/ducks/tweets/actionCreators';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ImageData } from '../store/types';
 import ImagesList from './ImagesList';
+import { User } from '../store/ducks/user/contracts/state';
+import { selectUserData } from '../store/ducks/user/selectors';
 
 interface TweetProps {
-  user: {
-    name: string;
-    username: string;
-    avatarUrl: string;
-  };
+  user: User;
   images: ImageData[];
   text: string;
   _id: string;
@@ -39,6 +37,7 @@ const Tweet: React.FC<TweetProps> = ({
   const s = useHomeStyles();
   const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
+  const currentUser = useSelector(selectUserData);
 
   const onOpenMoreInfo = (event: React.MouseEvent<HTMLElement>) => {
     event.preventDefault();
@@ -57,6 +56,8 @@ const Tweet: React.FC<TweetProps> = ({
     dispatch(fetchDeleteTweet(_id));
   };
 
+  const isAuthor = currentUser?.username === user.username;
+
   return (
     <>
       <Link to={`/tweet/${_id}`}>
@@ -72,9 +73,11 @@ const Tweet: React.FC<TweetProps> = ({
                 <span style={{ padding: '0 3px' }}>·</span>
                 <span className={s.tweetDate}>{formatToShortLabel(createdAt)}</span>
               </div>
-              <IconButton className={s.tweetHeaderMoreIcon} onClick={onOpenMoreInfo}>
-                <MoreIcon />
-              </IconButton>
+              {isAuthor && (
+                <IconButton className={s.tweetHeaderMoreIcon} onClick={onOpenMoreInfo}>
+                  <MoreIcon />
+                </IconButton>
+              )}
             </div>
             <Typography className={s.tweetText}>{text}</Typography>
             <ImagesList images={images} />

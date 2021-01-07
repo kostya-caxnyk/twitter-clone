@@ -1,11 +1,13 @@
 import { LoadingStatus } from '../../types';
 import {
+  ICheckCurrentUserAction,
   IFetchRegisterUserAction,
   IFetchUserDataAction,
   ILoginFormData,
   IRegisterFormData,
   ISetLoadingStatusAction,
   ISetUserDataAction,
+  ISignOut,
   UserDataActionsType,
 } from './contracts/actionTypes';
 import { User } from './contracts/state';
@@ -30,6 +32,10 @@ export const fetchRegisterUser = (data: IRegisterFormData): IFetchRegisterUserAc
   payload: data,
 });
 
-export const checkCurrentUser = () => ({
+export const checkCurrentUser = (): ICheckCurrentUserAction => ({
   type: UserDataActionsType.CHECK_CURRENT_USER,
+});
+
+export const signOut = (): ISignOut => ({
+  type: UserDataActionsType.SIGN_OUT,
 });

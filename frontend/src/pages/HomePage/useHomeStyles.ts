@@ -45,6 +45,34 @@ export default makeStyles((theme) => ({
   navTweetButton: {
     height: 49,
   },
+  profileBtn: {
+    width: '100%',
+    height: 55,
+    display: 'flex',
+    justifyContent: 'flex-start',
+    textTransform: 'none',
+    backgroundColor: 'white',
+    '&:hover': {
+      backgroundColor: 'rgba(122, 204, 254, 0.3)',
+    },
+  },
+  profileBtnInfo: {
+    marginLeft: 10,
+  },
+  profileBtnMoreIcon: {
+    marginLeft: 'auto',
+  },
+  profileBtnMenu: {
+    //backgroundColor: 'red',
+    '& .MuiMenu-paper': {
+      boxShadow: 'rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px',
+      borderRadius: 16,
+      minWidth: 260,
+    },
+    '& li': {
+      padding: '10px 15px',
+    },
+  },
   logoIcon: {
     fontSize: 36,
   },
@@ -382,5 +410,55 @@ export default makeStyles((theme) => ({
     '& svg': {
       fontSize: 25,
     },
+  },
+  profileBackground: {
+    height: 200,
+    backgroundColor: 'rgb(196, 207, 214)',
+  },
+  profileBlock: {
+    padding: '10px 15px 0px',
+    marginbottom: 15,
+  },
+  profileMeta: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  profileAvatar: {
+    marginTop: '-16%',
+    width: 140,
+    height: 140,
+    borderRadius: '50%',
+    overflow: 'hidden',
+    '& img': {
+      width: '100%',
+      height: '100%',
+    },
+  },
+  profileInfo: {},
+  profileLabel: {
+    color: 'rgb(91, 112, 131)',
+    fontWeight: 400,
+    fontSize: 15,
+    lineHeight: 1.35,
+    marginRight: 6,
+    display: 'flex',
+    alignItems: 'center',
+  },
+  profileAbout: {
+    fontWeight: 400,
+    fontSize: 15,
+    lineHeight: 1.35,
+    marginBottom: 10,
+  },
+  profileDetails: {
+    display: 'flex',
+    marginBottom: 10,
+  },
+  profileLink: {
+    color: 'rgb(91, 112, 131)',
+    fontWeight: 400,
+    fontSize: 15,
+    lineHeight: 1.35,
+    marginRight: 6,
   },
 }));

@@ -8,6 +8,7 @@ export enum UserDataActionsType {
   'SET_LOADING_STATE' = 'user/SET_LOADING_STATE',
   'FETCH_REGISTER_USER' = 'user/FETCH_REGISTER_USER',
   'CHECK_CURRENT_USER' = 'user/CHECK_CURRENT_USER',
+  'SIGN_OUT' = 'user/SIGN_OUT',
 }
 
 export interface ISetUserDataAction extends Action<UserDataActionsType> {
@@ -45,8 +46,13 @@ export interface ICheckCurrentUserAction {
   type: UserDataActionsType.CHECK_CURRENT_USER;
 }
 
+export interface ISignOut {
+  type: UserDataActionsType.SIGN_OUT;
+}
+
 export type UserDataActions =
   | ISetUserDataAction
   | IFetchUserDataAction
   | ISetLoadingStatusAction
-  | ICheckCurrentUserAction;
+  | ICheckCurrentUserAction
+  | ISignOut;

@@ -13,13 +13,10 @@ import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import { formatToFullLabel } from '../utils/formatDate';
 import { ImageData } from '../store/types';
 import ImagesList from './ImagesList';
+import { User } from '../store/ducks/user/contracts/state';
 
 interface BigTweetProps {
-  user: {
-    name: string;
-    username: string;
-    avatarUrl: string;
-  };
+  user: User;
   text: string;
   _id: string;
   createdAt: string;

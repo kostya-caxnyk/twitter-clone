@@ -19,6 +19,7 @@ import ModalBlock from './ModalBlock';
 import AddTweetForm from './AddTweetForm';
 import { useSelector } from 'react-redux';
 import { selectUserData } from '../store/ducks/user/selectors';
+import ProfileBtn from './ProfileBtn';
 
 interface SideMenuProps {}
 
@@ -36,106 +37,109 @@ const SideMenu: React.FC<SideMenuProps> = () => {
   };
 
   return (
-    <nav className={s.navSideBar}>
-      <IconButton aria-label="delete" className={s.logoBtn}>
-        <NavLink to="/home">
-          <TwitterIcon color="primary" className={s.logoIcon} />
-        </NavLink>
-      </IconButton>
-      <ul className={s.navList}>
-        <li className={s.navListItem}>
-          <NavLink to="/home" className={s.navLink} activeClassName={s.activeLink} exact>
-            <HomeIcon className={s.navIcon} />
-            <Hidden smDown>
-              <Typography variant="h6" component="span" className={s.navListLabel}>
-                Главная
-              </Typography>
-            </Hidden>
+    <>
+      <nav className={s.navSideBar}>
+        <IconButton aria-label="delete" className={s.logoBtn}>
+          <NavLink to="/home">
+            <TwitterIcon color="primary" className={s.logoIcon} />
           </NavLink>
-        </li>
-        <li className={s.navListItem}>
-          <NavLink to="/explore" className={s.navLink} activeClassName={s.activeLink} exact>
-            <SearchIcon className={s.navIcon} />
-            <Hidden smDown>
-              <Typography variant="h6" component="span" className={s.navListLabel}>
-                Поиск
-              </Typography>
-            </Hidden>
-          </NavLink>
-        </li>
-        <li className={s.navListItem}>
-          <NavLink to="/notifications" className={s.navLink} activeClassName={s.activeLink} exact>
-            <NotificationsNoneIcon className={s.navIcon} />
-            <Hidden smDown>
-              <Typography variant="h6" component="span" className={s.navListLabel}>
-                Уведомления
-              </Typography>
-            </Hidden>
-          </NavLink>
-        </li>
-        <li className={s.navListItem}>
-          <NavLink to="/messages" className={s.navLink} activeClassName={s.activeLink}>
-            <EmailIcon className={s.navIcon} />
-            <Hidden smDown>
-              <Typography variant="h6" component="span" className={s.navListLabel}>
-                Сообщения
-              </Typography>
-            </Hidden>
-          </NavLink>
-        </li>
-        <li className={s.navListItem}>
-          <NavLink to="/bookmarks" className={s.navLink} activeClassName={s.activeLink}>
-            <BookmarkBorderIcon className={s.navIcon} />
-            <Hidden smDown>
-              <Typography variant="h6" component="span" className={s.navListLabel}>
-                Закладки
-              </Typography>
-            </Hidden>
-          </NavLink>
-        </li>
-        <li className={s.navListItem}>
-          <NavLink to="/lists" className={s.navLink} activeClassName={s.activeLink}>
-            <ListIcon className={s.navIcon} />
-            <Hidden smDown>
-              <Typography variant="h6" component="span" className={s.navListLabel}>
-                Списки
-              </Typography>
-            </Hidden>
-          </NavLink>
-        </li>
-        <li className={s.navListItem}>
-          <NavLink
-            to={`/profile/${currentUser?.username}`}
-            className={s.navLink}
-            activeClassName={s.activeLink}>
-            <PermIdentityIcon className={s.navIcon} />
-            <Hidden smDown>
-              <Typography variant="h6" component="span" className={s.navListLabel}>
-                Профиль
-              </Typography>
-            </Hidden>
-          </NavLink>
-        </li>
-        <li>
-          <Button
-            className={s.navTweetButton}
-            variant="contained"
-            color="primary"
-            onClick={handleClickOpenAddTweet}
-            fullWidth>
-            <Hidden smDown>Твитнуть</Hidden>
-            <Hidden mdUp>
-              <CreateIcon />
-            </Hidden>
-          </Button>
-          <ModalBlock visible={visibleAddTweet} onClose={onCloseAddTweet}>
-            <div style={{ width: 550 }}>
-              <AddTweetForm rowsMin={4} />
-            </div>
-          </ModalBlock>
-        </li>
-      </ul>
-    </nav>
+        </IconButton>
+        <ul className={s.navList}>
+          <li className={s.navListItem}>
+            <NavLink to="/home" className={s.navLink} activeClassName={s.activeLink} exact>
+              <HomeIcon className={s.navIcon} />
+              <Hidden smDown>
+                <Typography variant="h6" component="span" className={s.navListLabel}>
+                  Главная
+                </Typography>
+              </Hidden>
+            </NavLink>
+          </li>
+          <li className={s.navListItem}>
+            <NavLink to="/explore" className={s.navLink} activeClassName={s.activeLink} exact>
+              <SearchIcon className={s.navIcon} />
+              <Hidden smDown>
+                <Typography variant="h6" component="span" className={s.navListLabel}>
+                  Поиск
+                </Typography>
+              </Hidden>
+            </NavLink>
+          </li>
+          <li className={s.navListItem}>
+            <NavLink to="/notifications" className={s.navLink} activeClassName={s.activeLink} exact>
+              <NotificationsNoneIcon className={s.navIcon} />
+              <Hidden smDown>
+                <Typography variant="h6" component="span" className={s.navListLabel}>
+                  Уведомления
+                </Typography>
+              </Hidden>
+            </NavLink>
+          </li>
+          <li className={s.navListItem}>
+            <NavLink to="/messages" className={s.navLink} activeClassName={s.activeLink}>
+              <EmailIcon className={s.navIcon} />
+              <Hidden smDown>
+                <Typography variant="h6" component="span" className={s.navListLabel}>
+                  Сообщения
+                </Typography>
+              </Hidden>
+            </NavLink>
+          </li>
+          <li className={s.navListItem}>
+            <NavLink to="/bookmarks" className={s.navLink} activeClassName={s.activeLink}>
+              <BookmarkBorderIcon className={s.navIcon} />
+              <Hidden smDown>
+                <Typography variant="h6" component="span" className={s.navListLabel}>
+                  Закладки
+                </Typography>
+              </Hidden>
+            </NavLink>
+          </li>
+          <li className={s.navListItem}>
+            <NavLink to="/lists" className={s.navLink} activeClassName={s.activeLink}>
+              <ListIcon className={s.navIcon} />
+              <Hidden smDown>
+                <Typography variant="h6" component="span" className={s.navListLabel}>
+                  Списки
+                </Typography>
+              </Hidden>
+            </NavLink>
+          </li>
+          <li className={s.navListItem}>
+            <NavLink
+              to={`/profile/${currentUser?.username}`}
+              className={s.navLink}
+              activeClassName={s.activeLink}>
+              <PermIdentityIcon className={s.navIcon} />
+              <Hidden smDown>
+                <Typography variant="h6" component="span" className={s.navListLabel}>
+                  Профиль
+                </Typography>
+              </Hidden>
+            </NavLink>
+          </li>
+          <li>
+            <Button
+              className={s.navTweetButton}
+              variant="contained"
+              color="primary"
+              onClick={handleClickOpenAddTweet}
+              fullWidth>
+              <Hidden smDown>Твитнуть</Hidden>
+              <Hidden mdUp>
+                <CreateIcon />
+              </Hidden>
+            </Button>
+            <ModalBlock visible={visibleAddTweet} onClose={onCloseAddTweet}>
+              <div style={{ width: 550 }}>
+                <AddTweetForm rowsMin={4} />
+              </div>
+            </ModalBlock>
+          </li>
+        </ul>
+      </nav>
+      <ProfileBtn />
+    </>
   );
 };
 

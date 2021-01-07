@@ -26,5 +26,9 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserDataAct
     case UserDataActionsType.CHECK_CURRENT_USER:
       draft.LoadingStatus = LoadingStatus.LOADING;
       break;
+
+    case UserDataActionsType.SIGN_OUT:
+      draft.LoadingStatus = LoadingStatus.LOADED;
+      draft.data = null;
   }
 }, initialUserDataState);

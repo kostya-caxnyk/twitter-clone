@@ -7,7 +7,7 @@ export interface User {
   _id: string;
   confirmed: boolean;
   token: string;
-  avatarUrl?: string;
+  avatarUrl: string;
   location?: string;
   about?: string;
   website?: string;

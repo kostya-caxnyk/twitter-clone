@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
@@ -11,22 +11,15 @@ import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import LoginModal from './components/LoginModal';
 import useAuthStyles from './useAuthStyles';
 import RegisterModal from './components/RegisterModal';
-import { selectIsUserLoggedIn, selectUserDataHasError } from '../../store/ducks/user/selectors';
+import { selectUserData, selectUserDataHasError } from '../../store/ducks/user/selectors';
 import Notification from '../../components/Notification';
 
 export const SignIn = () => {
   const s = useAuthStyles();
-  const isLoggedIn = useSelector(selectIsUserLoggedIn);
+  const currentUser = useSelector(selectUserData);
   const hasError = useSelector(selectUserDataHasError);
 
   const [visibleModal, setVisibleModal] = React.useState<'signIn' | 'signUp'>();
-  const [backendErrors, setBackendErrors] = React.useState<string | null>(null);
-
-  useEffect(() => {
-    if (hasError) {
-      setBackendErrors('Произошла ошибка');
-    }
-  }, [hasError]);
 
   const handleClickOpenSignIn = () => {
     setVisibleModal('signIn');
@@ -40,11 +33,7 @@ export const SignIn = () => {
     setVisibleModal(undefined);
   };
 
-  const handleCloseNotification = React.useCallback((): void => {
-    setBackendErrors(null);
-  }, []);
-
-  if (isLoggedIn) {
+  if (currentUser) {
     return <Redirect to="/home" />;
   }
 

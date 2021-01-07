@@ -17,6 +17,7 @@ import {
   selectIsAddTweetLoaded,
 } from '../store/ducks/tweets/selectors';
 import UploadImage from './UploadImage';
+import { selectUserData } from '../store/ducks/user/selectors';
 
 const MAX_INPUT_LENGTH = 280;
 
@@ -35,6 +36,8 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
   const hasError = useSelector(selectIsAddFormStateError);
   const isLoading = useSelector(selectIsAddFormStateLoading);
   const isLoaded = useSelector(selectIsAddTweetLoaded);
+  const currentUser = useSelector(selectUserData);
+
   const [textValue, setTextValue] = React.useState('');
   const [imageUrls, setImageUrls] = React.useState<FileData[]>([]);
 
@@ -79,11 +82,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
         </div>
       )}
       <div className={s.formAddTweet}>
-        <Avatar
-          alt="Remy Sharp"
-          src="https://i.stack.imgur.com/gBMMe.png?s=328&g=1"
-          className={s.formAddTweetAvatar}
-        />
+        <Avatar alt="Remy Sharp" src={currentUser?.avatarUrl} className={s.formAddTweetAvatar} />
         <div style={{ width: '100%', height: '100%' }}>
           <TextareaAutosize
             placeholder="Что происходит?"

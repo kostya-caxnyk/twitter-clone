@@ -12,7 +12,7 @@ import SearchPage from '../SearchPage';
 import TweetPage from '../TweetPage';
 import ProfilePage from '../ProfilePage';
 
-const Layout = () => {
+const Layout: React.FC = () => {
   const s = useHomeStyles();
 
   return (
@@ -23,7 +23,7 @@ const Layout = () => {
         </Grid>
         <Grid sm={8} md={6} item>
           <Switch>
-            <Route path="/home" component={Home} />
+            <Route path={['/home', '/']} component={Home} exact />
             <Route path="/explore" component={SearchPage} />
             <Route path="/tweet/:id" component={TweetPage} />
             <Route path="/profile/:username" component={ProfilePage} />
