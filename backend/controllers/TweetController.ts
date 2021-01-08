@@ -4,6 +4,7 @@ import express from 'express';
 import TweetModel from '../models/TweetModel';
 import { validationResult } from 'express-validator';
 import { ObjectId, isValidObjectId } from 'mongoose';
+import UserModel from '../models/UserModel';
 
 interface IJwtToken {
   _id: ObjectId;
@@ -61,6 +62,9 @@ class TweetController {
       const tweet = new TweetModel(data);
       await tweet.save();
 
+      const author = await UserModel.findById(user._id);
+      author?.tweets.push(tweet._id);
+      await author?.save();
       successResponse(res, 201, { data: await tweet.populate('user').execPopulate() });
     } catch (errors) {
       errorResponse(res, 500, { errors });

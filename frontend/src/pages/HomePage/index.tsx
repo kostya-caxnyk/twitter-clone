@@ -15,6 +15,7 @@ import {
 } from '../../store/ducks/tweets/selectors';
 import LoadingCircle from '../../components/LoadingCircle';
 import Notification from '../../components/Notification';
+import TweetsFeed from '../../components/TweetsFeed';
 
 const Home = () => {
   const s = useHomeStyles();
@@ -36,7 +37,7 @@ const Home = () => {
       </Paper>
       <AddTweetForm />
 
-      {isLoading ? <LoadingCircle /> : tweets.map((tweet) => <Tweet {...tweet} key={tweet._id} />)}
+      {isLoading ? <LoadingCircle /> : <TweetsFeed tweets={tweets} />}
       <Notification open={deleteTweetError} message="Ошибка при удалении твита" type="error" />
     </Paper>
   );

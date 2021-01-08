@@ -12,6 +12,7 @@ import { User } from '../../store/ducks/user/contracts/state';
 import LoadingCircle from '../../components/LoadingCircle';
 import RoomIcon from '@material-ui/icons/RoomOutlined';
 import DateRangeIcon from '@material-ui/icons/DateRangeOutlined';
+import { formatMonthAndYear } from '../../utils/formatDate';
 
 const ProfilePage = () => {
   const s = useHomeStyles();
@@ -44,7 +45,7 @@ const ProfilePage = () => {
             variant="subtitle2"
             className={s.feedHeaderLabel}
             style={{ padding: 0, paddingBottom: 5, fontWeight: 400 }}>
-            7 твитов
+            {user.tweets.length} твитов
           </Typography>
         </div>
       </Paper>
@@ -67,26 +68,25 @@ const ProfilePage = () => {
               @{user.username}
             </Typography>
           </div>
-
-          <Typography className={s.profileAbout}>
-            Каждый день новая порция интересных фактов. #мозг #интересно #факты #follow
-          </Typography>
+          {!!user.about && <Typography className={s.profileAbout}>{user.about}</Typography>}
           <div className={s.profileDetails}>
-            <Typography className={s.profileLabel}>
-              <RoomIcon />
-              Moscow
-            </Typography>
+            {!!user.location && (
+              <Typography className={s.profileLabel}>
+                <RoomIcon />
+                {user.location}
+              </Typography>
+            )}
             <Typography className={s.profileLabel}>
               <DateRangeIcon />
-              Регистрация: апрель 2011 г
+              Регистрация: {formatMonthAndYear(user.createdAt)}
             </Typography>
           </div>
           <div style={{ marginBottom: 10, fontSize: 15 }}>
             <span className={s.profileLink}>
-              <b>1</b> в читаемых
+              <b>{user.inSubscribers.length}</b> в читаемых
             </span>
             <span className={s.profileLink}>
-              <b>0</b> читателей
+              <b>{user.subscribers.length}</b> читателей
             </span>
           </div>
         </div>

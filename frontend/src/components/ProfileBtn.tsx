@@ -42,8 +42,8 @@ const ProfileBtn: React.FC = () => {
       <Fab variant="extended" className={s.profileBtn} onClick={handleOpenMenuClick} disableRipple>
         <Avatar alt="" src={currentUser.avatarUrl} />
         <div className={s.profileBtnInfo}>
-          <Typography variant="inherit">
-            <strong>{currentUser.name}</strong>
+          <Typography align="left" style={{ fontWeight: 700 }}>
+            {currentUser.name}
           </Typography>
           <Typography align="left">@{currentUser.username}</Typography>
         </div>

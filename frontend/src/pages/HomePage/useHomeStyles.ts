@@ -459,6 +459,6 @@ export default makeStyles((theme) => ({
     fontWeight: 400,
     fontSize: 15,
     lineHeight: 1.35,
-    marginRight: 6,
+    marginRight: 12,
   },
 }));

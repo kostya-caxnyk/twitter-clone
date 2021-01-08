@@ -36,6 +36,9 @@ class UserController {
         password: await bcrypt.hash(password, 10),
         confirmHash: await bcrypt.genSalt(8),
         confirmed: false,
+        subscribers: [],
+        inSubscribers: [],
+        tweets: [],
       };
 
       const user = new UserModel(data);

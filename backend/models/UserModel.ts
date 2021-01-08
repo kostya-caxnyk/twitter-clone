@@ -1,4 +1,4 @@
-import { Schema, model, Document } from 'mongoose';
+import { Schema, model, Document, ObjectId } from 'mongoose';
 
 export interface IUserModel {
   email: string;
@@ -8,10 +8,14 @@ export interface IUserModel {
   avatarUrl?: string;
   confirmHash: string;
   confirmed: boolean;
+  subscribers: string[];
+  inSubscribers: string[];
+  tweets: string[];
   location?: string;
   about?: string;
   website?: string;
   _id?: string;
+  createdAt?: string;
 }
 
 type IUserDocumentModel = IUserModel & Document;
@@ -51,6 +55,9 @@ const UserSchema = new Schema<IUserModel>(
       type: Boolean,
       default: false,
     },
+    subscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    inSubscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    tweets: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }],
     location: String,
     about: String,
     website: String,

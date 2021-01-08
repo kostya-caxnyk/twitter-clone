@@ -19,3 +19,8 @@ export const formatToShortLabel = (date: string | Date): string => {
   }
   return format(date, 'd MMM y г.', { locale: ru });
 };
+
+export const formatMonthAndYear = (date: string | Date): string => {
+  date = new Date(date);
+  return format(date, 'LLLL u г.', { locale: ru });
+};
