@@ -37,7 +37,7 @@ const Home = () => {
       </Paper>
       <AddTweetForm />
 
-      {isLoading ? <LoadingCircle /> : <TweetsFeed tweets={tweets} />}
+      {isLoading || !tweets ? <LoadingCircle /> : <TweetsFeed tweets={tweets} />}
       <Notification open={deleteTweetError} message="Ошибка при удалении твита" type="error" />
     </Paper>
   );

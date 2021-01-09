@@ -4,7 +4,7 @@ import { UsersActions, UsersActionsType } from './contracts/actionTypes';
 import { UsersState } from './contracts/state';
 
 const initialUsersState: UsersState = {
-  items: [],
+  items: null,
   LoadingStatus: LoadingStatus.NEVER,
 };
 
@@ -16,7 +16,6 @@ export const usersReducer = produce((draft: Draft<UsersState>, action: UsersActi
       break;
 
     case UsersActionsType.FETCH_ITEMS:
-      draft.items = [];
       draft.LoadingStatus = LoadingStatus.LOADING;
       break;
 

@@ -1,3 +1,4 @@
+import { Tweet } from './../../frontend/src/store/ducks/tweets/contracts/state';
 import { isValidObjectId } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import express from 'express';
@@ -9,11 +10,25 @@ import { transporter } from './../core/mailer';
 import UserModel from '../models/UserModel';
 import regEmail from '../emails/registration';
 import { errorResponse, successResponse } from './../utils/sendResponse';
+import TweetModel from '../models/TweetModel';
 
 class UserController {
-  async getUsers(_: any, res: express.Response): Promise<void> {
+  async getUsers(req: express.Request, res: express.Response): Promise<void> {
     try {
-      const users = await UserModel.find().exec();
+      const userFromReq = req.user;
+      const user = await UserModel.findOne({ _id: userFromReq?._id });
+
+      if (!user) {
+        res.status(401).send();
+        return;
+      }
+
+      const notRecomendedUsers = [...user.following, user._id];
+      const limit = (req.query as any).to;
+      const users = await UserModel.find({ _id: { $nin: notRecomendedUsers } })
+        .sort({ createdAt: 1 })
+        .limit(+limit)
+        .exec();
 
       successResponse(res, 200, { data: users });
     } catch (errors) {
@@ -36,8 +51,8 @@ class UserController {
         password: await bcrypt.hash(password, 10),
         confirmHash: await bcrypt.genSalt(8),
         confirmed: false,
-        subscribers: [],
-        inSubscribers: [],
+        following: [],
+        followers: [],
         tweets: [],
       };
 
@@ -91,14 +106,9 @@ class UserController {
 
   async getUser(req: express.Request, res: express.Response) {
     try {
-      const { id } = req.params;
+      const { username } = req.params;
 
-      if (!isValidObjectId(id)) {
-        res.status(400).send();
-        return;
-      }
-
-      const user = await UserModel.findById(id).exec();
+      const user = await UserModel.findOne({ username }).exec();
 
       if (!user) {
         errorResponse(res, 404, { errors: 'Пользователь не найден' });
@@ -134,18 +144,44 @@ class UserController {
 
   async getCurrentUser(req: express.Request, res: express.Response) {
     if (!req.user) {
-      res.status(404);
+      res.status(404).send();
       return;
     }
 
     const user = await UserModel.findById(req.user._id);
 
     if (!user) {
-      res.status(404);
+      res.status(404).send();
       return;
     }
 
     successResponse(res, 200, { data: user });
+  }
+
+  async getUserTweets(req: express.Request, res: express.Response) {
+    const username = req.params.username;
+
+    if (!username) {
+      res.status(401).send();
+      return;
+    }
+
+    const user = await UserModel.findOne({ username }).lean().exec();
+
+    if (!user) {
+      res.status(404).send();
+      return;
+    }
+
+    const tweets = await TweetModel.find({ user: user._id })
+      .populate('user')
+      .sort({ createdAt: -1 })
+      .lean()
+      .exec();
+
+    successResponse(res, 200, {
+      data: tweets,
+    });
   }
 }
 

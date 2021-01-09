@@ -12,8 +12,9 @@ export const setUsers = (payload: User[]): ISetUsersAction => ({
   payload,
 });
 
-export const fetchTopics = (): IFetchUsersAction => ({
+export const fetchUsers = (quantity: number): IFetchUsersAction => ({
   type: UsersActionsType.FETCH_ITEMS,
+  payload: quantity,
 });
 
 export const setUsersLoadingStatus = (payload: LoadingStatus): ISetLoadingStatusAction => ({

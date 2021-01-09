@@ -8,8 +8,8 @@ export interface IUserModel {
   avatarUrl?: string;
   confirmHash: string;
   confirmed: boolean;
-  subscribers: string[];
-  inSubscribers: string[];
+  following: string[];
+  followers: string[];
   tweets: string[];
   location?: string;
   about?: string;
@@ -55,8 +55,8 @@ const UserSchema = new Schema<IUserModel>(
       type: Boolean,
       default: false,
     },
-    subscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-    inSubscribers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    following: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+    followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     tweets: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }],
     location: String,
     about: String,

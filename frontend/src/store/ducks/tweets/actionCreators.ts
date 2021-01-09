@@ -1,4 +1,4 @@
-import { ImageData, LoadingStatus } from '../../types';
+import { LoadingStatus } from '../../types';
 import {
   IAddTweetAction,
   IDeleteTweetAction,
@@ -18,8 +18,9 @@ export const setTweets = (payload: Tweet[]): ISetTweetsAction => ({
   payload,
 });
 
-export const fetchTweets = (): IFetchTweetsAction => ({
+export const fetchTweets = (username?: string): IFetchTweetsAction => ({
   type: TweetsActionsType.FETCH_TWEETS,
+  payload: username,
 });
 
 export const setTweetsLoadingStatus = (payload: LoadingStatus): ISetLoadingStatusAction => ({

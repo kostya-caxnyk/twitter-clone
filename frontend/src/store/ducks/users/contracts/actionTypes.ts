@@ -15,6 +15,7 @@ export interface ISetUsersAction extends Action<UsersActionsType> {
 
 export interface IFetchUsersAction {
   type: UsersActionsType.FETCH_ITEMS;
+  payload: number;
 }
 
 export interface ISetLoadingStatusAction {

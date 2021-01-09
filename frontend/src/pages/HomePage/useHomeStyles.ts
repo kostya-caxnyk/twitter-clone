@@ -118,7 +118,7 @@ export default makeStyles((theme) => ({
     '&:hover': {
       backgroundColor: 'rgba(0,0,0,0.03)',
     },
-    padding: '3px 15px 2px',
+    padding: '10px 15px 2px',
     borderRight: 0,
     borderLeft: 0,
     display: 'flex',
@@ -225,7 +225,7 @@ export default makeStyles((theme) => ({
   recomItem: {
     backgroundColor: 'rgb(247, 249, 250)',
     borderBottom: '1px solid rgb(235, 238, 240)',
-    padding: 15,
+    padding: '5px 10px',
     cursor: 'pointer',
     position: 'relative',
     '&:hover': {
@@ -240,7 +240,10 @@ export default makeStyles((theme) => ({
     color: 'rgb(91, 112, 131)',
     fontSize: 13,
   },
-  recomItemBtn: {
+  recomItemActiveBtn: {
+    backgroundColor: theme.palette.primary.light,
+  },
+  recomItemBtnIcon: {
     color: theme.palette.primary.main,
   },
   recomLoadMore: {
@@ -261,14 +264,6 @@ export default makeStyles((theme) => ({
   },
   recomItemPeople: {
     display: 'flex',
-  },
-  recomItemAddBtn: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
-    '& svg': {
-      color: theme.palette.primary.main,
-    },
   },
   lowOpacity: {
     opacity: 0.5,
@@ -460,5 +455,33 @@ export default makeStyles((theme) => ({
     fontSize: 15,
     lineHeight: 1.35,
     marginRight: 12,
+  },
+  profileTabs: {
+    display: 'flex',
+    marginBottom: 10,
+    marginTop: 20,
+    fontSize: 15,
+    borderBottom: '1px solid rgba(0,0,0,0.1)',
+  },
+  profileTab: {
+    padding: 15,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 50,
+    fontWeight: 700,
+    color: 'rgb(91, 112, 131)',
+    transition: 'all .2s linear',
+
+    '&:hover': {
+      backgroundColor: 'rgba(122, 204, 254, 0.3)',
+      color: theme.palette.primary.main,
+    },
+  },
+  profileActiveLink: {
+    borderBottom: `2px solid ${theme.palette.primary.main}`,
+    '& div': {
+      color: theme.palette.primary.main,
+    },
   },
 }));

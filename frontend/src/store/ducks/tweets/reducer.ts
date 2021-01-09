@@ -4,7 +4,7 @@ import { TweetsActions, TweetsActionsType } from './contracts/actionTypes';
 import { LoadingStatus } from '../../types';
 
 const initialTweetsState: TweetsState = {
-  items: [],
+  items: null,
   LoadingStatus: LoadingStatus.NEVER,
   addFormState: AddFormState.NEVER,
   deleteTweetState: DeleteTweetState.NEVER,
@@ -36,7 +36,7 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
     case TweetsActionsType.ADD_TWEET:
       draft.addFormState = AddFormState.LOADED;
-      draft.items.unshift(action.payload);
+      draft.items?.unshift(action.payload);
       break;
 
     case TweetsActionsType.FETCH_DELETE_TWEET:
@@ -45,8 +45,10 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
     case TweetsActionsType.DELETE_TWEET:
       draft.deleteTweetState = DeleteTweetState.NEVER;
-      const idx = draft.items.findIndex((tweet) => tweet._id === action.payload);
-      draft.items.splice(idx, 1);
+
+      draft.items = draft.items
+        ? draft.items.filter((tweet) => tweet._id !== action.payload)
+        : null;
       break;
 
     case TweetsActionsType.SET_DELETE_TWEET_STATE:

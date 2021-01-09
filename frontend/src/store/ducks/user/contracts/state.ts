@@ -8,8 +8,8 @@ export interface User {
   confirmed: boolean;
   token: string;
   avatarUrl: string;
-  subscribers: string[];
-  inSubscribers: string[];
+  following: string[];
+  followers: string[];
   tweets: string[];
   createdAt: string;
   location?: string;

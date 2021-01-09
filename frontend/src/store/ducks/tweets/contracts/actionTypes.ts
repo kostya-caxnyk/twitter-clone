@@ -32,6 +32,7 @@ export interface ISetTweetsAction extends Action<TweetsActionsType> {
 
 export interface IFetchTweetsAction {
   type: TweetsActionsType.FETCH_TWEETS;
+  payload?: string;
 }
 
 export interface ISetLoadingStatusAction {

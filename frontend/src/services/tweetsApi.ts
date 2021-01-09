@@ -15,8 +15,9 @@ interface CreateTweetData {
 }
 
 export const tweetsApi = {
-  async getTweets(): Promise<Tweet[]> {
-    const { data } = await axios.get<IResponse<Tweet[]>>('/tweets');
+  async getTweets(username?: string): Promise<Tweet[]> {
+    const path = username ? '/user/tweets/' + username : '/tweets';
+    const { data } = await axios.get<IResponse<Tweet[]>>(path);
     return data.data;
   },
 

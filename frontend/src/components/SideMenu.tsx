@@ -26,7 +26,7 @@ interface SideMenuProps {}
 const SideMenu: React.FC<SideMenuProps> = () => {
   const s = useHomeStyles();
   const [visibleAddTweet, setVisibleAddTweet] = React.useState(false);
-  const currentUser = useSelector(selectUserData);
+  const currentUser = useSelector(selectUserData, () => true);
 
   const handleClickOpenAddTweet = () => {
     setVisibleAddTweet(true);

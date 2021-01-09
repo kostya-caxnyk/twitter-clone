@@ -5,8 +5,13 @@ import { useParams } from 'react-router-dom';
 import BackButton from '../../components/BackButton';
 import BigTweet from '../../components/BigTweet';
 import LoadingCircle from '../../components/LoadingCircle';
+import Notification from '../../components/Notification';
 import { fetchTweetData, setTweetData } from '../../store/ducks/tweet/actionCreators';
-import { selectIsTweetDataLoading, selectTweetData } from '../../store/ducks/tweet/selectors';
+import {
+  selectIsTweetDataHasError,
+  selectIsTweetDataLoading,
+  selectTweetData,
+} from '../../store/ducks/tweet/selectors';
 import useHomeStyles from '../HomePage/useHomeStyles';
 
 const TweetPage: React.FC = () => {
@@ -14,6 +19,7 @@ const TweetPage: React.FC = () => {
 
   const tweetData = useSelector(selectTweetData);
   const isLoading = useSelector(selectIsTweetDataLoading);
+  const hasError = useSelector(selectIsTweetDataHasError);
   const dispatch = useDispatch();
   const params: { id: string } = useParams();
   const { id } = params;
@@ -26,15 +32,18 @@ const TweetPage: React.FC = () => {
   }, [dispatch, id]);
 
   return (
-    <Paper variant="outlined" className={s.feedWrapper} square>
-      <Paper variant="outlined" className={s.feedHeader}>
-        <BackButton />
-        <Typography variant="h6" className={s.feedHeaderLabel}>
-          Твитнуть
-        </Typography>
+    <>
+      <Paper variant="outlined" className={s.feedWrapper} square>
+        <Paper variant="outlined" className={s.feedHeader}>
+          <BackButton />
+          <Typography variant="h6" className={s.feedHeaderLabel}>
+            Твитнуть
+          </Typography>
+        </Paper>
+        {isLoading || !tweetData ? <LoadingCircle /> : <BigTweet {...tweetData} />}
       </Paper>
-      {isLoading || !tweetData ? <LoadingCircle /> : <BigTweet {...tweetData} />}
-    </Paper>
+      <Notification open={hasError} message="Ошибка при загрузкe твита" type="error" />
+    </>
   );
 };
 

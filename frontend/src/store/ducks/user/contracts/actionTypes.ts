@@ -8,6 +8,7 @@ export enum UserDataActionsType {
   'SET_LOADING_STATE' = 'user/SET_LOADING_STATE',
   'FETCH_REGISTER_USER' = 'user/FETCH_REGISTER_USER',
   'CHECK_CURRENT_USER' = 'user/CHECK_CURRENT_USER',
+  'FETCH_USER_TWEETS' = 'user/FETCH_USER_TWEETS',
   'SIGN_OUT' = 'user/SIGN_OUT',
 }
 
@@ -42,6 +43,11 @@ export interface ISetLoadingStatusAction {
   payload: LoadingStatus;
 }
 
+export interface IFetchUserTweetsAction {
+  type: UserDataActionsType.FETCH_USER_TWEETS;
+  payload: string;
+}
+
 export interface ICheckCurrentUserAction {
   type: UserDataActionsType.CHECK_CURRENT_USER;
 }
@@ -55,4 +61,5 @@ export type UserDataActions =
   | IFetchUserDataAction
   | ISetLoadingStatusAction
   | ICheckCurrentUserAction
-  | ISignOut;
+  | ISignOut
+  | IFetchUserTweetsAction;

@@ -13,13 +13,14 @@ import {
   IFetchAddTweetAction,
   TweetsActionsType,
   IFetchDeleteTweetAction,
+  IFetchTweetsAction,
 } from './contracts/actionTypes';
 import { ImageData, LoadingStatus } from '../../types';
 import uploadImages from '../../../utils/uploadImages';
 
-export function* fetchTweetsRequest() {
+export function* fetchTweetsRequest({ payload }: IFetchTweetsAction) {
   try {
-    const tweets = yield call(tweetsApi.getTweets);
+    const tweets = yield call(tweetsApi.getTweets, payload);
     yield put(setTweets(tweets));
   } catch (e) {
     yield put(setTweetsLoadingStatus(LoadingStatus.ERROR));

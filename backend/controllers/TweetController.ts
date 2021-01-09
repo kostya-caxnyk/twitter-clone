@@ -87,11 +87,16 @@ class TweetController {
     }
 
     const isOwner = tweet.user.toString() === user._id;
-    if (!isOwner) {
+    const userDoc = await UserModel.findById(user._id);
+    if (!isOwner || !userDoc) {
       res.status(403).send('Not an author to delete this tweet');
       return;
     }
 
+    const newTweets = userDoc.tweets.filter((id) => id.toString() !== tweet._id.toString());
+    userDoc.tweets = newTweets;
+
+    await userDoc.save();
     await tweet.remove();
     successResponse(res, 204);
     try {
