@@ -31,5 +31,11 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserDataAct
       draft.LoadingStatus = LoadingStatus.LOADED;
       draft.data = null;
       break;
+
+    case UserDataActionsType.SET_NEW_FOLLOWING_ARR:
+      if (draft.data) {
+        draft.data.following = action.payload;
+      }
+      break;
   }
 }, initialUserDataState);

@@ -44,17 +44,24 @@ export default makeStyles((theme) => ({
   },
   navTweetButton: {
     height: 49,
+    minWidth: 49,
   },
   profileBtn: {
     width: '100%',
     height: 55,
     display: 'flex',
-    justifyContent: 'flex-start',
     textTransform: 'none',
+    padding: '0 5px',
     backgroundColor: 'white',
     '&:hover': {
       backgroundColor: 'rgba(122, 204, 254, 0.3)',
     },
+  },
+  profileBtnLabel: {
+    maxWidth: 140,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   profileBtnInfo: {
     marginLeft: 10,
@@ -63,7 +70,6 @@ export default makeStyles((theme) => ({
     marginLeft: 'auto',
   },
   profileBtnMenu: {
-    //backgroundColor: 'red',
     '& .MuiMenu-paper': {
       boxShadow: 'rgba(101, 119, 134, 0.2) 0px 0px 15px, rgba(101, 119, 134, 0.15) 0px 0px 3px 1px',
       borderRadius: 16,
@@ -150,8 +156,13 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
     alignItems: 'center',
   },
+  tweetHeaderLink: {
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
   tweetHeaderMoreIcon: {
-    padding: 5,
+    padding: 0,
     '&:hover': {
       color: theme.palette.primary.main,
     },
@@ -235,10 +246,18 @@ export default makeStyles((theme) => ({
   recomItemTitle: {
     fontWeight: 700,
     fontSize: 15,
+    maxWidth: 160,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   recomItemText: {
     color: 'rgb(91, 112, 131)',
     fontSize: 13,
+    maxWidth: 160,
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
   },
   recomItemActiveBtn: {
     backgroundColor: theme.palette.primary.light,

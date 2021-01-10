@@ -14,6 +14,7 @@ import { formatToFullLabel } from '../utils/formatDate';
 import { ImageData } from '../store/types';
 import ImagesList from './ImagesList';
 import { User } from '../store/ducks/user/contracts/state';
+import { Link } from 'react-router-dom';
 
 interface BigTweetProps {
   user: User;
@@ -36,11 +37,15 @@ const BigTweet: React.FC<BigTweetProps> = ({
     <Paper variant="outlined" className={s.bigTweet} square>
       <div className={s.bigTweetUserInfo}>
         <div className={s.tweetAvatarWrapper}>
-          <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />
+          <Link to={`/profile/${user.username}`}>
+            <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />
+          </Link>
         </div>
         <div>
           <p>
-            <b>{user.name} </b>
+            <b>
+              <Link to={`/profile/${user.username}`}>{user.name} </Link>
+            </b>
           </p>
           <p>
             <span className={s.tweetUserName}>@{user.username} </span>

@@ -69,7 +69,7 @@ const ProfilePage = () => {
           </Typography>
         </div>
       </Paper>
-      <ProfileUserInfo user={user} />
+      <ProfileUserInfo user={user} currentUser={currentUser} />
       <Tabs username={user.username} />
       {tweets && !isTweetsLoading ? <TweetsFeed tweets={tweets} /> : <LoadingCircle />}
     </Paper>

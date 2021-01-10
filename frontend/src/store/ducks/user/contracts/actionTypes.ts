@@ -10,6 +10,7 @@ export enum UserDataActionsType {
   'CHECK_CURRENT_USER' = 'user/CHECK_CURRENT_USER',
   'FETCH_USER_TWEETS' = 'user/FETCH_USER_TWEETS',
   'SIGN_OUT' = 'user/SIGN_OUT',
+  'SET_NEW_FOLLOWING_ARR' = 'user/SET_NEW_FOLLOWING_ARR',
 }
 
 export interface ISetUserDataAction extends Action<UserDataActionsType> {
@@ -52,8 +53,13 @@ export interface ICheckCurrentUserAction {
   type: UserDataActionsType.CHECK_CURRENT_USER;
 }
 
-export interface ISignOut {
+export interface ISignOutAction {
   type: UserDataActionsType.SIGN_OUT;
+}
+
+export interface ISetNewFollowingAction {
+  type: UserDataActionsType.SET_NEW_FOLLOWING_ARR;
+  payload: string[];
 }
 
 export type UserDataActions =
@@ -61,5 +67,6 @@ export type UserDataActions =
   | IFetchUserDataAction
   | ISetLoadingStatusAction
   | ICheckCurrentUserAction
-  | ISignOut
-  | IFetchUserTweetsAction;
+  | ISignOutAction
+  | IFetchUserTweetsAction
+  | ISetNewFollowingAction;

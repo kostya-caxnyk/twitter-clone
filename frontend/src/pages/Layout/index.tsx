@@ -1,7 +1,7 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import { Container } from '@material-ui/core';
+import { Container, Hidden } from '@material-ui/core';
 import SideMenu from '../../components/SideMenu';
 
 import RightSideBar from '../RightSideBar';
@@ -18,10 +18,10 @@ const Layout: React.FC = () => {
   return (
     <Container maxWidth="lg" className={s.wrapper}>
       <Grid container spacing={3}>
-        <Grid sm={1} md={3} item>
+        <Grid xs={1} md={1} lg="auto" style={{ width: 255 }} item>
           <SideMenu />
         </Grid>
-        <Grid sm={8} md={6} item>
+        <Grid xs md lg item>
           <Switch>
             <Route path={['/home', '/']} component={Home} exact />
             <Route path="/explore" component={SearchPage} />
@@ -29,9 +29,11 @@ const Layout: React.FC = () => {
             <Route path="/profile/:username" component={ProfilePage} />
           </Switch>
         </Grid>
-        <Grid sm={3} md={3} item>
-          <RightSideBar />
-        </Grid>
+        <Hidden smDown>
+          <Grid md="auto" lg="auto" style={{ width: 350 }} item>
+            <RightSideBar />
+          </Grid>
+        </Hidden>
       </Grid>
     </Container>
   );

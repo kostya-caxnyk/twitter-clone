@@ -6,13 +6,39 @@ import { formatMonthAndYear } from '../../../utils/formatDate';
 import useHomeStyles from '../../HomePage/useHomeStyles';
 import RoomIcon from '@material-ui/icons/RoomOutlined';
 import DateRangeIcon from '@material-ui/icons/DateRangeOutlined';
+import FollowUserBtn from '../../../components/FollowUserBtn';
+import { fetchFollowUser } from '../../../store/ducks/users/actionCreators';
+import { useDispatch } from 'react-redux';
 
 interface ProfileUserInfoProps {
   user: User;
+  currentUser: User | null;
 }
 
-const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({ user }) => {
+const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({ user, currentUser }) => {
   const s = useHomeStyles();
+  const dispatch = useDispatch();
+
+  const onClickFollowUser = (event: React.MouseEvent, id: string, isFollowing: boolean) => {
+    event.preventDefault();
+    event.stopPropagation();
+    dispatch(fetchFollowUser({ id, isFollowing }));
+  };
+
+  const isFollowing = !!currentUser?.following.includes(user._id);
+  const actionButton =
+    currentUser?._id !== user._id ? (
+      <FollowUserBtn
+        isFollowing={isFollowing}
+        onClickFollowUser={onClickFollowUser}
+        userId={user._id}
+        big
+      />
+    ) : (
+      <Button variant="outlined" color="primary">
+        Изменить профиль
+      </Button>
+    );
 
   return (
     <>
@@ -22,9 +48,7 @@ const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({ user }) => {
           <div className={s.profileAvatar}>
             <img src={user.avatarUrl} alt={user.name} />
           </div>
-          <Button variant="outlined" color="primary">
-            Изменить профиль
-          </Button>
+          {currentUser && actionButton}
         </div>
         <div className={s.profileInfo}>
           <div style={{ marginBottom: 10 }}>

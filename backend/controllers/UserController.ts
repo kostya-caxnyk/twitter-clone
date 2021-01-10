@@ -183,6 +183,62 @@ class UserController {
       data: tweets,
     });
   }
+
+  async followUser(req: express.Request, res: express.Response) {
+    const id = req.params.id;
+    const userFromReq = req.user;
+
+    const user = await UserModel.findOne({ _id: userFromReq?._id }).exec();
+    if (!user) {
+      res.status(404).send();
+      return;
+    }
+
+    const followingUser = await UserModel.findOne({ _id: id }).exec();
+    if (!followingUser) {
+      res.status(404).send();
+      return;
+    }
+
+    user.following.push(followingUser._id);
+    followingUser.followers.push(user._id);
+
+    await user.save();
+    await followingUser.save();
+    successResponse(res, 200, {
+      data: user.following,
+    });
+  }
+
+  async unFollowUser(req: express.Request, res: express.Response) {
+    const id = req.params.id;
+    const userFromReq = req.user;
+
+    const user = await UserModel.findOne({ _id: userFromReq?._id }).exec();
+    if (!user) {
+      res.status(404).send();
+      return;
+    }
+
+    const UnFollowingUser = await UserModel.findOne({ _id: id }).exec();
+    if (!UnFollowingUser) {
+      res.status(404).send();
+      return;
+    }
+
+    user.following = user.following.filter(
+      (_id) => _id.toString() !== UnFollowingUser._id.toString(),
+    );
+    UnFollowingUser.followers = UnFollowingUser.followers.filter(
+      (_id) => _id.toString() !== user._id.toString(),
+    );
+
+    await user.save();
+    await UnFollowingUser.save();
+    successResponse(res, 200, {
+      data: user.following,
+    });
+  }
 }
 
 export default new UserController();

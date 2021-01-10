@@ -1,6 +1,7 @@
 import {
   Avatar,
   Fab,
+  Hidden,
   ListItemAvatar,
   ListItemText,
   Menu,
@@ -41,20 +42,23 @@ const ProfileBtn: React.FC = () => {
     <div style={{ position: 'sticky', top: '93vh' }}>
       <Fab variant="extended" className={s.profileBtn} onClick={handleOpenMenuClick} disableRipple>
         <Avatar alt="" src={currentUser.avatarUrl} />
-        <div className={s.profileBtnInfo}>
-          <Typography align="left" style={{ fontWeight: 700 }}>
-            {currentUser.name}
-          </Typography>
-          <Typography align="left">@{currentUser.username}</Typography>
-        </div>
-        <MoreIcon className={s.profileBtnMoreIcon} />
+        <Hidden mdDown>
+          <div className={s.profileBtnInfo}>
+            <Typography align="left" className={s.profileBtnLabel} style={{ fontWeight: 700 }}>
+              {currentUser.name}
+            </Typography>
+            <Typography align="left" className={s.profileBtnLabel}>
+              @{currentUser.username}
+            </Typography>
+          </div>
+          <MoreIcon className={s.profileBtnMoreIcon} />
+        </Hidden>
       </Fab>
       <Menu
         anchorEl={anchorEl}
         open={Boolean(anchorEl)}
         onClose={handleCloseMenu}
-        className={s.profileBtnMenu}
-        keepMounted>
+        className={s.profileBtnMenu}>
         <MenuItem className={s.recomItem} style={{ cursor: 'default', pointerEvents: 'none' }}>
           <ListItemAvatar>
             <Avatar
@@ -64,8 +68,16 @@ const ProfileBtn: React.FC = () => {
             />
           </ListItemAvatar>
           <ListItemText
-            primary={<Typography className={s.recomItemTitle}>{currentUser.name}</Typography>}
-            secondary={<Typography className={s.recomItemText}>@{currentUser.username}</Typography>}
+            primary={
+              <Typography className={s.recomItemTitle} style={{ maxWidth: 500 }}>
+                {currentUser.name}
+              </Typography>
+            }
+            secondary={
+              <Typography className={s.recomItemText} style={{ maxWidth: 500 }}>
+                @{currentUser.username}
+              </Typography>
+            }
           />
         </MenuItem>
         <MenuItem onClick={handleSignOut}>

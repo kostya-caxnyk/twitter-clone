@@ -19,11 +19,13 @@ export const userApi = {
     return data.data;
   },
 
-  async followUser(id: string): Promise<void> {
-    await axios.post('/follow/' + id);
+  async followUser(id: string): Promise<string[]> {
+    const { data } = await axios.post<IResponse<string[]>>('/follow/' + id);
+    return data.data;
   },
 
-  async unfollowUser(id: string): Promise<void> {
-    await axios.delete('/follow/' + id);
+  async unfollowUser(id: string): Promise<string[]> {
+    const { data } = await axios.delete<IResponse<string[]>>('/follow/' + id);
+    return data.data;
   },
 };

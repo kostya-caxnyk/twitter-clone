@@ -6,8 +6,9 @@ import {
   ILoginFormData,
   IRegisterFormData,
   ISetLoadingStatusAction,
+  ISetNewFollowingAction,
   ISetUserDataAction,
-  ISignOut,
+  ISignOutAction,
   UserDataActionsType,
 } from './contracts/actionTypes';
 import { User } from './contracts/state';
@@ -36,6 +37,11 @@ export const checkCurrentUser = (): ICheckCurrentUserAction => ({
   type: UserDataActionsType.CHECK_CURRENT_USER,
 });
 
-export const signOut = (): ISignOut => ({
+export const signOut = (): ISignOutAction => ({
   type: UserDataActionsType.SIGN_OUT,
+});
+
+export const setNewFollowingArr = (payload: string[]): ISetNewFollowingAction => ({
+  type: UserDataActionsType.SET_NEW_FOLLOWING_ARR,
+  payload,
 });

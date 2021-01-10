@@ -54,7 +54,7 @@ export default [
 
   body('name', 'Введите имя')
     .isString()
-    .isLength({ min: 2, max: 100 })
+    .isLength({ min: 2, max: 50 })
     .withMessage('Неверное имя')
     .trim(),
 ];

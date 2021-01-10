@@ -63,16 +63,21 @@ const Tweet: React.FC<TweetProps> = ({
       <Link to={`/tweet/${_id}`}>
         <Paper variant="outlined" className={s.tweet} square>
           <div className={s.tweetAvatarWrapper}>
-            <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />
+            <Link to={`/profile/${user.username}`}>
+              <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />
+            </Link>
           </div>
           <div style={{ width: '100%' }}>
             <div className={s.tweetHeader}>
               <div>
-                <b>{user.name} </b>
-                <span className={s.tweetUserName}>@{user.username} </span>
+                <Link to={`/profile/${user.username}`} className={s.tweetHeaderLink}>
+                  <b>{user.name} </b>
+                  <span className={s.tweetUserName}>@{user.username} </span>
+                </Link>
                 <span style={{ padding: '0 3px' }}>·</span>
                 <span className={s.tweetDate}>{formatToShortLabel(createdAt)}</span>
               </div>
+
               {isAuthor && (
                 <IconButton className={s.tweetHeaderMoreIcon} onClick={onOpenMoreInfo}>
                   <MoreIcon />

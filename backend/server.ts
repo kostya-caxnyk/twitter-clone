@@ -41,8 +41,10 @@ app.delete(
 );
 
 app.get('/user/tweets/:username', UserController.getUserTweets);
-
 app.post('/images', upload.array('images'), UploadFilesController.uploadImages);
+
+app.post('/follow/:id', passport.authenticate('jwt'), UserController.followUser);
+app.delete('/follow/:id', passport.authenticate('jwt'), UserController.unFollowUser);
 
 app.listen(PORT, () => {
   console.log('server is running on port ' + PORT);

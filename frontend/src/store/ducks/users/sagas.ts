@@ -1,5 +1,10 @@
+import { setNewFollowingArr } from './../user/actionCreators';
 import { setUsers, setUsersLoadingStatus } from './actionCreators';
-import { UsersActionsType, IFetchUsersAction } from './contracts/actionTypes';
+import {
+  UsersActionsType,
+  IFetchUsersAction,
+  IFetchFollowUserAction,
+} from './contracts/actionTypes';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { LoadingStatus } from '../../types';
 import { User } from '../user/contracts/state';
@@ -14,6 +19,18 @@ export function* fetchUsersRequest({ payload }: IFetchUsersAction) {
   }
 }
 
+export function* fetchFollowingUser({ payload }: IFetchFollowUserAction) {
+  try {
+    const followingUsers: string[] = payload.isFollowing
+      ? yield call(userApi.unfollowUser, payload.id)
+      : yield call(userApi.followUser, payload.id);
+    yield put(setNewFollowingArr(followingUsers));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function* usersSaga() {
   yield takeEvery(UsersActionsType.FETCH_ITEMS, fetchUsersRequest);
+  yield takeEvery(UsersActionsType.FETCH_FOLLOW_USER, fetchFollowingUser);
 }

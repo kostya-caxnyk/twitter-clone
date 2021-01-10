@@ -48,7 +48,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           <li className={s.navListItem}>
             <NavLink to="/home" className={s.navLink} activeClassName={s.activeLink} exact>
               <HomeIcon className={s.navIcon} />
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Typography variant="h6" component="span" className={s.navListLabel}>
                   Главная
                 </Typography>
@@ -58,7 +58,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           <li className={s.navListItem}>
             <NavLink to="/explore" className={s.navLink} activeClassName={s.activeLink} exact>
               <SearchIcon className={s.navIcon} />
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Typography variant="h6" component="span" className={s.navListLabel}>
                   Поиск
                 </Typography>
@@ -68,7 +68,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           <li className={s.navListItem}>
             <NavLink to="/notifications" className={s.navLink} activeClassName={s.activeLink} exact>
               <NotificationsNoneIcon className={s.navIcon} />
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Typography variant="h6" component="span" className={s.navListLabel}>
                   Уведомления
                 </Typography>
@@ -78,7 +78,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           <li className={s.navListItem}>
             <NavLink to="/messages" className={s.navLink} activeClassName={s.activeLink}>
               <EmailIcon className={s.navIcon} />
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Typography variant="h6" component="span" className={s.navListLabel}>
                   Сообщения
                 </Typography>
@@ -88,7 +88,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           <li className={s.navListItem}>
             <NavLink to="/bookmarks" className={s.navLink} activeClassName={s.activeLink}>
               <BookmarkBorderIcon className={s.navIcon} />
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Typography variant="h6" component="span" className={s.navListLabel}>
                   Закладки
                 </Typography>
@@ -98,7 +98,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
           <li className={s.navListItem}>
             <NavLink to="/lists" className={s.navLink} activeClassName={s.activeLink}>
               <ListIcon className={s.navIcon} />
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Typography variant="h6" component="span" className={s.navListLabel}>
                   Списки
                 </Typography>
@@ -111,7 +111,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
               className={s.navLink}
               activeClassName={s.activeLink}>
               <PermIdentityIcon className={s.navIcon} />
-              <Hidden smDown>
+              <Hidden mdDown>
                 <Typography variant="h6" component="span" className={s.navListLabel}>
                   Профиль
                 </Typography>
@@ -125,8 +125,8 @@ const SideMenu: React.FC<SideMenuProps> = () => {
               color="primary"
               onClick={handleClickOpenAddTweet}
               fullWidth>
-              <Hidden smDown>Твитнуть</Hidden>
-              <Hidden mdUp>
+              <Hidden mdDown>Твитнуть</Hidden>
+              <Hidden lgUp>
                 <CreateIcon />
               </Hidden>
             </Button>
