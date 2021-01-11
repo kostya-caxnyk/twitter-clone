@@ -11,6 +11,7 @@ export enum UserDataActionsType {
   'FETCH_USER_TWEETS' = 'user/FETCH_USER_TWEETS',
   'SIGN_OUT' = 'user/SIGN_OUT',
   'SET_NEW_FOLLOWING_ARR' = 'user/SET_NEW_FOLLOWING_ARR',
+  'SET_NEW_LIKED_TWEETS_ARR' = 'user/SET_NEW_LIKED_TWEETS_ARR',
 }
 
 export interface ISetUserDataAction extends Action<UserDataActionsType> {
@@ -62,6 +63,11 @@ export interface ISetNewFollowingAction {
   payload: string[];
 }
 
+export interface ISetNewLikedTweetsAction {
+  type: UserDataActionsType.SET_NEW_LIKED_TWEETS_ARR;
+  payload: string[];
+}
+
 export type UserDataActions =
   | ISetUserDataAction
   | IFetchUserDataAction
@@ -69,4 +75,5 @@ export type UserDataActions =
   | ICheckCurrentUserAction
   | ISignOutAction
   | IFetchUserTweetsAction
-  | ISetNewFollowingAction;
+  | ISetNewFollowingAction
+  | ISetNewLikedTweetsAction;

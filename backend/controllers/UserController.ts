@@ -54,6 +54,7 @@ class UserController {
         following: [],
         followers: [],
         tweets: [],
+        likedTweets: [],
       };
 
       const user = new UserModel(data);

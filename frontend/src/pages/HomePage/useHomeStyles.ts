@@ -181,7 +181,8 @@ export default makeStyles((theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    maxWidth: 430,
+    width: '100%',
+    paddingRight: 40,
     position: 'relative',
     left: -15,
   },
@@ -246,7 +247,7 @@ export default makeStyles((theme) => ({
   recomItemTitle: {
     fontWeight: 700,
     fontSize: 15,
-    maxWidth: 160,
+    maxWidth: 145,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -254,7 +255,7 @@ export default makeStyles((theme) => ({
   recomItemText: {
     color: 'rgb(91, 112, 131)',
     fontSize: 13,
-    maxWidth: 160,
+    maxWidth: 145,
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',

@@ -1,6 +1,7 @@
 import axios from '../utils/axios';
 import { Tweet } from '../store/ducks/tweets/contracts/state';
 import { ImageData } from '../store/types';
+import LikeTweetBtn from '../components/LikeTweetBtn';
 
 type ResponseStatus = 'success' | 'error';
 
@@ -34,5 +35,15 @@ export const tweetsApi = {
   async deleteTweet(id: string): Promise<string> {
     await axios.delete<IResponse<null>>('/tweets/' + id);
     return id;
+  },
+
+  async likeTweet(id: string): Promise<string[]> {
+    const { data } = await axios.post<IResponse<string[]>>('/like/tweet/' + id);
+    return data.data;
+  },
+
+  async dislikeTweet(id: string): Promise<string[]> {
+    const { data } = await axios.delete<IResponse<string[]>>('/like/tweet/' + id);
+    return data.data;
   },
 };

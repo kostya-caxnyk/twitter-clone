@@ -11,6 +11,7 @@ export interface User {
   following: string[];
   followers: string[];
   tweets: string[];
+  likedTweets: string[];
   createdAt: string;
   location?: string;
   about?: string;

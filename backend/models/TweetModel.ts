@@ -10,12 +10,9 @@ export interface ImageData {
 export interface ITweetModel {
   user: string;
   text: string;
-  // likes: {
-  //   count: number;
-  //   users: [IUserModel];
-  // };
-  // retweets: number;
-  // comments: number;
+  likes: string[];
+  retweets: string[];
+  comments: string[];
   images: ImageData[];
   _id?: string;
 }
@@ -38,6 +35,24 @@ const TweetSchema = new Schema<ITweetModel>(
         url: String,
         height: Number,
         width: Number,
+      },
+    ],
+    likes: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    comments: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Tweet',
+      },
+    ],
+    retweets: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
       },
     ],
   },

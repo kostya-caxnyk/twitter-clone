@@ -37,5 +37,11 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserDataAct
         draft.data.following = action.payload;
       }
       break;
+
+    case UserDataActionsType.SET_NEW_LIKED_TWEETS_ARR:
+      if (draft.data) {
+        draft.data.likedTweets = action.payload;
+      }
+      break;
   }
 }, initialUserDataState);

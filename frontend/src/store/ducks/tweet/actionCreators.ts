@@ -1,5 +1,6 @@
 import { LoadingStatus } from '../../types';
 import {
+  IFetchLikeTweetAction,
   IFetchTweetDataAction,
   ISetLoadingStatusAction,
   ISetTweetDataAction,
@@ -20,4 +21,10 @@ export const fetchTweetData = (id: string): IFetchTweetDataAction => ({
 export const setTweetDataLoadingStatus = (payload: LoadingStatus): ISetLoadingStatusAction => ({
   type: TweetDataActionsType.SET_LOADING_STATE,
   payload,
+});
+
+export const fetchLikeTweet = (id: string, isLiked: boolean): IFetchLikeTweetAction => ({
+  type: TweetDataActionsType.FETCH_LIKE_TWEET,
+  id,
+  isLiked,
 });

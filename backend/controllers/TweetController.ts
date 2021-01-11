@@ -57,6 +57,9 @@ class TweetController {
         text,
         user: user._id,
         images: images,
+        likes: [],
+        retweets: [],
+        comments: [],
       };
 
       const tweet = new TweetModel(data);
@@ -99,6 +102,74 @@ class TweetController {
     await userDoc.save();
     await tweet.remove();
     successResponse(res, 204);
+    try {
+    } catch (errors) {
+      errorResponse(res, 500, { errors });
+    }
+  }
+
+  async likeTweet(req: express.Request, res: express.Response) {
+    const user = req.user;
+    const tweetId = req.params.id;
+
+    if (!user) {
+      res.status(401).send();
+      return;
+    }
+
+    const tweet = await TweetModel.findById(tweetId).exec();
+    if (!tweet) {
+      res.status(404).send();
+      return;
+    }
+
+    const userDoc = await UserModel.findById(user._id);
+    if (!userDoc) {
+      res.status(401).send();
+      return;
+    }
+
+    tweet.likes.push(userDoc._id);
+    userDoc.likedTweets.push(tweet._id);
+
+    await userDoc.save();
+    await tweet.save();
+    successResponse(res, 200, { data: userDoc.likedTweets });
+    try {
+    } catch (errors) {
+      errorResponse(res, 500, { errors });
+    }
+  }
+
+  async dislikeTweet(req: express.Request, res: express.Response) {
+    const user = req.user;
+    const tweetId = req.params.id;
+
+    if (!user) {
+      res.status(401).send();
+      return;
+    }
+
+    const tweet = await TweetModel.findById(tweetId).exec();
+    if (!tweet) {
+      res.status(404).send();
+      return;
+    }
+
+    const userDoc = await UserModel.findById(user._id);
+    if (!userDoc) {
+      res.status(401).send();
+      return;
+    }
+
+    tweet.likes = tweet.likes.filter((id) => id.toString() !== userDoc._id.toString());
+    userDoc.likedTweets = userDoc.likedTweets.filter(
+      (id) => id.toString() !== tweet._id.toString(),
+    );
+
+    await userDoc.save();
+    await tweet.save();
+    successResponse(res, 200, { data: userDoc.likedTweets });
     try {
     } catch (errors) {
       errorResponse(res, 500, { errors });

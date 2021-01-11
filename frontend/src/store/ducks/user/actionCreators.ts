@@ -7,6 +7,7 @@ import {
   IRegisterFormData,
   ISetLoadingStatusAction,
   ISetNewFollowingAction,
+  ISetNewLikedTweetsAction,
   ISetUserDataAction,
   ISignOutAction,
   UserDataActionsType,
@@ -43,5 +44,10 @@ export const signOut = (): ISignOutAction => ({
 
 export const setNewFollowingArr = (payload: string[]): ISetNewFollowingAction => ({
   type: UserDataActionsType.SET_NEW_FOLLOWING_ARR,
+  payload,
+});
+
+export const setNewLikedTweetsArr = (payload: string[]): ISetNewLikedTweetsAction => ({
+  type: UserDataActionsType.SET_NEW_LIKED_TWEETS_ARR,
   payload,
 });

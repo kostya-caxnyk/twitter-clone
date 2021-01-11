@@ -1,4 +1,9 @@
-import { IFetchTweetDataAction, TweetDataActionsType } from './contracts/actionTypes';
+import { setNewLikedTweetsArr } from './../user/actionCreators';
+import {
+  IFetchTweetDataAction,
+  TweetDataActionsType,
+  IFetchLikeTweetAction,
+} from './contracts/actionTypes';
 import { Tweet } from './../tweets/contracts/state';
 import { setTweetData, setTweetDataLoadingStatus } from './actionCreators';
 import { call, put, takeEvery } from 'redux-saga/effects';
@@ -14,6 +19,18 @@ export function* fetchTweetDataRequest({ payload: tweetId }: IFetchTweetDataActi
   }
 }
 
+export function* fetchLikeTweetRequest({ id, isLiked }: IFetchLikeTweetAction) {
+  try {
+    const data: string[] = isLiked
+      ? yield call(tweetsApi.dislikeTweet, id)
+      : yield call(tweetsApi.likeTweet, id);
+    yield put(setNewLikedTweetsArr(data));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export function* tweetSaga() {
   yield takeEvery(TweetDataActionsType.FETCH_TWEET_DATA, fetchTweetDataRequest);
+  yield takeEvery(TweetDataActionsType.FETCH_LIKE_TWEET, fetchLikeTweetRequest);
 }

@@ -1,13 +1,5 @@
-import { User } from './../../user/contracts/state';
-import { ImageData, LoadingStatus } from '../../../types';
-
-export interface Tweet {
-  _id: string;
-  text: string;
-  user: User;
-  createdAt: string;
-  images: ImageData[];
-}
+import { LoadingStatus } from '../../../types';
+import { Tweet } from '../../tweets/contracts/state';
 
 export interface TweetState {
   data: Tweet | null;

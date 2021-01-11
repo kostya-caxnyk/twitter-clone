@@ -46,6 +46,9 @@ app.post('/images', upload.array('images'), UploadFilesController.uploadImages);
 app.post('/follow/:id', passport.authenticate('jwt'), UserController.followUser);
 app.delete('/follow/:id', passport.authenticate('jwt'), UserController.unFollowUser);
 
+app.post('/like/tweet/:id', passport.authenticate('jwt'), TweetController.likeTweet);
+app.delete('/like/tweet/:id', passport.authenticate('jwt'), TweetController.dislikeTweet);
+
 app.listen(PORT, () => {
   console.log('server is running on port ' + PORT);
 });

@@ -1,41 +1,30 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import IconButton from '@material-ui/core/IconButton';
 import { Avatar, ListItemIcon, Menu, MenuItem, Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
 import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
-import LikeIcon from '@material-ui/icons/FavoriteBorder';
 import DeleteIcon from '@material-ui/icons/DeleteForeverOutlined';
 import RepeatIcon from '@material-ui/icons/Repeat';
 import ReplyIcon from '@material-ui/icons/Reply';
 import MoreIcon from '@material-ui/icons/MoreHoriz';
 import useHomeStyles from '../pages/HomePage/useHomeStyles';
-import { Link } from 'react-router-dom';
 import { formatToShortLabel } from '../utils/formatDate';
-import { fetchDeleteTweet } from '../store/ducks/tweets/actionCreators';
-import { useDispatch, useSelector } from 'react-redux';
-import { ImageData } from '../store/types';
 import ImagesList from './ImagesList';
-import { User } from '../store/ducks/user/contracts/state';
 import { selectUserData } from '../store/ducks/user/selectors';
+import { Tweet as TweetInterface } from '../store/ducks/tweets/contracts/state';
+import LikeTweetBtn from './LikeTweetBtn';
 
 interface TweetProps {
-  user: User;
-  images: ImageData[];
-  text: string;
-  _id: string;
-  createdAt: string;
+  tweet: TweetInterface;
+  handleDelete: (e: React.MouseEvent, id: string) => void;
+  handleLike: (e: React.MouseEvent, id: string, isLiked: boolean) => void;
 }
 
-const Tweet: React.FC<TweetProps> = ({
-  text,
-  user,
-  _id,
-  createdAt,
-  images,
-}): React.ReactElement => {
+const Tweet: React.FC<TweetProps> = ({ tweet, handleDelete, handleLike }): React.ReactElement => {
   const s = useHomeStyles();
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState<HTMLElement | null>(null);
   const currentUser = useSelector(selectUserData);
 
@@ -50,32 +39,36 @@ const Tweet: React.FC<TweetProps> = ({
     setAnchorEl(null);
   };
 
-  const onClickDeleteTweet = (event: React.MouseEvent) => {
-    event.stopPropagation();
-    setAnchorEl(null);
-    dispatch(fetchDeleteTweet(_id));
-  };
+  const isAuthor = currentUser?.username === tweet.user.username;
 
-  const isAuthor = currentUser?.username === user.username;
+  const isTweetLiked = currentUser ? currentUser.likedTweets?.includes(tweet._id) : false;
+
+  const commentsCount = tweet.comments?.length;
+  const likesCount = tweet.likes?.filter((id) => id !== currentUser?._id).length + +isTweetLiked;
+  const retweetsCount = tweet.retweets?.length;
 
   return (
     <>
-      <Link to={`/tweet/${_id}`}>
+      <Link to={`/tweet/${tweet._id}`}>
         <Paper variant="outlined" className={s.tweet} square>
           <div className={s.tweetAvatarWrapper}>
-            <Link to={`/profile/${user.username}`}>
-              <Avatar src={user.avatarUrl} className={s.tweetAvatar} alt={`Аватар ${user.name}`} />
+            <Link to={`/profile/${tweet.user.username}`}>
+              <Avatar
+                src={tweet.user.avatarUrl}
+                className={s.tweetAvatar}
+                alt={`Аватар ${tweet.user.name}`}
+              />
             </Link>
           </div>
           <div style={{ width: '100%' }}>
             <div className={s.tweetHeader}>
               <div>
-                <Link to={`/profile/${user.username}`} className={s.tweetHeaderLink}>
-                  <b>{user.name} </b>
-                  <span className={s.tweetUserName}>@{user.username} </span>
+                <Link to={`/profile/${tweet.user.username}`} className={s.tweetHeaderLink}>
+                  <b>{tweet.user.name} </b>
+                  <span className={s.tweetUserName}>@{tweet.user.username} </span>
                 </Link>
                 <span style={{ padding: '0 3px' }}>·</span>
-                <span className={s.tweetDate}>{formatToShortLabel(createdAt)}</span>
+                <span className={s.tweetDate}>{formatToShortLabel(tweet.createdAt)}</span>
               </div>
 
               {isAuthor && (
@@ -84,24 +77,24 @@ const Tweet: React.FC<TweetProps> = ({
                 </IconButton>
               )}
             </div>
-            <Typography className={s.tweetText}>{text}</Typography>
-            <ImagesList images={images} />
+            <Typography className={s.tweetText}>{tweet.text}</Typography>
+            <ImagesList images={tweet.images} />
             <div className={s.tweetButtons}>
               <div>
                 <IconButton className={s.tweetIcon}>
                   <ChatBubbleIcon />
                 </IconButton>
-                <span>1</span>
+                {commentsCount ? <span>{commentsCount}</span> : null}
               </div>
               <div>
                 <IconButton className={s.tweetIcon}>
                   <RepeatIcon />
                 </IconButton>
+                {retweetsCount ? <span>{retweetsCount}</span> : null}
               </div>
               <div>
-                <IconButton className={s.tweetIcon}>
-                  <LikeIcon />
-                </IconButton>
+                <LikeTweetBtn handleLike={handleLike} id={tweet._id} isLiked={isTweetLiked} />
+                {likesCount ? <span>{likesCount}</span> : null}
               </div>
               <div>
                 <IconButton className={s.tweetIcon}>
@@ -118,7 +111,7 @@ const Tweet: React.FC<TweetProps> = ({
         open={Boolean(anchorEl)}
         onClose={handleCloseMoreInfo}
         className={s.tweetMenu}>
-        <MenuItem onClick={onClickDeleteTweet} className={s.tweetMenuDelete}>
+        <MenuItem onClick={(e) => handleDelete(e, tweet._id)} className={s.tweetMenuDelete}>
           <ListItemIcon>
             <DeleteIcon />
           </ListItemIcon>

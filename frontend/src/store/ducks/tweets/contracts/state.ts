@@ -21,6 +21,9 @@ export interface Tweet {
   images: ImageData[];
   user: User;
   createdAt: string;
+  likes: string[];
+  retweets: string[];
+  comments: string[];
 }
 
 export interface TweetsState {

@@ -37,9 +37,11 @@ const ProfilePage = () => {
         .then((user) => setUser(user))
         .catch((error) => setFetchUserError(error.response.data.errors));
     }
-
-    dispatch(fetchTweets(username));
   }, [currentUser, username, dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchTweets(username));
+  }, [dispatch, username]);
 
   if (!user || fetchUserErrors) {
     return (
