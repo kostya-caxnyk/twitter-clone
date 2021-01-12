@@ -13,6 +13,7 @@ export interface User {
   tweets: string[];
   likedTweets: string[];
   createdAt: string;
+  backgroundImgUrl?: string;
   location?: string;
   about?: string;
   website?: string;

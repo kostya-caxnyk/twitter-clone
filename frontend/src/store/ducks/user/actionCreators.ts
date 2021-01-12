@@ -1,6 +1,8 @@
 import { LoadingStatus } from '../../types';
 import {
   ICheckCurrentUserAction,
+  IEditFormData,
+  IFetchEditUserDataAction,
   IFetchRegisterUserAction,
   IFetchUserDataAction,
   ILoginFormData,
@@ -50,4 +52,17 @@ export const setNewFollowingArr = (payload: string[]): ISetNewFollowingAction =>
 export const setNewLikedTweetsArr = (payload: string[]): ISetNewLikedTweetsAction => ({
   type: UserDataActionsType.SET_NEW_LIKED_TWEETS_ARR,
   payload,
+});
+
+export const fetchEditUserData = (
+  data: IEditFormData,
+  avatarFile?: File,
+  backgroundFile?: File,
+): IFetchEditUserDataAction => ({
+  type: UserDataActionsType.FETCH_EDIT_USER_DATA,
+  payload: {
+    ...data,
+    avatarFile,
+    backgroundFile,
+  },
 });

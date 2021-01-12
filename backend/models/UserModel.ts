@@ -5,13 +5,14 @@ export interface IUserModel {
   username: string;
   name: string;
   password: string;
-  avatarUrl?: string;
   confirmHash: string;
   confirmed: boolean;
   following: string[];
   followers: string[];
   tweets: string[];
   likedTweets: string[];
+  avatarUrl?: string;
+  backgroundImgUrl?: string;
   location?: string;
   about?: string;
   website?: string;
@@ -60,6 +61,7 @@ const UserSchema = new Schema<IUserModel>(
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     tweets: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }],
     likedTweets: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }],
+    backgroundImgUrl: String,
     location: String,
     about: String,
     website: String,

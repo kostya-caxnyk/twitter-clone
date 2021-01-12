@@ -439,17 +439,17 @@ export default makeStyles((theme) => ({
     justifyContent: 'space-between',
   },
   profileAvatar: {
-    marginTop: '-16%',
+    marginTop: '-90px',
     width: 140,
     height: 140,
     borderRadius: '50%',
+    border: '4px solid white',
     overflow: 'hidden',
     '& img': {
       width: '100%',
       height: '100%',
     },
   },
-  profileInfo: {},
   profileLabel: {
     color: 'rgb(91, 112, 131)',
     fontWeight: 400,
@@ -459,6 +459,12 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
   },
+  profileLabelIcon: {
+    marginRight: 5,
+  },
+  profileWebsite: {
+    color: 'rgba(29,161,242,1.00)',
+  },
   profileAbout: {
     fontWeight: 400,
     fontSize: 15,
@@ -467,6 +473,7 @@ export default makeStyles((theme) => ({
   },
   profileDetails: {
     display: 'flex',
+    flexWrap: 'wrap',
     marginBottom: 10,
   },
   profileLink: {
@@ -503,5 +510,72 @@ export default makeStyles((theme) => ({
     '& div': {
       color: theme.palette.primary.main,
     },
+  },
+  editModal: {
+    width: 585,
+    height: 500,
+    fontSize: 15,
+    overflow: 'scroll',
+    overflowX: 'hidden',
+  },
+  editModalBlock: {
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    height: 200,
+    marginLeft: 2,
+  },
+  editModalAvatar: {
+    width: 112,
+    height: 112,
+    marginLeft: 15,
+    marginTop: -40,
+    borderRadius: 9999,
+    overflow: 'hidden',
+    border: '4px solid white',
+    position: 'relative',
+    backgroundColor: 'white',
+
+    '& img': {
+      width: '100%',
+      height: '100%',
+    },
+  },
+  editProfileAvatarBg: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    opacity: 0.75,
+    pointerEvents: 'none',
+  },
+  editModalInput: {
+    margin: '10px 0',
+  },
+  editProfileBtn: {
+    margin: 15,
+    width: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+  editModalAddBtn: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 100,
+    padding: 10,
+
+    '& svg': {
+      color: 'white',
+      fontSize: 20,
+    },
+  },
+  editModalBackgroundImg: {
+    backgroundPosition: 'center',
+    backgroundRepeat: 'no-repeat',
+    backgroundSize: 'cover',
+    height: 200,
+    marginLeft: 2,
   },
 }));

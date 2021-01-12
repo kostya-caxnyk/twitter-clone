@@ -17,6 +17,7 @@ import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
 import { userApi } from '../../services/userApi';
 import Notification from '../../components/Notification';
 import Tabs from './components/Tabs';
+import EditProfileModal from './components/EditProfileModal';
 
 const ProfilePage = () => {
   const s = useHomeStyles();
@@ -25,8 +26,10 @@ const ProfilePage = () => {
   const currentUser = useSelector(selectUserData);
   const tweets = useSelector(selectTweetsItems);
   const isTweetsLoading = useSelector(selectIsTweetsLoading);
+
   const [user, setUser] = React.useState<User | null>(null);
   const [fetchUserErrors, setFetchUserError] = React.useState(null);
+  const [visibleEditModal, setVisibleEditModal] = React.useState(false);
 
   useEffect(() => {
     if (currentUser?.username === username) {
@@ -43,12 +46,20 @@ const ProfilePage = () => {
     dispatch(fetchTweets(username));
   }, [dispatch, username]);
 
+  const onOpenEditModal = () => {
+    setVisibleEditModal(true);
+  };
+
+  const onCloseEditModal = () => {
+    setVisibleEditModal(false);
+  };
+
   if (!user || fetchUserErrors) {
     return (
-      <>
+      <Paper variant="outlined" className={s.feedWrapper} square>
         <LoadingCircle />
         <Notification open={!!fetchUserErrors} message={fetchUserErrors} type="error" />
-      </>
+      </Paper>
     );
   }
 
@@ -71,9 +82,10 @@ const ProfilePage = () => {
           </Typography>
         </div>
       </Paper>
-      <ProfileUserInfo user={user} currentUser={currentUser} />
+      <ProfileUserInfo user={user} currentUser={currentUser} onOpenEditModal={onOpenEditModal} />
       <Tabs username={user.username} />
       {tweets && !isTweetsLoading ? <TweetsFeed tweets={tweets} /> : <LoadingCircle />}
+      {visibleEditModal && <EditProfileModal onClose={onCloseEditModal} open={visibleEditModal} />}
     </Paper>
   );
 };

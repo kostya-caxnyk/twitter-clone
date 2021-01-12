@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 interface DialogBoxProps {
   children: React.ReactNode;
   title?: string;
-  visible?: boolean;
+  visible: boolean;
   onClose: () => void;
   loading?: boolean;
 }
@@ -54,7 +54,7 @@ interface DialogBoxProps {
 const DialogBox: React.FC<DialogBoxProps> = ({
   children,
   title,
-  visible = false,
+  visible,
   onClose,
   loading = false,
 }) => {

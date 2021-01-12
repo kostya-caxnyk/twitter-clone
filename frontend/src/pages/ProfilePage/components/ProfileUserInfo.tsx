@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 
 import { Button, Typography } from '@material-ui/core';
 import { User } from '../../../store/ducks/user/contracts/state';
@@ -8,14 +9,19 @@ import RoomIcon from '@material-ui/icons/RoomOutlined';
 import DateRangeIcon from '@material-ui/icons/DateRangeOutlined';
 import FollowUserBtn from '../../../components/FollowUserBtn';
 import { fetchFollowUser } from '../../../store/ducks/users/actionCreators';
-import { useDispatch } from 'react-redux';
+import LinkIcon from '@material-ui/icons/Link';
 
 interface ProfileUserInfoProps {
   user: User;
   currentUser: User | null;
+  onOpenEditModal: () => void;
 }
 
-const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({ user, currentUser }) => {
+const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({
+  user,
+  currentUser,
+  onOpenEditModal,
+}) => {
   const s = useHomeStyles();
   const dispatch = useDispatch();
 
@@ -35,14 +41,21 @@ const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({ user, currentUser }) 
         big
       />
     ) : (
-      <Button variant="outlined" color="primary">
+      <Button variant="outlined" color="primary" onClick={onOpenEditModal}>
         Изменить профиль
       </Button>
     );
 
   return (
     <>
-      <div className={s.profileBackground} />
+      {user.backgroundImgUrl ? (
+        <div
+          className={s.editModalBackgroundImg}
+          style={{ backgroundImage: `url("${user.backgroundImgUrl}")` }}
+        />
+      ) : (
+        <div className={s.profileBackground} />
+      )}
       <div className={s.profileBlock}>
         <div className={s.profileMeta}>
           <div className={s.profileAvatar}>
@@ -50,7 +63,7 @@ const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({ user, currentUser }) 
           </div>
           {currentUser && actionButton}
         </div>
-        <div className={s.profileInfo}>
+        <div>
           <div style={{ marginBottom: 10 }}>
             <Typography variant="h6" style={{ fontSize: 19, fontWeight: 800 }}>
               {user.name}
@@ -63,12 +76,24 @@ const ProfileUserInfo: React.FC<ProfileUserInfoProps> = ({ user, currentUser }) 
           <div className={s.profileDetails}>
             {!!user.location && (
               <Typography className={s.profileLabel}>
-                <RoomIcon />
+                <RoomIcon className={s.profileLabelIcon} />
                 {user.location}
               </Typography>
             )}
+            {!!user.website && (
+              <Typography className={s.profileLabel}>
+                <LinkIcon className={s.profileLabelIcon} />
+                <a
+                  href={user.website}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={s.profileWebsite}>
+                  {user.website}
+                </a>
+              </Typography>
+            )}
             <Typography className={s.profileLabel}>
-              <DateRangeIcon />
+              <DateRangeIcon className={s.profileLabelIcon} />
               Регистрация: {formatMonthAndYear(user.createdAt)}
             </Typography>
           </div>

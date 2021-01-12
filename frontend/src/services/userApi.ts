@@ -8,6 +8,15 @@ interface IResponse<T> {
   data: T;
 }
 
+export interface IEditFormData {
+  name: string;
+  about: string;
+  location: string;
+  website: string;
+  avatarUrl?: string;
+  backgroundUrl?: string;
+}
+
 export const userApi = {
   async getUser(username: string): Promise<User> {
     const { data } = await axios.get<IResponse<User>>('/users/' + username);
@@ -26,6 +35,11 @@ export const userApi = {
 
   async unfollowUser(id: string): Promise<string[]> {
     const { data } = await axios.delete<IResponse<string[]>>('/follow/' + id);
+    return data.data;
+  },
+
+  async editUserData(newData: IEditFormData): Promise<User> {
+    const { data } = await axios.patch<IResponse<User>>('/edit/profile', newData);
     return data.data;
   },
 };

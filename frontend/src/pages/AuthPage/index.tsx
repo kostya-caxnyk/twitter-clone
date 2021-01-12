@@ -33,7 +33,7 @@ export const SignIn = () => {
     setVisibleModal(undefined);
   };
 
-  if (currentUser) {
+  if (currentUser && !hasError) {
     return <Redirect to="/home" />;
   }
 

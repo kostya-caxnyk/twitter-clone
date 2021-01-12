@@ -12,6 +12,7 @@ export enum UserDataActionsType {
   'SIGN_OUT' = 'user/SIGN_OUT',
   'SET_NEW_FOLLOWING_ARR' = 'user/SET_NEW_FOLLOWING_ARR',
   'SET_NEW_LIKED_TWEETS_ARR' = 'user/SET_NEW_LIKED_TWEETS_ARR',
+  'FETCH_EDIT_USER_DATA' = 'user/FETCH_EDIT_USER_DATA',
 }
 
 export interface ISetUserDataAction extends Action<UserDataActionsType> {
@@ -34,6 +35,15 @@ export interface IRegisterFormData {
 export interface IFetchUserDataAction {
   type: UserDataActionsType.FETCH_USER_DATA;
   payload: ILoginFormData;
+}
+
+export interface IEditFormData {
+  name: string;
+  about: string;
+  location: string;
+  website: string;
+  avatarFile?: File;
+  backgroundFile?: File;
 }
 
 export interface IFetchRegisterUserAction {
@@ -66,6 +76,11 @@ export interface ISetNewFollowingAction {
 export interface ISetNewLikedTweetsAction {
   type: UserDataActionsType.SET_NEW_LIKED_TWEETS_ARR;
   payload: string[];
+}
+
+export interface IFetchEditUserDataAction {
+  type: UserDataActionsType.FETCH_EDIT_USER_DATA;
+  payload: IEditFormData;
 }
 
 export type UserDataActions =

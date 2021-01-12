@@ -1,5 +1,3 @@
-import { Tweet } from './../../frontend/src/store/ducks/tweets/contracts/state';
-import { isValidObjectId } from 'mongoose';
 import jwt from 'jsonwebtoken';
 import express from 'express';
 import bcrypt from 'bcryptjs';
@@ -11,6 +9,12 @@ import UserModel from '../models/UserModel';
 import regEmail from '../emails/registration';
 import { errorResponse, successResponse } from './../utils/sendResponse';
 import TweetModel from '../models/TweetModel';
+
+interface IJwtToken {
+  _id: string;
+  username: string;
+  email: string;
+}
 
 class UserController {
   async getUsers(req: express.Request, res: express.Response): Promise<void> {
@@ -66,10 +70,16 @@ class UserController {
       delete userWithoutPass.password;
       delete userWithoutPass.confirmHash;
 
+      const jwtData: IJwtToken = {
+        email: user.email,
+        username: user.username,
+        _id: user._id,
+      };
+
       successResponse(res, 201, {
         data: {
           ...userWithoutPass,
-          token: jwt.sign(userWithoutPass, process.env.SECRET_KEY as string, {
+          token: jwt.sign(jwtData, process.env.SECRET_KEY as string, {
             expiresIn: '30d',
           }),
         },
@@ -130,10 +140,16 @@ class UserController {
         return;
       }
 
+      const jwtData: IJwtToken = {
+        email: user.email,
+        username: user.username,
+        _id: user._id,
+      };
+
       successResponse(res, 200, {
         data: {
           ...user,
-          token: jwt.sign(user, process.env.SECRET_KEY as string, {
+          token: jwt.sign(jwtData, process.env.SECRET_KEY as string, {
             expiresIn: '30d',
           }),
         },
@@ -238,6 +254,30 @@ class UserController {
     await UnFollowingUser.save();
     successResponse(res, 200, {
       data: user.following,
+    });
+  }
+
+  async editUserData(req: express.Request, res: express.Response) {
+    const userFromReq = req.user;
+    const { name, about, location, website, avatarUrl, backgroundUrl } = req.body;
+
+    const user = await UserModel.findOne({ _id: userFromReq?._id }).exec();
+    if (!user) {
+      res.status(401).send();
+      return;
+    }
+
+    user.avatarUrl = avatarUrl || user.avatarUrl;
+    user.backgroundImgUrl = backgroundUrl || user.backgroundImgUrl;
+    user.name = name;
+    user.about = about;
+    user.location = location;
+    user.website = website;
+
+    await user.save();
+
+    successResponse(res, 200, {
+      data: user,
     });
   }
 }

@@ -6,11 +6,12 @@ import useHomeStyles from '../pages/HomePage/useHomeStyles';
 
 interface UploadImageProps {
   onAddFile: (url: string, file: File) => void;
-  disabled: boolean;
+  disabled?: boolean;
+  iconEl?: React.ReactElement;
 }
 
 const UploadImage: React.FC<UploadImageProps> = React.memo(
-  ({ onAddFile, disabled }): React.ReactElement => {
+  ({ onAddFile, disabled = false, iconEl }): React.ReactElement => {
     const s = useHomeStyles();
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -36,7 +37,7 @@ const UploadImage: React.FC<UploadImageProps> = React.memo(
           onClick={handleClickUploadFile}
           className={s.formAddTweetIcon}
           disabled={disabled}>
-          <ImageIcon />
+          {iconEl ? iconEl : <ImageIcon />}
         </IconButton>
         <input
           accept="image/jpeg,image/png,image/webp,image/gif"

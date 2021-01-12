@@ -49,6 +49,8 @@ app.delete('/follow/:id', passport.authenticate('jwt'), UserController.unFollowU
 app.post('/like/tweet/:id', passport.authenticate('jwt'), TweetController.likeTweet);
 app.delete('/like/tweet/:id', passport.authenticate('jwt'), TweetController.dislikeTweet);
 
+app.patch('/edit/profile', passport.authenticate('jwt'), UserController.editUserData);
+
 app.listen(PORT, () => {
   console.log('server is running on port ' + PORT);
 });
