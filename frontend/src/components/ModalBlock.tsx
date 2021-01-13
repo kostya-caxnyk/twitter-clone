@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
   },
   dialogContent: {
     padding: 0,
-    paddingTop: 15,
     borderTop: '1px solid rgb(204, 214, 221)',
   },
   dialogTitle: {

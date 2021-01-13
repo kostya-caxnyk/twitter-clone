@@ -175,6 +175,54 @@ class TweetController {
       errorResponse(res, 500, { errors });
     }
   }
+
+  async addComment(req: express.Request, res: express.Response) {
+    try {
+      const author = await UserModel.findById(req.user?._id);
+      if (!author) {
+        res.status(401).send();
+        return;
+      }
+
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        errorResponse(res, 400, { errors });
+        return;
+      }
+
+      const { text, images } = req.body;
+      const commentedTweetId = req.params.id;
+
+      const commentedTweet = await TweetModel.findById(commentedTweetId);
+      if (!commentedTweet) {
+        res.status(404).send();
+        return;
+      }
+
+      const data: ITweetModel = {
+        text,
+        user: author._id,
+        images: images,
+        likes: [],
+        retweets: [],
+        comments: [],
+        commentTo: commentedTweetId,
+        isComment: true,
+      };
+
+      const comment = new TweetModel(data);
+      await comment.save();
+
+      author.comments.push(comment._id);
+      commentedTweet.comments.push(comment._id);
+      await author.save();
+      await commentedTweet.save();
+
+      successResponse(res, 201, { data: await comment.populate('user').execPopulate() });
+    } catch (errors) {
+      errorResponse(res, 500, { errors });
+    }
+  }
 }
 
 export default new TweetController();

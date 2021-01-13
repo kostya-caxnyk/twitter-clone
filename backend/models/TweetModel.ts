@@ -14,7 +14,9 @@ export interface ITweetModel {
   retweets: string[];
   comments: string[];
   images: ImageData[];
+  isComment?: boolean;
   _id?: string;
+  commentTo?: string;
 }
 
 export type ITweetDocumentModel = ITweetModel & Document;
@@ -55,6 +57,8 @@ const TweetSchema = new Schema<ITweetModel>(
         ref: 'User',
       },
     ],
+    isComment: { type: Boolean, default: false },
+    commentTo: { type: Schema.Types.ObjectId, ref: 'Tweet' },
   },
   { timestamps: true },
 );

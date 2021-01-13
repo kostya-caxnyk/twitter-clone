@@ -24,6 +24,8 @@ export interface Tweet {
   likes: string[];
   retweets: string[];
   comments: string[];
+  isComment: boolean;
+  commentTo?: string;
 }
 
 export interface TweetsState {

@@ -23,6 +23,9 @@ const MAX_INPUT_LENGTH = 280;
 
 interface AddTweetFormProps {
   rowsMin?: number;
+  placeholder?: string;
+  btnLabel?: string;
+  onAddTweet: (text: string, images: File[]) => void;
 }
 
 export interface FileData {
@@ -30,9 +33,13 @@ export interface FileData {
   url: string;
 }
 
-const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.ReactElement => {
+const AddTweetForm: React.FC<AddTweetFormProps> = ({
+  rowsMin = 1,
+  btnLabel,
+  placeholder,
+  onAddTweet,
+}): React.ReactElement => {
   const s = useHomeStyles();
-  const dispatch = useDispatch();
   const hasError = useSelector(selectIsAddFormStateError);
   const isLoading = useSelector(selectIsAddFormStateLoading);
   const isLoaded = useSelector(selectIsAddTweetLoaded);
@@ -52,9 +59,9 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
     setTextValue(e.currentTarget.value);
   };
 
-  const handleClickAddTweet = async () => {
+  const handleClickAddTweet = () => {
     const images = imageUrls.map((obj) => obj.file);
-    dispatch(fetchAddTweet(textValue, images));
+    onAddTweet(textValue, images);
   };
 
   const onSelectFile = React.useCallback((url: string, file: File): void => {
@@ -85,7 +92,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
         <Avatar alt="Remy Sharp" src={currentUser?.avatarUrl} className={s.formAddTweetAvatar} />
         <div style={{ width: '100%', height: '100%' }}>
           <TextareaAutosize
-            placeholder="Что происходит?"
+            placeholder={placeholder ?? 'Что происходит?'}
             className={s.formAddTweetTextArea}
             onChange={handleTextAreaChange}
             value={textValue}
@@ -121,7 +128,7 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({ rowsMin = 1 }): React.React
                 variant="contained"
                 color="primary"
                 onClick={handleClickAddTweet}>
-                Твитнуть
+                {btnLabel ?? 'Твитнуть'}
               </Button>
             </div>
           )}

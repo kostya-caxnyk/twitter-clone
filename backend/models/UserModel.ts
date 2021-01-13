@@ -11,6 +11,7 @@ export interface IUserModel {
   followers: string[];
   tweets: string[];
   likedTweets: string[];
+  comments: string[];
   avatarUrl?: string;
   backgroundImgUrl?: string;
   location?: string;
@@ -61,6 +62,7 @@ const UserSchema = new Schema<IUserModel>(
     followers: [{ type: Schema.Types.ObjectId, ref: 'User' }],
     tweets: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }],
     likedTweets: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }],
+    comments: [{ type: Schema.Types.ObjectId, ref: 'Tweet' }],
     backgroundImgUrl: String,
     location: String,
     about: String,

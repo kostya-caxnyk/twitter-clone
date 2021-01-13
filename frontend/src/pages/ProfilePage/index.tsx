@@ -18,12 +18,14 @@ import { userApi } from '../../services/userApi';
 import Notification from '../../components/Notification';
 import Tabs from './components/Tabs';
 import EditProfileModal from './components/EditProfileModal';
+import { selectUsersItems } from '../../store/ducks/users/selectors';
 
 const ProfilePage = () => {
   const s = useHomeStyles();
   const username = useParams<{ username: string }>().username;
   const dispatch = useDispatch();
   const currentUser = useSelector(selectUserData);
+  const loadedUsers = useSelector(selectUsersItems);
   const tweets = useSelector(selectTweetsItems);
   const isTweetsLoading = useSelector(selectIsTweetsLoading);
 
@@ -32,15 +34,27 @@ const ProfilePage = () => {
   const [visibleEditModal, setVisibleEditModal] = React.useState(false);
 
   useEffect(() => {
-    if (currentUser?.username === username) {
-      setUser(currentUser);
+    let isCanceled = false;
+    let loadedUser = currentUser?.username === username ? currentUser : undefined;
+    if (!loadedUser) {
+      loadedUser = loadedUsers?.find((user) => user.username === username);
+    }
+    if (loadedUser) {
+      setUser(loadedUser);
     } else {
       userApi
         .getUser(username)
-        .then((user) => setUser(user))
+        .then((user) => {
+          if (!isCanceled) {
+            setUser(user);
+          }
+        })
         .catch((error) => setFetchUserError(error.response.data.errors));
     }
-  }, [currentUser, username, dispatch]);
+    return () => {
+      isCanceled = true;
+    };
+  }, [currentUser, loadedUsers, username, dispatch]);
 
   useEffect(() => {
     dispatch(fetchTweets(username));

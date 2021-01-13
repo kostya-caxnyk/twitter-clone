@@ -7,7 +7,7 @@ import Tweet from '../../components/Tweet';
 
 import useHomeStyles from './useHomeStyles';
 import AddTweetForm from '../../components/AddTweetForm';
-import { fetchTweets } from '../../store/ducks/tweets/actionCreators';
+import { fetchAddTweet, fetchTweets } from '../../store/ducks/tweets/actionCreators';
 import {
   selectHasDeleteTweetError,
   selectIsTweetsLoading,
@@ -28,6 +28,13 @@ const Home = () => {
     dispatch(fetchTweets());
   }, [dispatch]);
 
+  const handleAddTweet = React.useCallback(
+    (text: string, images: File[]) => {
+      dispatch(fetchAddTweet(text, images));
+    },
+    [dispatch],
+  );
+
   return (
     <Paper variant="outlined" className={s.feedWrapper} square>
       <Paper variant="outlined" className={s.feedHeader}>
@@ -35,7 +42,7 @@ const Home = () => {
           Главная
         </Typography>
       </Paper>
-      <AddTweetForm />
+      <AddTweetForm onAddTweet={handleAddTweet} />
 
       {isLoading || !tweets ? <LoadingCircle /> : <TweetsFeed tweets={tweets} />}
       <Notification open={deleteTweetError} message="Ошибка при удалении твита" type="error" />

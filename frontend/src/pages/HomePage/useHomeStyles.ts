@@ -119,15 +119,22 @@ export default makeStyles((theme) => ({
     color: 'black',
   },
   tweet: {
+    display: 'flex',
     minHeight: 88,
     cursor: 'pointer',
-    '&:hover': {
-      backgroundColor: 'rgba(0,0,0,0.03)',
-    },
     padding: '10px 15px 2px',
     borderRight: 0,
     borderLeft: 0,
-    display: 'flex',
+    borderBottom: 0,
+    '&:hover': {
+      backgroundColor: 'rgba(0,0,0,0.03)',
+    },
+  },
+  tweetNoClick: {
+    cursor: 'auto',
+    '&:hover': {
+      backgroundColor: 'inherit',
+    },
   },
   tweetMenu: {
     '& ul': {
@@ -149,6 +156,12 @@ export default makeStyles((theme) => ({
     marginTop: 10,
     height: 49,
     width: 49,
+  },
+  tweetAvatarLine: {
+    height: '100%',
+    width: 2,
+    backgroundColor: 'rgb(196, 207, 214)',
+    marginLeft: 24,
   },
   tweetHeader: {
     fontSize: 15,

@@ -17,14 +17,16 @@ import CreateIcon from '@material-ui/icons/Create';
 import useHomeStyles from '../pages/HomePage/useHomeStyles';
 import ModalBlock from './ModalBlock';
 import AddTweetForm from './AddTweetForm';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectUserData } from '../store/ducks/user/selectors';
 import ProfileBtn from './ProfileBtn';
+import { fetchAddTweet } from '../store/ducks/tweets/actionCreators';
 
 interface SideMenuProps {}
 
 const SideMenu: React.FC<SideMenuProps> = () => {
   const s = useHomeStyles();
+  const dispatch = useDispatch();
   const [visibleAddTweet, setVisibleAddTweet] = React.useState(false);
   const currentUser = useSelector(selectUserData, () => true);
 
@@ -34,6 +36,10 @@ const SideMenu: React.FC<SideMenuProps> = () => {
 
   const onCloseAddTweet = () => {
     setVisibleAddTweet(false);
+  };
+
+  const handleAddTweet = (text: string, images: File[]) => {
+    dispatch(fetchAddTweet(text, images));
   };
 
   return (
@@ -132,7 +138,7 @@ const SideMenu: React.FC<SideMenuProps> = () => {
             </Button>
             <ModalBlock visible={visibleAddTweet} onClose={onCloseAddTweet}>
               <div style={{ width: 550 }}>
-                <AddTweetForm rowsMin={4} />
+                <AddTweetForm rowsMin={4} onAddTweet={handleAddTweet} />
               </div>
             </ModalBlock>
           </li>

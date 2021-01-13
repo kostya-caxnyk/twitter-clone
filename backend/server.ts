@@ -28,17 +28,8 @@ app.get('/auth/verify', UserController.verify);
 
 app.get('/tweets/:id', TweetController.getTweet);
 app.get('/tweets', TweetController.getAllTweets);
-app.post(
-  '/tweets',
-  passport.authenticate('jwt', { session: false }),
-  tweetValidators,
-  TweetController.createTweet,
-);
-app.delete(
-  '/tweets/:id',
-  passport.authenticate('jwt', { session: false }),
-  TweetController.deleteTweet,
-);
+app.post('/tweets', passport.authenticate('jwt'), tweetValidators, TweetController.createTweet);
+app.delete('/tweets/:id', passport.authenticate('jwt'), TweetController.deleteTweet);
 
 app.get('/user/tweets/:username', UserController.getUserTweets);
 app.post('/images', upload.array('images'), UploadFilesController.uploadImages);
@@ -48,6 +39,12 @@ app.delete('/follow/:id', passport.authenticate('jwt'), UserController.unFollowU
 
 app.post('/like/tweet/:id', passport.authenticate('jwt'), TweetController.likeTweet);
 app.delete('/like/tweet/:id', passport.authenticate('jwt'), TweetController.dislikeTweet);
+app.post(
+  '/comment/tweet/:id',
+  passport.authenticate('jwt'),
+  tweetValidators,
+  TweetController.addComment,
+);
 
 app.patch('/edit/profile', passport.authenticate('jwt'), UserController.editUserData);
 
