@@ -1,6 +1,10 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
-import { fetchLikeTweet } from '../store/ducks/tweet/actionCreators';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAddComment, fetchLikeTweet } from '../store/ducks/tweet/actionCreators';
+import {
+  selectIsAddCommentLoaded,
+  selectIsAddCommentLoading,
+} from '../store/ducks/tweet/selectors';
 import { fetchDeleteTweet } from '../store/ducks/tweets/actionCreators';
 import { Tweet } from '../store/ducks/tweets/contracts/state';
 import AddTweetForm from './AddTweetForm';
@@ -19,10 +23,18 @@ interface ICommentModal {
 
 const TweetsFeed: React.FC<TweetsFeedProps> = ({ tweets }) => {
   const dispatch = useDispatch();
+  const isAddCommentLoading = useSelector(selectIsAddCommentLoading);
+  const isAddCommentLoaded = useSelector(selectIsAddCommentLoaded);
   const [commentModal, setCommentModal] = React.useState<ICommentModal>({
     open: false,
     tweet: null,
   });
+
+  React.useEffect(() => {
+    if (isAddCommentLoaded) {
+      setCommentModal({ open: false, tweet: null });
+    }
+  }, [isAddCommentLoaded]);
 
   const onClickDeleteTweet = React.useCallback(
     (e: React.MouseEvent, id: string) => {
@@ -62,9 +74,7 @@ const TweetsFeed: React.FC<TweetsFeedProps> = ({ tweets }) => {
     if (!tweetId) {
       return;
     }
-    console.log(tweetId, text, images);
-    //dipatch(fetchAddComment(tweetId, text, images))
-    setCommentModal({ open: false, tweet: null });
+    dispatch(fetchAddComment(tweetId, text, images));
   };
 
   return (
@@ -86,6 +96,8 @@ const TweetsFeed: React.FC<TweetsFeedProps> = ({ tweets }) => {
             onAddTweet={handleAddComment}
             placeholder="Твитнуть в ответ"
             btnLabel="Ответить"
+            isLoading={isAddCommentLoading}
+            isLoaded={isAddCommentLoaded}
           />
         </ModalBlock>
       )}

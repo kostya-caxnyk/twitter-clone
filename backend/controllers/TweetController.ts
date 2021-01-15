@@ -15,7 +15,10 @@ interface IJwtToken {
 class TweetController {
   async getAllTweets(req: express.Request, res: express.Response) {
     try {
-      const tweets = await TweetModel.find({}).populate('user').sort({ createdAt: -1 }).exec();
+      const tweets = await TweetModel.find({ isComment: false })
+        .populate('user')
+        .sort({ createdAt: -1 })
+        .exec();
       successResponse(res, 200, { data: tweets });
     } catch (errors) {
       errorResponse(res, 500, { errors });
@@ -96,8 +99,16 @@ class TweetController {
       return;
     }
 
-    const newTweets = userDoc.tweets.filter((id) => id.toString() !== tweet._id.toString());
-    userDoc.tweets = newTweets;
+    userDoc.tweets = userDoc.tweets.filter((id) => id.toString() !== tweet._id.toString());
+    userDoc.comments = userDoc.comments.filter((id) => id.toString() !== tweet._id.toString());
+    if (tweet.isComment) {
+      const repliedTweet = await TweetModel.findById(tweet.commentTo);
+      if (repliedTweet) {
+        repliedTweet.comments = userDoc.comments.filter(
+          (id) => id.toString() !== tweet._id.toString(),
+        );
+      }
+    }
 
     await userDoc.save();
     await tweet.remove();
@@ -219,6 +230,40 @@ class TweetController {
       await commentedTweet.save();
 
       successResponse(res, 201, { data: await comment.populate('user').execPopulate() });
+    } catch (errors) {
+      errorResponse(res, 500, { errors });
+    }
+  }
+
+  async getComments(req: express.Request, res: express.Response) {
+    const tweetId = req.params.id;
+
+    if (!isValidObjectId(tweetId)) {
+      res.status(404).send();
+      return;
+    }
+
+    const tweet = await TweetModel.findById(tweetId).exec();
+    if (!tweet) {
+      res.status(404).send();
+      return;
+    }
+
+    await tweet
+      .populate({
+        path: 'comments',
+        populate: { path: 'user' },
+        options: {
+          sort: {
+            createdAt: -1,
+            likes: -1,
+          },
+        },
+      })
+      .execPopulate();
+
+    successResponse(res, 200, { data: tweet.comments });
+    try {
     } catch (errors) {
       errorResponse(res, 500, { errors });
     }

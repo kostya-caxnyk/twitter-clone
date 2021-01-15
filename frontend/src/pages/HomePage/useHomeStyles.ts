@@ -125,13 +125,15 @@ export default makeStyles((theme) => ({
     padding: '10px 15px 2px',
     borderRight: 0,
     borderLeft: 0,
-    borderBottom: 0,
+
     '&:hover': {
       backgroundColor: 'rgba(0,0,0,0.03)',
     },
   },
   tweetNoClick: {
     cursor: 'auto',
+    borderBottom: 0,
+    minWidth: 600,
     '&:hover': {
       backgroundColor: 'inherit',
     },

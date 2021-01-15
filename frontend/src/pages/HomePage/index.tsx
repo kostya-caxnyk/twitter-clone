@@ -3,13 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import Tweet from '../../components/Tweet';
 
 import useHomeStyles from './useHomeStyles';
 import AddTweetForm from '../../components/AddTweetForm';
 import { fetchAddTweet, fetchTweets } from '../../store/ducks/tweets/actionCreators';
 import {
   selectHasDeleteTweetError,
+  selectIsAddFormStateLoading,
+  selectIsAddTweetLoaded,
   selectIsTweetsLoading,
   selectTweetsItems,
 } from '../../store/ducks/tweets/selectors';
@@ -23,6 +24,8 @@ const Home = () => {
   const tweets = useSelector(selectTweetsItems);
   const isLoading = useSelector(selectIsTweetsLoading);
   const deleteTweetError = useSelector(selectHasDeleteTweetError);
+  const isAddTweetLoading = useSelector(selectIsAddFormStateLoading);
+  const isAddTweetLoaded = useSelector(selectIsAddTweetLoaded);
 
   useEffect(() => {
     dispatch(fetchTweets());
@@ -42,7 +45,11 @@ const Home = () => {
           Главная
         </Typography>
       </Paper>
-      <AddTweetForm onAddTweet={handleAddTweet} />
+      <AddTweetForm
+        onAddTweet={handleAddTweet}
+        isLoaded={isAddTweetLoaded}
+        isLoading={isAddTweetLoading}
+      />
 
       {isLoading || !tweets ? <LoadingCircle /> : <TweetsFeed tweets={tweets} />}
       <Notification open={deleteTweetError} message="Ошибка при удалении твита" type="error" />

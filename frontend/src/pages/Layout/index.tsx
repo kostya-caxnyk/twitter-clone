@@ -18,10 +18,10 @@ const Layout: React.FC = () => {
   return (
     <Container maxWidth="lg" className={s.wrapper}>
       <Grid container spacing={3}>
-        <Grid xs={1} md={1} lg="auto" style={{ width: 255 }} item>
+        <Grid xs={1} md={1} lg="auto" style={{ width: 255, paddingBottom: 0 }} item>
           <SideMenu />
         </Grid>
-        <Grid xs md lg item>
+        <Grid xs md lg item style={{ paddingBottom: 0 }}>
           <Switch>
             <Route path={['/home', '/']} component={Home} exact />
             <Route path="/explore" component={SearchPage} />
@@ -30,7 +30,7 @@ const Layout: React.FC = () => {
           </Switch>
         </Grid>
         <Hidden smDown>
-          <Grid md="auto" lg="auto" style={{ width: 350 }} item>
+          <Grid md="auto" lg="auto" style={{ width: 350, paddingBottom: 0 }} item>
             <RightSideBar />
           </Grid>
         </Hidden>

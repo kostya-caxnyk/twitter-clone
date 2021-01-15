@@ -21,6 +21,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectUserData } from '../store/ducks/user/selectors';
 import ProfileBtn from './ProfileBtn';
 import { fetchAddTweet } from '../store/ducks/tweets/actionCreators';
+import {
+  selectIsAddFormStateLoading,
+  selectIsAddTweetLoaded,
+} from '../store/ducks/tweets/selectors';
+import Notification from '../components/Notification';
 
 interface SideMenuProps {}
 
@@ -29,6 +34,8 @@ const SideMenu: React.FC<SideMenuProps> = () => {
   const dispatch = useDispatch();
   const [visibleAddTweet, setVisibleAddTweet] = React.useState(false);
   const currentUser = useSelector(selectUserData, () => true);
+  const isAddTweetLoading = useSelector(selectIsAddFormStateLoading);
+  const isAddTweetLoaded = useSelector(selectIsAddTweetLoaded);
 
   const handleClickOpenAddTweet = () => {
     setVisibleAddTweet(true);
@@ -138,13 +145,19 @@ const SideMenu: React.FC<SideMenuProps> = () => {
             </Button>
             <ModalBlock visible={visibleAddTweet} onClose={onCloseAddTweet}>
               <div style={{ width: 550 }}>
-                <AddTweetForm rowsMin={4} onAddTweet={handleAddTweet} />
+                <AddTweetForm
+                  rowsMin={4}
+                  onAddTweet={handleAddTweet}
+                  isLoading={isAddTweetLoading}
+                  isLoaded={isAddTweetLoaded}
+                />
               </div>
             </ModalBlock>
           </li>
         </ul>
       </nav>
       <ProfileBtn />
+      <Notification open={isAddTweetLoaded} message="Ваш твит отправлен" type="info" />
     </>
   );
 };

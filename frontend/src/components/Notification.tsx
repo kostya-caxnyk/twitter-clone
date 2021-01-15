@@ -8,7 +8,7 @@ import CloseIcon from '@material-ui/icons/Close';
 interface NotificationProps {
   open: boolean;
   message: string | null;
-  type: 'error' | 'success' | 'warning';
+  type: 'error' | 'success' | 'warning' | 'info';
 }
 
 function Alert(props: AlertProps) {

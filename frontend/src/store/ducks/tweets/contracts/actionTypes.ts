@@ -12,6 +12,7 @@ export enum TweetsActionsType {
   'SET_LOADING_STATE' = 'tweets/SET_LOADING_STATE',
   'SET_ADD_FORM_STATE' = 'tweets/SET_ADD_FORM_STATE',
   'SET_DELETE_TWEET_STATE' = 'tweets/SET_DELETE_TWEET_STATE',
+  'ADD_COMMENT_TO_TWEET' = 'tweets/ADD_COMMENT_TO_TWEET',
 }
 
 export type TweetsActions =
@@ -23,7 +24,8 @@ export type TweetsActions =
   | ISetAddFormStateAction
   | IFetchDeleteTweetAction
   | IDeleteTweetAction
-  | ISetDeleteTweetStateAction;
+  | ISetDeleteTweetStateAction
+  | IAddCommentToTweetAction;
 
 export interface ISetTweetsAction extends Action<TweetsActionsType> {
   type: TweetsActionsType.SET_TWEETS;
@@ -71,4 +73,9 @@ export interface IDeleteTweetAction {
 export interface ISetDeleteTweetStateAction {
   type: TweetsActionsType.SET_DELETE_TWEET_STATE;
   payload: DeleteTweetState;
+}
+
+export interface IAddCommentToTweetAction {
+  type: TweetsActionsType.ADD_COMMENT_TO_TWEET;
+  payload: Tweet;
 }

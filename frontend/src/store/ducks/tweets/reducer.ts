@@ -45,14 +45,20 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
     case TweetsActionsType.DELETE_TWEET:
       draft.deleteTweetState = DeleteTweetState.NEVER;
-
-      draft.items = draft.items
-        ? draft.items.filter((tweet) => tweet._id !== action.payload)
-        : null;
+      const deletedTweetId = draft.items?.findIndex((tweet) => tweet._id === action.payload);
+      if (deletedTweetId) {
+        draft.items?.splice(deletedTweetId, 1);
+      }
       break;
 
     case TweetsActionsType.SET_DELETE_TWEET_STATE:
       draft.deleteTweetState = action.payload;
+      break;
+
+    case TweetsActionsType.ADD_COMMENT_TO_TWEET:
+      const newComment = action.payload;
+      const commentedTweet = draft.items?.find((el) => el._id === newComment.commentTo);
+      commentedTweet?.comments.push(newComment._id);
       break;
   }
 }, initialTweetsState);

@@ -1,5 +1,6 @@
 import { LoadingStatus } from '../../types';
 import {
+  IAddCommentToTweetAction,
   IAddTweetAction,
   IDeleteTweetAction,
   IFetchAddTweetAction,
@@ -58,5 +59,10 @@ export const deleteTweet = (id: string): IDeleteTweetAction => ({
 
 export const setDeleteTweetState = (payload: DeleteTweetState): ISetDeleteTweetStateAction => ({
   type: TweetsActionsType.SET_DELETE_TWEET_STATE,
+  payload,
+});
+
+export const addCommentToTweet = (payload: Tweet): IAddCommentToTweetAction => ({
+  type: TweetsActionsType.ADD_COMMENT_TO_TWEET,
   payload,
 });

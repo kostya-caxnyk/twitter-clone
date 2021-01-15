@@ -45,6 +45,7 @@ app.post(
   tweetValidators,
   TweetController.addComment,
 );
+app.get('/comments/:id', TweetController.getComments);
 
 app.patch('/edit/profile', passport.authenticate('jwt'), UserController.editUserData);
 

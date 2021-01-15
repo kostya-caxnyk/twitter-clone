@@ -34,6 +34,7 @@ const RegisterFormSchema = yup.object().shape({
   username: yup
     .string()
     .required('Введите никнейм')
+    .matches(/^[a-zA-Z0-9]+$/, 'Неверный никнейм')
     .min(3, 'Минимальная длина никнейма 3 символа')
     .max(25, 'Максимальная длина ника 25 символов'),
   password: yup.string().required('Введите пароль').min(6, 'Минимальная длина пароля 6 символов'),

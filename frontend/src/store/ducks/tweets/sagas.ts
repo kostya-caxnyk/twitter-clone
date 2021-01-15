@@ -17,6 +17,7 @@ import {
 } from './contracts/actionTypes';
 import { ImageData, LoadingStatus } from '../../types';
 import uploadImages from '../../../utils/uploadImages';
+import { deleteComment } from '../tweet/actionCreators';
 
 export function* fetchTweetsRequest({ payload }: IFetchTweetsAction) {
   try {
@@ -44,6 +45,7 @@ export function* deleteTweetRequest({ payload }: IFetchDeleteTweetAction) {
   try {
     const id: string = yield call(tweetsApi.deleteTweet, payload);
     yield put(deleteTweet(id));
+    yield put(deleteComment(id));
   } catch (error) {
     yield put(setDeleteTweetState(DeleteTweetState.ERROR));
   }

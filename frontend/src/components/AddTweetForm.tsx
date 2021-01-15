@@ -9,13 +9,8 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import CancelIcon from '@material-ui/icons/Cancel';
 
 import useHomeStyles from '../pages/HomePage/useHomeStyles';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchAddTweet } from '../store/ducks/tweets/actionCreators';
-import {
-  selectIsAddFormStateError,
-  selectIsAddFormStateLoading,
-  selectIsAddTweetLoaded,
-} from '../store/ducks/tweets/selectors';
+import { useSelector } from 'react-redux';
+import { selectIsAddFormStateError } from '../store/ducks/tweets/selectors';
 import UploadImage from './UploadImage';
 import { selectUserData } from '../store/ducks/user/selectors';
 
@@ -26,6 +21,8 @@ interface AddTweetFormProps {
   placeholder?: string;
   btnLabel?: string;
   onAddTweet: (text: string, images: File[]) => void;
+  isLoading?: boolean;
+  isLoaded?: boolean;
 }
 
 export interface FileData {
@@ -38,13 +35,12 @@ const AddTweetForm: React.FC<AddTweetFormProps> = ({
   btnLabel,
   placeholder,
   onAddTweet,
+  isLoading = false,
+  isLoaded = false,
 }): React.ReactElement => {
   const s = useHomeStyles();
   const hasError = useSelector(selectIsAddFormStateError);
-  const isLoading = useSelector(selectIsAddFormStateLoading);
-  const isLoaded = useSelector(selectIsAddTweetLoaded);
   const currentUser = useSelector(selectUserData);
-
   const [textValue, setTextValue] = React.useState('');
   const [imageUrls, setImageUrls] = React.useState<FileData[]>([]);
 
