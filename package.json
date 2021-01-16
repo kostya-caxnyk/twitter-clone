@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "cd backend && npm install && npm run start",
+    "start": "cd backend  && npm run start",
     "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "keywords": [],
@@ -17,5 +17,8 @@
     "url": "https://github.com/kostya-caxnyk/twitter-clone/issues"
   },
   "homepage": "https://github.com/kostya-caxnyk/twitter-clone#readme",
-  "description": ""
+  "description": "",
+  "engines": {
+    "node": "14.13.0"
+  }
 }

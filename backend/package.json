@@ -39,14 +39,15 @@
     ]
   },
   "scripts": {
-    "build-ts": "tsc",
-    "postinstall": "npm run build-ts",
-    "start": "npm run serve",
-    "serve": "node dist/server.js",
+    "start": "node dist/server.js",
+    "postinstall": "tsc",
     "dev": "ts-node server.ts",
     "nodemon": "nodemon"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "engines": {
+    "node": "14.13.0"
+  }
 }
