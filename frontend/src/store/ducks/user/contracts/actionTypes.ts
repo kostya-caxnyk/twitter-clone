@@ -13,6 +13,7 @@ export enum UserDataActionsType {
   'SET_NEW_FOLLOWING_ARR' = 'user/SET_NEW_FOLLOWING_ARR',
   'SET_NEW_LIKED_TWEETS_ARR' = 'user/SET_NEW_LIKED_TWEETS_ARR',
   'FETCH_EDIT_USER_DATA' = 'user/FETCH_EDIT_USER_DATA',
+  'SET_ERROR_MESSAGE' = 'user/SET_ERROR_MESSAGE',
 }
 
 export interface ISetUserDataAction extends Action<UserDataActionsType> {
@@ -83,6 +84,11 @@ export interface IFetchEditUserDataAction {
   payload: IEditFormData;
 }
 
+export interface ISetErrorMsgAction {
+  type: UserDataActionsType.SET_ERROR_MESSAGE;
+  payload: string;
+}
+
 export type UserDataActions =
   | ISetUserDataAction
   | IFetchUserDataAction
@@ -91,4 +97,5 @@ export type UserDataActions =
   | ISignOutAction
   | IFetchUserTweetsAction
   | ISetNewFollowingAction
-  | ISetNewLikedTweetsAction;
+  | ISetNewLikedTweetsAction
+  | ISetErrorMsgAction;

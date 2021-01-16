@@ -7,7 +7,6 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
-import Notification from '../../../components/Notification';
 import { useDispatch } from 'react-redux';
 import { fetchRegisterUser } from '../../../store/ducks/user/actionCreators';
 

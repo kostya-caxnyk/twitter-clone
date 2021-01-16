@@ -81,7 +81,7 @@ const BigTweet: React.FC<BigTweetProps> = ({ tweet }): React.ReactElement => {
 
   const commentsCount = tweet.comments?.length;
   const likesCount = tweet.likes?.filter((id) => id !== currentUser?._id).length + +isTweetLiked;
-  const retweetsCount = tweet.retweets?.length;
+  //const retweetsCount = tweet.retweets?.length;
   return (
     <>
       <Paper variant="outlined" className={s.bigTweet} square>

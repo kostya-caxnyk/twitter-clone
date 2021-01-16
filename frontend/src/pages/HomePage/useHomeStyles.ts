@@ -182,6 +182,16 @@ export default makeStyles((theme) => ({
       color: theme.palette.primary.main,
     },
   },
+  tweetResponseLabel: {
+    lineHeight: 1.2,
+    fontSize: 15,
+    '& a': {
+      color: theme.palette.primary.main,
+      '&:hover': {
+        textDecoration: 'underline',
+      },
+    },
+  },
   tweetUserName: {
     color: grey[600],
   },

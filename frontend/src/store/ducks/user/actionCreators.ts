@@ -7,6 +7,7 @@ import {
   IFetchUserDataAction,
   ILoginFormData,
   IRegisterFormData,
+  ISetErrorMsgAction,
   ISetLoadingStatusAction,
   ISetNewFollowingAction,
   ISetNewLikedTweetsAction,
@@ -65,4 +66,9 @@ export const fetchEditUserData = (
     avatarFile,
     backgroundFile,
   },
+});
+
+export const setErrorMessage = (error: string): ISetErrorMsgAction => ({
+  type: UserDataActionsType.SET_ERROR_MESSAGE,
+  payload: error,
 });

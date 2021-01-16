@@ -54,13 +54,14 @@ export const tweetReducer = produce((draft: Draft<TweetState>, action: TweetData
       break;
 
     case TweetDataActionsType.DELETE_COMMENT:
-      const deletedCommentIdx = draft.comments?.findIndex((tweet) => tweet._id === action.payload);
-      if (deletedCommentIdx) {
-        draft.comments?.splice(deletedCommentIdx, 1);
-        if (draft.data) {
-          draft.data.comments = draft.data.comments.filter((id) => id !== action.payload);
-        }
+      draft.comments = draft.comments
+        ? draft.comments.filter((tweet) => tweet._id !== action.payload)
+        : null;
+
+      if (draft.data) {
+        draft.data.comments = draft.data.comments.filter((id) => id !== action.payload);
       }
+
       break;
   }
 }, initialTweetDataState);

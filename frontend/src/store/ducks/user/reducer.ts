@@ -5,6 +5,7 @@ import { UserState } from './contracts/state';
 
 const initialUserDataState: UserState = {
   data: null,
+  errorMsg: null,
   LoadingStatus: LoadingStatus.NEVER,
 };
 
@@ -42,6 +43,11 @@ export const userReducer = produce((draft: Draft<UserState>, action: UserDataAct
       if (draft.data) {
         draft.data.likedTweets = action.payload;
       }
+      break;
+
+    case UserDataActionsType.SET_ERROR_MESSAGE:
+      draft.errorMsg = action.payload;
+      draft.LoadingStatus = LoadingStatus.ERROR;
       break;
   }
 }, initialUserDataState);

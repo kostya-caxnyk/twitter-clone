@@ -18,3 +18,5 @@ export const selectUserDataHasError = (state: RootState) =>
 
 export const selectIsNeverLoading = (state: RootState) =>
   selectUser(state).LoadingStatus === LoadingStatus.NEVER;
+
+export const selectErrorMessage = (state: RootState) => selectUser(state).errorMsg;

@@ -104,11 +104,14 @@ class TweetController {
     if (tweet.isComment) {
       const repliedTweet = await TweetModel.findById(tweet.commentTo);
       if (repliedTweet) {
-        repliedTweet.comments = userDoc.comments.filter(
+        repliedTweet.comments = repliedTweet.comments.filter(
           (id) => id.toString() !== tweet._id.toString(),
         );
+        await repliedTweet.save();
       }
     }
+
+    await TweetModel.deleteMany({ _id: { $in: tweet.comments } });
 
     await userDoc.save();
     await tweet.remove();

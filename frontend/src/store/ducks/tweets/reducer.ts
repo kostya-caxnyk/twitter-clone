@@ -45,10 +45,9 @@ export const tweetsReducer = produce((draft: Draft<TweetsState>, action: TweetsA
 
     case TweetsActionsType.DELETE_TWEET:
       draft.deleteTweetState = DeleteTweetState.NEVER;
-      const deletedTweetId = draft.items?.findIndex((tweet) => tweet._id === action.payload);
-      if (deletedTweetId) {
-        draft.items?.splice(deletedTweetId, 1);
-      }
+      draft.items = draft.items
+        ? draft.items.filter((tweet) => tweet._id !== action.payload)
+        : null;
       break;
 
     case TweetsActionsType.SET_DELETE_TWEET_STATE:

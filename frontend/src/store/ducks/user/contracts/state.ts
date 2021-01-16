@@ -21,5 +21,6 @@ export interface User {
 
 export interface UserState {
   data: User | null;
+  errorMsg: string | null;
   LoadingStatus: LoadingStatus;
 }

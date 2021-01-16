@@ -1,5 +1,5 @@
 import { User } from './../user/contracts/state';
-import { setUserData, setUserLoadingStatus } from './actionCreators';
+import { setErrorMessage, setUserData, setUserLoadingStatus } from './actionCreators';
 import { call, put, takeEvery } from 'redux-saga/effects';
 import { authApi } from '../../../services/authApi';
 import { ImageData, LoadingStatus } from '../../types';
@@ -18,7 +18,7 @@ export function* fetchUserDataRequest({ payload }: IFetchUserDataAction) {
     localStorage.setItem('token', data.token);
     yield put(setUserData(data));
   } catch (e) {
-    yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    yield put(setErrorMessage('Произошла ошибка'));
   }
 }
 
@@ -38,7 +38,7 @@ export function* fetchRegisterUserRequest({ payload }: IFetchRegisterUserAction)
     localStorage.setItem('token', user.token);
     yield put(setUserData(user));
   } catch (error) {
-    yield put(setUserLoadingStatus(LoadingStatus.ERROR));
+    yield put(setErrorMessage(error.response.data.errors ?? null));
   }
 }
 

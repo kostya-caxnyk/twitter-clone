@@ -79,6 +79,11 @@ const Tweet: React.FC<TweetProps> = React.memo(
                   </IconButton>
                 )}
               </div>
+              {tweet.isComment && (
+                <Typography className={s.tweetResponseLabel}>
+                  В ответ на <Link to={`/tweet/${tweet.commentTo}`}>твит</Link>
+                </Typography>
+              )}
               <Typography className={s.tweetText}>{tweet.text}</Typography>
               <ImagesList images={tweet.images} />
               <div className={s.tweetButtons}>

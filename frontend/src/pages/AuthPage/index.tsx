@@ -11,12 +11,17 @@ import ChatBubbleIcon from '@material-ui/icons/ChatBubbleOutlineOutlined';
 import LoginModal from './components/LoginModal';
 import useAuthStyles from './useAuthStyles';
 import RegisterModal from './components/RegisterModal';
-import { selectUserData, selectUserDataHasError } from '../../store/ducks/user/selectors';
+import {
+  selectErrorMessage,
+  selectUserData,
+  selectUserDataHasError,
+} from '../../store/ducks/user/selectors';
 import Notification from '../../components/Notification';
 
 export const SignIn = () => {
   const s = useAuthStyles();
   const currentUser = useSelector(selectUserData);
+  const errorMessage = useSelector(selectErrorMessage);
   const hasError = useSelector(selectUserDataHasError);
 
   const [visibleModal, setVisibleModal] = React.useState<'signIn' | 'signUp'>();
@@ -39,7 +44,7 @@ export const SignIn = () => {
 
   return (
     <main className={s.wrapper}>
-      <Notification open={hasError} message="Произошла ошибка" type="error" />
+      <Notification open={!!errorMessage && hasError} message={errorMessage} type="error" />
       <div className={s.leftSide}>
         <TwitterIcon className={s.bgcTwitterIcon} />
 

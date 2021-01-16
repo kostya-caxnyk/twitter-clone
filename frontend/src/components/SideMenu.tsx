@@ -25,7 +25,6 @@ import {
   selectIsAddFormStateLoading,
   selectIsAddTweetLoaded,
 } from '../store/ducks/tweets/selectors';
-import Notification from '../components/Notification';
 
 interface SideMenuProps {}
 
@@ -157,7 +156,6 @@ const SideMenu: React.FC<SideMenuProps> = () => {
         </ul>
       </nav>
       <ProfileBtn />
-      <Notification open={isAddTweetLoaded} message="Ваш твит отправлен" type="info" />
     </>
   );
 };

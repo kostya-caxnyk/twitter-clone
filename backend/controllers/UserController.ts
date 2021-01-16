@@ -43,7 +43,7 @@ class UserController {
     try {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        errorResponse(res, 400, { errors: errors.array() });
+        errorResponse(res, 400, { errors: errors.array()[0].msg });
         return;
       }
 
@@ -191,7 +191,7 @@ class UserController {
       return;
     }
 
-    const tweets = await TweetModel.find({ user: user._id })
+    const tweets = await TweetModel.find({ user: user._id /* isComment: false */ })
       .populate('user')
       .sort({ createdAt: -1 })
       .lean()
