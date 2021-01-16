@@ -1,14 +1,21 @@
 {
   "name": "app",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
- 
   "scripts": {
-    "start": "cd backend && node dist/server.js",
-  	"heroku-postbuild": "cd frontend && npm install && npm run build"
+    "start": "cd backend && npm install && npm run start",
+    "heroku-postbuild": "cd frontend && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kostya-caxnyk/twitter-clone.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kostya-caxnyk/twitter-clone/issues"
+  },
+  "homepage": "https://github.com/kostya-caxnyk/twitter-clone#readme",
+  "description": ""
 }
