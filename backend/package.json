@@ -21,10 +21,10 @@
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
-    "@types/express": "^4.17.9",
+    "@types/express": "^4.17.11",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/multer": "^1.4.5",
-    "@types/passport": "^1.0.4",
+    "@types/passport": "^1.0.5",
     "@types/passport-jwt": "^3.0.3",
     "@types/passport-local": "^1.0.33",
     "nodemon": "^2.0.6",

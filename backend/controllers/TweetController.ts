@@ -1,16 +1,11 @@
-import { ITweetModel } from './../models/TweetModel';
-import { errorResponse, successResponse } from './../utils/sendResponse';
+import { ITweetModel } from '../models/TweetModel';
+import { errorResponse, successResponse } from '../utils/sendResponse';
 import express from 'express';
 import TweetModel from '../models/TweetModel';
 import { validationResult } from 'express-validator';
-import { ObjectId, isValidObjectId } from 'mongoose';
+import { isValidObjectId } from 'mongoose';
 import UserModel from '../models/UserModel';
 
-interface IJwtToken {
-  _id: ObjectId;
-  username: string;
-  name: string;
-}
 
 class TweetController {
   async getAllTweets(req: express.Request, res: express.Response) {
@@ -42,7 +37,7 @@ class TweetController {
 
   async createTweet(req: express.Request, res: express.Response) {
     try {
-      const user = req.user;
+      const user = req.user as any;
 
       if (!user) {
         res.status(401).send();
@@ -78,7 +73,7 @@ class TweetController {
   }
 
   async deleteTweet(req: express.Request, res: express.Response) {
-    const user = req.user;
+    const user = req.user as any;
     const tweetId = req.params.id;
 
     if (!user) {
@@ -123,7 +118,7 @@ class TweetController {
   }
 
   async likeTweet(req: express.Request, res: express.Response) {
-    const user = req.user;
+    const user = req.user as any;
     const tweetId = req.params.id;
 
     if (!user) {
@@ -156,7 +151,7 @@ class TweetController {
   }
 
   async dislikeTweet(req: express.Request, res: express.Response) {
-    const user = req.user;
+    const user = req.user as any;
     const tweetId = req.params.id;
 
     if (!user) {
@@ -192,7 +187,7 @@ class TweetController {
 
   async addComment(req: express.Request, res: express.Response) {
     try {
-      const author = await UserModel.findById(req.user?._id);
+      const author = await UserModel.findById((req.user as any)?._id);
       if (!author) {
         res.status(401).send();
         return;

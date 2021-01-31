@@ -33,7 +33,7 @@ passport.use(
   ),
 );
 
-passport.serializeUser(function (user: IUserModel, done) {
+passport.serializeUser(function (user: any, done: any) {
   done(null, user?._id);
 });
 

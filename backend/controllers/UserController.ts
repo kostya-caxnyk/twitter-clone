@@ -3,11 +3,11 @@ import express from 'express';
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 
-import { IUserModel } from './../models/UserModel';
-import { transporter } from './../core/mailer';
+import { IUserModel } from '../models/UserModel';
+import { transporter } from '../core/mailer';
 import UserModel from '../models/UserModel';
 import regEmail from '../emails/registration';
-import { errorResponse, successResponse } from './../utils/sendResponse';
+import { errorResponse, successResponse } from '../utils/sendResponse';
 import TweetModel from '../models/TweetModel';
 
 interface IJwtToken {
@@ -19,7 +19,7 @@ interface IJwtToken {
 class UserController {
   async getUsers(req: express.Request, res: express.Response): Promise<void> {
     try {
-      const userFromReq = req.user;
+      const userFromReq = req.user as any;
       const user = await UserModel.findOne({ _id: userFromReq?._id });
 
       if (!user) {
@@ -135,7 +135,7 @@ class UserController {
 
   async login(req: express.Request, res: express.Response): Promise<void> {
     try {
-      const user = req.user;
+      const user = req.user as any;
       if (!user) {
         errorResponse(res, 500);
         return;
@@ -166,7 +166,7 @@ class UserController {
       return;
     }
 
-    const user = await UserModel.findById(req.user._id);
+    const user = await UserModel.findById((req.user as any)._id);
 
     if (!user) {
       res.status(404).send();
@@ -204,7 +204,7 @@ class UserController {
 
   async followUser(req: express.Request, res: express.Response) {
     const id = req.params.id;
-    const userFromReq = req.user;
+    const userFromReq = req.user as any;
 
     const user = await UserModel.findOne({ _id: userFromReq?._id }).exec();
     if (!user) {
@@ -230,7 +230,7 @@ class UserController {
 
   async unFollowUser(req: express.Request, res: express.Response) {
     const id = req.params.id;
-    const userFromReq = req.user;
+    const userFromReq = req.user as any;
 
     const user = await UserModel.findOne({ _id: userFromReq?._id }).exec();
     if (!user) {
@@ -259,7 +259,7 @@ class UserController {
   }
 
   async editUserData(req: express.Request, res: express.Response) {
-    const userFromReq = req.user;
+    const userFromReq = req.user as any;
     const { name, about, location, website, avatarUrl, backgroundUrl } = req.body;
 
     const user = await UserModel.findOne({ _id: userFromReq?._id }).exec();
